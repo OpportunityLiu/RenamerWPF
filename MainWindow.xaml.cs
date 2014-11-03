@@ -149,20 +149,19 @@ namespace RenamerWpf
                 if(item.State == FileData.FileState.Prepared)
                     item.RenameToTempFileName();
             }
-            //listView.Items.Refresh();
             foreach(var item in files)
             {
                 if(item.State == FileData.FileState.Renaming)
                     item.RenameToNewFileName();
             }
-            //listView.Items.Refresh();
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var item in listView.SelectedItems)
+
+            for(; listView.SelectedItem != null; )
             {
-                files.Remove(item as FileData);
+                files.Remove(listView.SelectedItem as FileData);
             }
             if(files.Count == 0)
             {
@@ -170,7 +169,6 @@ namespace RenamerWpf
                 listView.View = null;
                 lableListViewHint.Visibility = System.Windows.Visibility.Visible;
             }
-            //listView.Items.Refresh();
         }
 
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
@@ -179,7 +177,6 @@ namespace RenamerWpf
             {
                 item.Replace(textboxFind.Text, textboxTo.Text);
             }
-            //listView.Items.Refresh();
         }
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
