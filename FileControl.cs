@@ -216,29 +216,29 @@ namespace RenamerWpf
                     try
                     {
                         var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
-                        if(tempName == this.OldName)
+                        try
                         {
-                            this.State = FileState.Loaded;
-                            this.newName = Resources.RegexMatchNotFoundError;
+                            tempName = transformToValidFileName(tempName);
+                            if(tempName == this.OldName)
+                            {
+                                this.State = FileState.Loaded;
+                                this.newName = Resources.RegexMatchNotFoundError;
+                            }
+                            else
+                            {
+                                this.newName = tempName;
+                                this.State = FileState.Prepared;
+                            }
                         }
-                        else
+                        catch(ArgumentNullException)
                         {
-                            try
-                            {
-                                tempName = transformToValidFileName(tempName);
-                            }
-                            catch(ArgumentNullException)
-                            {
-                                this.newName = Resources.EmptyFileNameError;
-                                this.State = FileState.Loaded;
-                            }
-                            catch(ArgumentException ex)
-                            {
-                                this.newName = ex.Message;
-                                this.State = FileState.Loaded;
-                            }
-                            this.newName = tempName;
-                            this.State = FileState.Prepared;
+                            this.newName = Resources.EmptyFileNameError;
+                            this.State = FileState.Loaded;
+                        }
+                        catch(ArgumentException ex)
+                        {
+                            this.newName = ex.Message;
+                            this.State = FileState.Loaded;
                         }
                     }
                     catch(ArgumentException)
