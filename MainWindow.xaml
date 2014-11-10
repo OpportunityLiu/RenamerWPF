@@ -15,11 +15,11 @@
                 <Color x:Key="SelectedInactiveBackgroundColorKey">#4CE2E2E2</Color>
                 <Color x:Key="SelectedInactiveBorderColorKey">#DEDEDE</Color>
 
-                <Color x:Key="StateLoadedBackgroundColorKey">#50ffffff</Color>
-                <Color x:Key="StatePreparedBackgroundColorKey">#503AD8FE</Color>
-                <Color x:Key="StateRenamingBackgroundColorKey">#50E6D650</Color>
-                <Color x:Key="StateRenamedBackgroundColorKey">#507EFD74</Color>
-                <Color x:Key="StateErrorBackgroundColorKey">#50FF2D2D</Color>
+                <SolidColorBrush x:Key="StateLoadedBackgroundBrushKey">#50ffffff</SolidColorBrush>
+                <SolidColorBrush x:Key="StatePreparedBackgroundBrushKey">#503AD8FE</SolidColorBrush>
+                <SolidColorBrush x:Key="StateRenamingBackgroundBrushKey">#50E6D650</SolidColorBrush>
+                <SolidColorBrush x:Key="StateRenamedBackgroundBrushKey">#507EFD74</SolidColorBrush>
+                <SolidColorBrush x:Key="StateErrorBackgroundBrushKey">#50FF2D2D</SolidColorBrush>
 
                 <Duration x:Key="StateChangeDurationKey">0</Duration>
                 <Duration x:Key="MouseChangeDurationKey">0:0:0.05</Duration>
@@ -57,49 +57,19 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding State}" Value="Loaded">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="ListViewItemBackground" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" Duration="{StaticResource StateChangeDurationKey}" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
+                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateLoadedBackgroundBrushKey}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Prepared">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="ListViewItemBackground" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" To="{StaticResource StatePreparedBackgroundColorKey}" Duration="{StaticResource StateChangeDurationKey}" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
+                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StatePreparedBackgroundBrushKey}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Renaming">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="ListViewItemBackground" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" To="{StaticResource StateRenamingBackgroundColorKey}" Duration="{StaticResource StateChangeDurationKey}" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
+                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateRenamingBackgroundBrushKey}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Renamed">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="ListViewItemBackground" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" To="{StaticResource StateRenamedBackgroundColorKey}" Duration="{StaticResource StateChangeDurationKey}" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
+                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateRenamedBackgroundBrushKey}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Error">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="ListViewItemBackground" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)" To="{StaticResource StateErrorBackgroundColorKey}" Duration="{StaticResource StateChangeDurationKey}" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
+                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateErrorBackgroundBrushKey}" />
                             </DataTrigger>
 
                             <Trigger Property="IsMouseOver" Value="True">
