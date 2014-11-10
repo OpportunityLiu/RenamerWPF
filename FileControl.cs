@@ -43,7 +43,7 @@ namespace RenamerWpf
         }
 
         /// <summary>
-        /// 通过正则匹配对 <c>FileData.OldName</c> 进行处理，并更新 <c>FileData.NewName</c> 和 <c>FileData.State</c> 的值。
+        /// 通过正则匹配对 <c>FileData.OldName</c> 进行处理，并挂起更改 <c>FileData.NewName</c> 和 <c>FileData.State</c> 的值。
         /// </summary>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
@@ -51,7 +51,7 @@ namespace RenamerWpf
         {
             try
             {
-                var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None, TimeSpan.FromMilliseconds(5));
+                var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
                 if(tempName == this.OldName)
                 {
                     this.State = FileState.Loaded;
@@ -168,6 +168,8 @@ namespace RenamerWpf
             throw new ArgumentException(fileName);
         }
 
+        #region object
+
         /// <summary>
         /// 确定指定的对象是否相等。
         /// </summary>
@@ -188,6 +190,17 @@ namespace RenamerWpf
                 return false;
             }
         }
+
+        /// <summary>
+        /// 用作特定类型的哈希函数。
+        /// </summary>
+        /// <returns>当前 <c>FileData</c> 的哈希代码。</returns>
+        public override int GetHashCode()
+        {
+            return (this.Path + this.OldName).GetHashCode();
+        }
+
+        #endregion
 
         /// <summary>
         /// 不包含文件名的路径。
@@ -407,45 +420,6 @@ namespace RenamerWpf
             }
         }
     }
-
-    /// <summary>
-    /// 比较两个 <c>FileData</c> 实例是否相等的比较器。
-    /// </summary>
-    public class FileDataComparer : IEqualityComparer<FileData>
-    {
-        #region IEqualityComparer<fileData> 成员
-
-        /// <summary>
-        /// 确定指定的对象是否相等。
-        /// </summary>
-        /// <param name="x">要比较的第一个类型为 <c>FileData</c> 的对象。</param>
-        /// <param name="y">要比较的第二个类型为 <c>FileData</c> 的对象。</param>
-        /// <returns>如果指定的对象相等，则为 <c>true</c>；否则为 <c>false</c>。</returns>
-        public bool Equals(FileData x, FileData y)
-        {
-            if(x != null && y != null)
-                return (x.Path == y.Path) && (x.OldName == y.OldName);
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// 返回指定对象的哈希代码。
-        /// </summary>
-        /// <param name="obj"><c>FileData</c>，将为其返回哈希代码。</param>
-        /// <returns>指定对象的哈希代码。</returns>
-        /// <exception cref="System.ArgumentNullException">obj 的类型为引用类型，obj 为 null。</exception>
-        public int GetHashCode(FileData obj)
-        {
-            if(obj != null)
-                return (obj.Path + obj.OldName).GetHashCode();
-            else
-                throw new ArgumentNullException("obj");
-        }
-
-        #endregion
-    }
-
 
     public class FileSet : ObservableCollection<FileData>
     {
