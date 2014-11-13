@@ -11,6 +11,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using RenamerWpf.Properties;
+using System.Threading.Tasks;
 
 namespace RenamerWpf
 {
@@ -30,17 +31,9 @@ namespace RenamerWpf
             this.fullPath = fullPath;
             this.path = System.IO.Path.GetDirectoryName(fullPath) + "\\";
             this.OldName = System.IO.Path.GetFileName(fullPath);
-            try
-            {
-                this.FileIcon = fileIconGetter.GetFileIcon(fullPath);
-            }
-            catch(FileLoadException)
-            {
-                //返回默认图标
-                this.FileIcon = new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
-            }
             this.Replace(pattern, replacement);
             this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
+            this.FileIcon = fileIconGetter.GetFileIcon(fullPath);
         }
 
         /// <summary>
@@ -390,7 +383,7 @@ namespace RenamerWpf
                 NativeMethods.SHFILEINFO _SHFILEINFO = new NativeMethods.SHFILEINFO();
                 IntPtr _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
                 if(_IconIntPtr.Equals(IntPtr.Zero))
-                    throw new FileLoadException();
+                    return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
                 ImageSource img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                 NativeMethods.DestroyIcon(_SHFILEINFO.hIcon);
                 return img;
