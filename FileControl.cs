@@ -33,7 +33,6 @@ namespace RenamerWpf
             this.OldName = fileInfo.Name;
             this.Replace(pattern, replacement);
             this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
-            this.FileIcon = fileIconGetter.GetFileIcon(this.fullPath);
         }
 
         /// <summary>
@@ -282,13 +281,19 @@ namespace RenamerWpf
             }
         }
 
+        private ImageSource fileIcon;
+
         /// <summary>
         /// 文件的图标。
         /// </summary>
         public ImageSource FileIcon
         {
-            get;
-            private set;
+            get
+            {
+                if(this.fileIcon == null)
+                    this.fileIcon = fileIconGetter.GetFileIcon(this.fullPath);
+                return this.fileIcon;
+            }
         }
 
         /// <summary>
