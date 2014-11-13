@@ -25,12 +25,11 @@ namespace RenamerWpf
         public MainWindow()
         {
             InitializeComponent();
-            //files = new HashSet<FileData>(new FileDataComparer());
             files = new FileSet();
             gridview = listView.View as GridView;
             listView.View = null;
             listView.ItemsSource = files;
-            listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("OldName", System.ComponentModel.ListSortDirection.Ascending));
+            listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
         }
 
         /// <summary>
@@ -47,28 +46,27 @@ namespace RenamerWpf
         {
             Task.Run(delegate
             {
+            List<FileData> newfiles=new List<FileData>();
                 var fileCountOld = files.Count;
-                var directoryHandler = new Action<DirectoryInfo>(delegate(DirectoryInfo f)
+                Action<DirectoryInfo> directoryHandler = null;
+                Action<FileInfo> fileHandler = delegate(FileInfo f)
                     {
-                    });
-                var fileHandler = new Action<FileInfo>(delegate(FileInfo f)
-                    {
-                        this.Dispatcher.BeginInvoke(new Action(delegate
-                        {
+                        //this.Dispatcher.BeginInvoke(new Action(delegate
+                        //{
                             try
                             {
                                 //载入文件
-                                var tempFileData = new FileData(f.FullName, textboxFind.Text, textboxTo.Text);
-                                files.AddAndCheck(tempFileData);
+                                //files.AddAndCheck(tempFileData);
+                                newfiles.Add(new FileData(f, textboxFind.Text, textboxTo.Text));
 
                             }
                             catch(PathTooLongException)
                             {
                                 //放弃读取
                             }
-                        }));
-                    });
-                directoryHandler = new Action<DirectoryInfo>(delegate(DirectoryInfo d)
+                        //};
+                    };
+                directoryHandler = delegate(DirectoryInfo d)
                     {
                         try
                         {
@@ -81,7 +79,7 @@ namespace RenamerWpf
                         {
                             //没有读取权限时直接放弃该目录的读取
                         }
-                    });
+                    };
                 foreach(String item in e.Data.GetData(DataFormats.FileDrop) as String[])
                 {
                     if(File.Exists(item))
@@ -94,10 +92,13 @@ namespace RenamerWpf
                         var directory = new DirectoryInfo(item);
                         directoryHandler(directory);
                     }
-
                 }
                 this.Dispatcher.BeginInvoke(new Action(delegate
                 {
+                    foreach(var item in newfiles)
+                    {
+                        files.AddAndCheck(item);
+                    }
                     if(files.Count != 0)
                     {
                         listView.View = gridview;
@@ -105,8 +106,6 @@ namespace RenamerWpf
                     }
                     if(files.Count != fileCountOld)
                         checkboxSelectAll.IsChecked = false;
-                    
-                    //listView.Items.Refresh();
                 }));
             });
         }

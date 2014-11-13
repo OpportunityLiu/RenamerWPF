@@ -23,17 +23,17 @@ namespace RenamerWpf
         /// <summary>
         /// 通过文件的绝对路径建立文件信息类。
         /// </summary>
-        /// <param name="fullPath">文件的绝对路径</param>
+        /// <param name="fileInfo">文件的信息</param>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
-        public FileData(string fullPath, string pattern, string replacement)
+        public FileData(FileInfo fileInfo, string pattern, string replacement)
         {
-            this.fullPath = fullPath;
-            this.path = System.IO.Path.GetDirectoryName(fullPath) + "\\";
-            this.OldName = System.IO.Path.GetFileName(fullPath);
+            this.fullPath = fileInfo.FullName;
+            this.path = fileInfo.DirectoryName + "\\";
+            this.OldName = fileInfo.Name;
             this.Replace(pattern, replacement);
             this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
-            this.FileIcon = fileIconGetter.GetFileIcon(fullPath);
+            this.FileIcon = fileIconGetter.GetFileIcon(this.fullPath);
         }
 
         /// <summary>
