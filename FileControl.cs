@@ -22,16 +22,17 @@ namespace RenamerWpf
         /// <summary>
         /// 通过文件的绝对路径建立文件信息类。
         /// </summary>
-        /// <param name="path">文件的绝对路径</param>
+        /// <param name="fullPath">文件的绝对路径</param>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
-        public FileData(string path, string pattern, string replacement)
+        public FileData(string fullPath, string pattern, string replacement)
         {
-            this.path = System.IO.Path.GetDirectoryName(path) + "\\";
-            this.OldName = System.IO.Path.GetFileName(path);
+            this.fullPath = fullPath;
+            this.path = System.IO.Path.GetDirectoryName(fullPath) + "\\";
+            this.OldName = System.IO.Path.GetFileName(fullPath);
             try
             {
-                this.FileIcon = fileIconGetter.GetFileIcon(path);
+                this.FileIcon = fileIconGetter.GetFileIcon(fullPath);
             }
             catch(FileLoadException)
             {
@@ -39,7 +40,7 @@ namespace RenamerWpf
                 this.FileIcon = new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
             }
             this.Replace(pattern, replacement);
-            this.tempFileName = this.OldName + "." + System.IO.Path.GetRandomFileName();
+            this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace RenamerWpf
         {
             try
             {
-                File.Move(this.Path, this.path + this.tempFileName);
+                File.Move(this.Path, this.tempFullName);
                 this.State = FileState.Renaming;
             }
             catch(Exception ex)
@@ -70,7 +71,7 @@ namespace RenamerWpf
                 throw new InvalidOperationException("必须先调用 RenameToTempFileName 。");
             try
             {
-                File.Move(this.path + this.tempFileName, this.path + this.NewName);
+                File.Move(this.tempFullName, this.path + this.NewName);
                 this.State = FileState.Renamed;
             }
             catch(Exception ex)
@@ -82,9 +83,9 @@ namespace RenamerWpf
         }
 
         /// <summary>
-        /// 临时文件名。
+        /// 临时文件名，包含路径。
         /// </summary>
-        private readonly string tempFileName;
+        private readonly string tempFullName;
 
         /// <summary>
         /// 用于删除文件名两边的空格以进行格式化的正则表达式。
@@ -156,7 +157,9 @@ namespace RenamerWpf
         /// <summary>
         /// 不包含文件名的路径。
         /// </summary>
-        private string path;
+        private readonly string path;
+
+        private readonly string fullPath;
 
         /// <summary>
         /// 文件的完整路径。
@@ -166,7 +169,7 @@ namespace RenamerWpf
             get
             {
                 //path != Path
-                return this.path + this.OldName;
+                return this.fullPath;
             }
         }
 
@@ -179,21 +182,54 @@ namespace RenamerWpf
             get;
         }
 
-        private string newName,pattern,replacement;
-        private bool newNameUpToDate;
-
         /// <summary>
-        /// 通过正则匹配对 <c>FileData.OldName</c> 进行处理，并挂起更改 <c>FileData.NewName</c> 和 <c>FileData.State</c> 的值。
+        /// 通过正则匹配对 <c>FileData.OldName</c> 进行处理，更改 <c>FileData.NewName</c> 和 <c>FileData.State</c> 的值。
         /// </summary>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
         public void Replace(string pattern, string replacement)
         {
-            this.pattern = pattern;
-            this.replacement = replacement;
-            this.newNameUpToDate = false;
-            this.NotifyPropertyChanged("NewName");
+            try
+            {
+                var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
+                try
+                {
+                    tempName = transformToValidFileName(tempName);
+                    if(tempName == this.OldName)
+                    {
+                        this.State = FileState.Loaded;
+                        this.NewName = Resources.RegexMatchNotFoundError;
+                    }
+                    else
+                    {
+                        this.NewName = tempName;
+                        this.State = FileState.Prepared;
+                    }
+                }
+                catch(ArgumentNullException)
+                {
+                    this.NewName = Resources.EmptyFileNameError;
+                    this.State = FileState.Loaded;
+                }
+                catch(ArgumentException ex)
+                {
+                    this.NewName = ex.Message;
+                    this.State = FileState.Loaded;
+                }
+            }
+            catch(ArgumentException)
+            {
+                this.State = FileState.Loaded;
+                this.NewName = Resources.RegexPatternError;
+            }
+            catch(RegexMatchTimeoutException)
+            {
+                this.State = FileState.Error;
+                this.NewName = Resources.RegexTimeOutError;
+            }
         }
+
+        private string newName;
 
         /// <summary>
         /// 新文件名。
@@ -202,56 +238,11 @@ namespace RenamerWpf
         {
             private set
             {
-                if(this.newName!=value)
-                {
-                    this.newNameUpToDate = true;
-                    this.newName = value;
-                    this.NotifyPropertyChanged();
-                }
+                this.newName = value;
+                NotifyPropertyChanged();
             }
             get
             {
-                if(!this.newNameUpToDate)
-                {
-                    try
-                    {
-                        var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
-                        try
-                        {
-                            tempName = transformToValidFileName(tempName);
-                            if(tempName == this.OldName)
-                            {
-                                this.State = FileState.Loaded;
-                                this.newName = Resources.RegexMatchNotFoundError;
-                            }
-                            else
-                            {
-                                this.newName = tempName;
-                                this.State = FileState.Prepared;
-                            }
-                        }
-                        catch(ArgumentNullException)
-                        {
-                            this.newName = Resources.EmptyFileNameError;
-                            this.State = FileState.Loaded;
-                        }
-                        catch(ArgumentException ex)
-                        {
-                            this.newName = ex.Message;
-                            this.State = FileState.Loaded;
-                        }
-                    }
-                    catch(ArgumentException)
-                    {
-                        this.State = FileState.Loaded;
-                        this.newName = Resources.RegexPatternError;
-                    }
-                    catch(RegexMatchTimeoutException)
-                    {
-                        this.State = FileState.Error;
-                        this.newName = Resources.RegexTimeOutError;
-                    }
-                }
                 return this.newName;
             }
         }
