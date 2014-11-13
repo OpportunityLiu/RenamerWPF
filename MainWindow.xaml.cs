@@ -158,10 +158,9 @@ namespace RenamerWpf
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
         {
-
             for(; listView.SelectedItem != null; )
             {
-                files.Remove(listView.SelectedItem as FileData);
+                files.Remove((FileData)listView.SelectedItem);
             }
             if(files.Count == 0)
             {
@@ -181,8 +180,10 @@ namespace RenamerWpf
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
-            listView.SelectAll();
-            menuitemDelete_Click(sender, e);
+            files.Clear();
+            checkboxSelectAll.IsChecked = false;
+            listView.View = null;
+            lableListViewHint.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void DeleteListViewItem_CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
