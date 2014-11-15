@@ -28,6 +28,8 @@ namespace RenamerWpf
         /// <param name="replacement">替换字符串。</param>
         public FileData(FileInfo fileInfo, string pattern, string replacement)
         {
+            if(fileInfo == null)
+                throw new ArgumentNullException("fileInfo");
             this.fullPath = fileInfo.FullName;
             this.path = fileInfo.DirectoryName + "\\";
             this.OldName = fileInfo.Name;
