@@ -31,8 +31,8 @@ namespace RenamerWpf
             this.fullPath = fileInfo.FullName;
             this.path = fileInfo.DirectoryName + "\\";
             this.OldName = fileInfo.Name;
-            this.Replace(pattern, replacement);
             this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
+            this.Replace(pattern, replacement);
         }
 
         /// <summary>
@@ -123,11 +123,7 @@ namespace RenamerWpf
         {
             try
             {
-                var item = (FileData)obj;
-                if(this != null && obj != null)
-                    return (this.Path == item.Path) && (this.OldName == item.OldName);
-                else
-                    return false;
+                return this.fullPath == ((FileData)obj).fullPath;
             }
             catch
             {
@@ -141,7 +137,7 @@ namespace RenamerWpf
         /// <returns>当前 <c>FileData</c> 的哈希代码。</returns>
         public override int GetHashCode()
         {
-            return (this.Path + this.OldName).GetHashCode();
+            return this.fullPath.GetHashCode();
         }
 
         #endregion
@@ -385,11 +381,11 @@ namespace RenamerWpf
             /// </exception>
             public static ImageSource GetFileIcon(string p_Path)
             {
-                NativeMethods.SHFILEINFO _SHFILEINFO = new NativeMethods.SHFILEINFO();
-                IntPtr _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
+                var _SHFILEINFO = new NativeMethods.SHFILEINFO();
+                var _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
                 if(_IconIntPtr.Equals(IntPtr.Zero))
                     return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
-                ImageSource img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                var img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                 NativeMethods.DestroyIcon(_SHFILEINFO.hIcon);
                 return img;
             }

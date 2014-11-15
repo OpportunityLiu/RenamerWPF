@@ -79,6 +79,9 @@
   <PropertyGroup>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\RenamerWpf.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="System" />
@@ -165,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\DefaultFileIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\RenamerWpf.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
