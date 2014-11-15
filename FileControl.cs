@@ -101,14 +101,14 @@ namespace RenamerWpf
         private static string transformToValidFileName(String fileName)
         {
             if(string.IsNullOrWhiteSpace(fileName))
-                throw new ArgumentNullException("文件名为空", (Exception)null);
+                throw new ArgumentNullException(Resources.EmptyFileNameError, (Exception)null);
             fileName = fileNameFormatter.Replace(fileName, "$1");
             if(fileName.Length > 255)
                 throw new ArgumentException(fileName);
             if(fileNameTest.IsMatch(fileName))
                 return fileName;
             if(string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("文件名为空", (Exception)null);
+                throw new ArgumentNullException(Resources.EmptyFileNameError, (Exception)null);
             throw new ArgumentException(fileName);
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace RenamerWpf
 {
@@ -30,6 +31,21 @@ namespace RenamerWpf
             listView.View = null;
             listView.ItemsSource = files;
             listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
+            files.CollectionChanged += files_CollectionChanged;
+        }
+
+        void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(files.Count != 0)
+            {
+                listView.View = gridview;
+                lableListViewHint.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                listView.View = null;
+                lableListViewHint.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -44,28 +60,13 @@ namespace RenamerWpf
 
         private void listView_Drop(object sender, DragEventArgs e)
         {
+            var fileCountOld = files.Count;
+            var findText = textboxFind.Text;
+            var toText = textboxTo.Text;
             Task.Run(delegate
             {
-            List<FileData> newfiles=new List<FileData>();
-                var fileCountOld = files.Count;
                 Action<DirectoryInfo> directoryHandler = null;
-                Action<FileInfo> fileHandler = delegate(FileInfo f)
-                    {
-                        //this.Dispatcher.BeginInvoke(new Action(delegate
-                        //{
-                            try
-                            {
-                                //载入文件
-                                //files.AddAndCheck(tempFileData);
-                                newfiles.Add(new FileData(f, textboxFind.Text, textboxTo.Text));
-
-                            }
-                            catch(PathTooLongException)
-                            {
-                                //放弃读取
-                            }
-                        //};
-                    };
+                Action<FileInfo> fileHandler = null;
                 directoryHandler = delegate(DirectoryInfo d)
                     {
                         try
@@ -78,6 +79,22 @@ namespace RenamerWpf
                         catch(UnauthorizedAccessException)
                         {
                             //没有读取权限时直接放弃该目录的读取
+                        }
+                    };
+                fileHandler = delegate(FileInfo f)
+                    {
+                        try
+                        {
+                            //载入文件
+                            var tempFileData = new FileData(f, findText, toText);
+                            this.Dispatcher.BeginInvoke(new Action(delegate
+                            {
+                                files.AddAndCheck(tempFileData);
+                            }));
+                        }
+                        catch(PathTooLongException)
+                        {
+                            //放弃读取
                         }
                     };
                 foreach(String item in e.Data.GetData(DataFormats.FileDrop) as String[])
@@ -93,20 +110,6 @@ namespace RenamerWpf
                         directoryHandler(directory);
                     }
                 }
-                this.Dispatcher.BeginInvoke(new Action(delegate
-                {
-                    foreach(var item in newfiles)
-                    {
-                        files.AddAndCheck(item);
-                    }
-                    if(files.Count != 0)
-                    {
-                        listView.View = gridview;
-                        lableListViewHint.Visibility = System.Windows.Visibility.Hidden;
-                    }
-                    if(files.Count != fileCountOld)
-                        checkboxSelectAll.IsChecked = false;
-                }));
             });
         }
 
@@ -161,12 +164,6 @@ namespace RenamerWpf
             {
                 files.Remove((FileData)listView.SelectedItem);
             }
-            if(files.Count == 0)
-            {
-                checkboxSelectAll.IsChecked = false;
-                listView.View = null;
-                lableListViewHint.Visibility = System.Windows.Visibility.Visible;
-            }
         }
 
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
@@ -180,9 +177,6 @@ namespace RenamerWpf
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
             files.Clear();
-            checkboxSelectAll.IsChecked = false;
-            listView.View = null;
-            lableListViewHint.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void DeleteListViewItem_CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
