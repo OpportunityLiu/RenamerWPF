@@ -205,6 +205,24 @@ namespace RenamerWpf.Properties {
         }
         
         /// <summary>
+        ///   查找类似 项目总数 的本地化字符串。
+        /// </summary>
+        public static string HintFileCount {
+            get {
+                return ResourceManager.GetString("HintFileCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 所选项目数量 的本地化字符串。
+        /// </summary>
+        public static string HintSelectedFileCount {
+            get {
+                return ResourceManager.GetString("HintSelectedFileCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 查找... 的本地化字符串。
         /// </summary>
         public static string LableFind {
@@ -223,6 +241,15 @@ namespace RenamerWpf.Properties {
         }
         
         /// <summary>
+        ///   查找类似 删除(_D) 的本地化字符串。
+        /// </summary>
+        public static string MenuDelete {
+            get {
+                return ResourceManager.GetString("MenuDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 {0} 个项目 的本地化字符串。
         /// </summary>
         public static string StatusFileCount {
@@ -237,6 +264,24 @@ namespace RenamerWpf.Properties {
         public static string StatusSelectedFileCount {
             get {
                 return ResourceManager.GetString("StatusSelectedFileCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 新文件名 的本地化字符串。
+        /// </summary>
+        public static string ViewNewFileName {
+            get {
+                return ResourceManager.GetString("ViewNewFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 原文件名 的本地化字符串。
+        /// </summary>
+        public static string ViewOldFileName {
+            get {
+                return ResourceManager.GetString("ViewOldFileName", resourceCulture);
             }
         }
     }

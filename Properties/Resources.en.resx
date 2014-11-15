@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonClear" xml:space="preserve">
-    <value>清空(_C)</value>
+    <value>_Clear</value>
   </data>
   <data name="ButtonRename" xml:space="preserve">
-    <value>重命名(_R)</value>
+    <value>_Rename</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="DefaultFileIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -144,74 +144,73 @@
 </value>
   </data>
   <data name="ErrorEmptyFileName" xml:space="preserve">
-    <value>文件名为空</value>
+    <value>Empty file name</value>
   </data>
   <data name="ErrorInfoEmptyFileName" xml:space="preserve">
-    <value>新文件名有误，
-文件名不能为空。</value>
+    <value>Wrong new filename,
+file name can't be empty.</value>
   </data>
   <data name="ErrorInfoNotAllowedName" xml:space="preserve">
-    <value>新文件名有误，
-文件名不应包含特殊字符，
-也不能长于 225 个字符。</value>
+    <value>Wrong new filename,
+file name should not contain special characters or more than 225 characters.</value>
   </data>
   <data name="ErrorInfoRegexMatchNotFound" xml:space="preserve">
-    <value>没有找到可以匹配的项目，‎
-请尝试更换正则表达式。</value>
+    <value>Matches are not found,
+try replacing the regular expression.</value>
   </data>
   <data name="ErrorInfoRegexPattern" xml:space="preserve">
-    <value>正则表达式有误，
-无法进行匹配。</value>
+    <value>Regular expression error,
+unable to match.</value>
   </data>
   <data name="ErrorInfoRegexTimeOut" xml:space="preserve">
-    <value>正则匹配超时，
-请尝试更换正则表达式。</value>
+    <value>Regex matching times out,
+try replacing the regular expression.</value>
   </data>
   <data name="ErrorInfoRename" xml:space="preserve">
-    <value>在重命名操作的过程中出现错误
-错误信息：
+    <value>Error occurred during the rename operation.
+Error message:
     {0}</value>
   </data>
   <data name="ErrorRegexMatchNotFound" xml:space="preserve">
-    <value>匹配失败</value>
+    <value>Matches not found</value>
   </data>
   <data name="ErrorRegexPattern" xml:space="preserve">
-    <value>表达式有误</value>
+    <value>Wrong regular expression</value>
   </data>
   <data name="ErrorRegexTimeOut" xml:space="preserve">
-    <value>匹配超时</value>
+    <value>Matching timeout</value>
   </data>
   <data name="ErrorRename" xml:space="preserve">
-    <value>重命名错误</value>
+    <value>Error occurred when renaming</value>
   </data>
   <data name="HintDragToAddFile" xml:space="preserve">
-    <value>拖动以添加文件...</value>
+    <value>Drag and drop to add file...</value>
   </data>
   <data name="HintFileCount" xml:space="preserve">
-    <value>项目总数</value>
+    <value>Total item count</value>
   </data>
   <data name="HintSelectedFileCount" xml:space="preserve">
-    <value>所选项目数量</value>
+    <value>Selected item count</value>
   </data>
   <data name="LableFind" xml:space="preserve">
-    <value>查找...</value>
+    <value>Find what...</value>
   </data>
   <data name="LableTo" xml:space="preserve">
-    <value>替换为...</value>
+    <value>Replace with...</value>
   </data>
   <data name="MenuDelete" xml:space="preserve">
-    <value>删除(_D)</value>
+    <value>_Delete</value>
   </data>
   <data name="StatusFileCount" xml:space="preserve">
-    <value>{0} 个项目</value>
+    <value>{0} item(s)</value>
   </data>
   <data name="StatusSelectedFileCount" xml:space="preserve">
-    <value>已选择 {0} 个项目</value>
+    <value>{0} item(s) selected</value>
   </data>
   <data name="ViewNewFileName" xml:space="preserve">
-    <value>新文件名</value>
+    <value>New name</value>
   </data>
   <data name="ViewOldFileName" xml:space="preserve">
-    <value>原文件名</value>
+    <value>Old name</value>
   </data>
 </root>

@@ -126,92 +126,92 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="DefaultFileIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAvlJREFUaEPVWbFqHDEU9P8X51TXhbg6uPrq68JVV9kkDoRL43ROF2Mc4qDsbBgY
-        HiOt1kh32WJ4T6MnvRlpheF8lVJaNCy5JFhySbDkkmDJJcGSirvb2/TtdEqIrfD94SHdf/o4bO97zoEl
-        FWj48+kp/Xh8bAbsd/p6l24+vB9a+L61sKQCBv68/m6Gl+fnETCCm91sNkMb37sGllQ4AxDA/NfLv1w5
-        5o7D6QNYt9/vRxPb7XZo5ftPwZIKNaCCHFcSrkbJ7Xa70QDexFs/J0sqSjfghJa4GGEA4vE5Ib7lJiyp
-        iAbmfjKlehjA54ScJua+CUsqogEnpMS5SFM0oCaAOSYsqci9gShM83jqGjkH4BEfDod0PB5HIAfwLtbr
-        9dDea1JYUpG7AUbNS8JdxGljfwj+cv95zBH5sGtMWFLhboBR81rxsc6Bn1RzA4A2zomkAHIqGrnWccw5
-        oJsBNtZcxbkazjNSHCNqdK0aeHd9PUjwughLKnI3kBMexWg+VUNgDKxWq0GC10VYUlF6A6VIYdGonnxO
-        PGuaG2CzqajCkHOs4jnGHMaRQ97cgArLxShWRcc6jrUGPPdo/ohrDOSi5k48T57z4Lr/HdBmjPHkKUzr
-        43qFrj2LAUbFVA3GNOZwFgNoxFx5nSdYw/l4O7m6s9wAc4rCGGKm5iNYq2u6GEAz5mykHHMI5nzNiUeg
-        vqmBKJJNOCYoNDdPgC8Ba5vfgH4GGnmyudxBxTpgfVMD3FQjQDEqmLlytcIJrO1yAyoGHJthTnOtA1Rc
-        DbBPtxtQ8QS5uSfuarFHcwMUTJFsRg5RxaigKXA/mu9iIAqjEUadZ00JpbouBrCxRhXPWCuewJoYsZ57
-        dnnEaEShDhSXQ01dFwPcnLmKrhGl0BPPxS4GELH5XPG1dUQXAxQfTTgBDlgzJzY3oKc4Jby2LgeY6GbA
-        NXSACNTnTrgUgYsZmGOSe+qarga0eQl6mlMxh2YG8EsxNrsEmhjAPxsuhSY/bP3vsORykK7+Atfe+7UZ
-        hozdAAAAAElFTkSuQmCC
-</value>
+      iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+      wwAADsMBx2+oZAAAAvlJREFUaEPVWbFqHDEU9P8X51TXhbg6uPrq68JVV9kkDoRL43ROF2Mc4qDsbBgY
+      HiOt1kh32WJ4T6MnvRlpheF8lVJaNCy5JFhySbDkkmDJJcGSirvb2/TtdEqIrfD94SHdf/o4bO97zoEl
+      FWj48+kp/Xh8bAbsd/p6l24+vB9a+L61sKQCBv68/m6Gl+fnETCCm91sNkMb37sGllQ4AxDA/NfLv1w5
+      5o7D6QNYt9/vRxPb7XZo5ftPwZIKNaCCHFcSrkbJ7Xa70QDexFs/J0sqSjfghJa4GGEA4vE5Ib7lJiyp
+      iAbmfjKlehjA54ScJua+CUsqogEnpMS5SFM0oCaAOSYsqci9gShM83jqGjkH4BEfDod0PB5HIAfwLtbr
+      9dDea1JYUpG7AUbNS8JdxGljfwj+cv95zBH5sGtMWFLhboBR81rxsc6Bn1RzA4A2zomkAHIqGrnWccw5
+      oJsBNtZcxbkazjNSHCNqdK0aeHd9PUjwughLKnI3kBMexWg+VUNgDKxWq0GC10VYUlF6A6VIYdGonnxO
+      PGuaG2CzqajCkHOs4jnGHMaRQ97cgArLxShWRcc6jrUGPPdo/ohrDOSi5k48T57z4Lr/HdBmjPHkKUzr
+      43qFrj2LAUbFVA3GNOZwFgNoxFx5nSdYw/l4O7m6s9wAc4rCGGKm5iNYq2u6GEAz5mykHHMI5nzNiUeg
+      vqmBKJJNOCYoNDdPgC8Ba5vfgH4GGnmyudxBxTpgfVMD3FQjQDEqmLlytcIJrO1yAyoGHJthTnOtA1Rc
+      DbBPtxtQ8QS5uSfuarFHcwMUTJFsRg5RxaigKXA/mu9iIAqjEUadZ00JpbouBrCxRhXPWCuewJoYsZ57
+      dnnEaEShDhSXQ01dFwPcnLmKrhGl0BPPxS4GELH5XPG1dUQXAxQfTTgBDlgzJzY3oKc4Jby2LgeY6GbA
+      NXSACNTnTrgUgYsZmGOSe+qarga0eQl6mlMxh2YG8EsxNrsEmhjAPxsuhSY/bP3vsORykK7+Atfe+7UZ
+      hozdAAAAAElFTkSuQmCC
+    </value>
   </data>
   <data name="ErrorEmptyFileName" xml:space="preserve">
-    <value>文件名为空</value>
+    <value>檔案名為空</value>
   </data>
   <data name="ErrorInfoEmptyFileName" xml:space="preserve">
-    <value>新文件名有误，
-文件名不能为空。</value>
+    <value>新檔案名有誤，
+檔案名不能為空。</value>
   </data>
   <data name="ErrorInfoNotAllowedName" xml:space="preserve">
-    <value>新文件名有误，
-文件名不应包含特殊字符，
-也不能长于 225 个字符。</value>
+    <value>新檔案名有誤，
+檔案名不應包含特殊字元，
+也不能長於 225 個字元。</value>
   </data>
   <data name="ErrorInfoRegexMatchNotFound" xml:space="preserve">
-    <value>没有找到可以匹配的项目，‎
-请尝试更换正则表达式。</value>
+    <value>沒有找到可以匹配的項目，‎
+請嘗試更換正則運算式。</value>
   </data>
   <data name="ErrorInfoRegexPattern" xml:space="preserve">
-    <value>正则表达式有误，
-无法进行匹配。</value>
+    <value>正則運算式有誤，
+無法進行匹配。</value>
   </data>
   <data name="ErrorInfoRegexTimeOut" xml:space="preserve">
-    <value>正则匹配超时，
-请尝试更换正则表达式。</value>
+    <value>正則匹配超時，
+請嘗試更換正則運算式。</value>
   </data>
   <data name="ErrorInfoRename" xml:space="preserve">
-    <value>在重命名操作的过程中出现错误
-错误信息：
+    <value>在重命名操作的過程中出現錯誤
+錯誤資訊：
     {0}</value>
   </data>
   <data name="ErrorRegexMatchNotFound" xml:space="preserve">
-    <value>匹配失败</value>
+    <value>匹配失敗</value>
   </data>
   <data name="ErrorRegexPattern" xml:space="preserve">
-    <value>表达式有误</value>
+    <value>運算式有誤</value>
   </data>
   <data name="ErrorRegexTimeOut" xml:space="preserve">
-    <value>匹配超时</value>
+    <value>匹配超時</value>
   </data>
   <data name="ErrorRename" xml:space="preserve">
-    <value>重命名错误</value>
+    <value>重命名錯誤</value>
   </data>
   <data name="HintDragToAddFile" xml:space="preserve">
-    <value>拖动以添加文件...</value>
+    <value>拖動以添加項目...</value>
   </data>
   <data name="HintFileCount" xml:space="preserve">
-    <value>项目总数</value>
+    <value>項目總數</value>
   </data>
   <data name="HintSelectedFileCount" xml:space="preserve">
-    <value>所选项目数量</value>
+    <value>所選項目數量</value>
   </data>
   <data name="LableFind" xml:space="preserve">
     <value>查找...</value>
   </data>
   <data name="LableTo" xml:space="preserve">
-    <value>替换为...</value>
+    <value>替換為...</value>
   </data>
   <data name="MenuDelete" xml:space="preserve">
-    <value>删除(_D)</value>
+    <value>刪除(_D)</value>
   </data>
   <data name="StatusFileCount" xml:space="preserve">
-    <value>{0} 个项目</value>
+    <value>{0} 個項目</value>
   </data>
   <data name="StatusSelectedFileCount" xml:space="preserve">
-    <value>已选择 {0} 个项目</value>
+    <value>已選擇 {0} 個項目</value>
   </data>
   <data name="ViewNewFileName" xml:space="preserve">
-    <value>新文件名</value>
+    <value>新檔案名</value>
   </data>
   <data name="ViewOldFileName" xml:space="preserve">
-    <value>原文件名</value>
+    <value>原檔案名</value>
   </data>
 </root>
