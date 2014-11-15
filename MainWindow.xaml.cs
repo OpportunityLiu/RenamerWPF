@@ -43,6 +43,7 @@ namespace RenamerWpf
         private void listView_Drop(object sender, DragEventArgs e)
         {
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+            listView.Cursor = Cursors.Wait;
             var fileCountOld = files.Count;
             var findText = textboxFind.Text;
             var toText = textboxTo.Text;
@@ -96,16 +97,17 @@ namespace RenamerWpf
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
                     TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                    listView.Cursor = null;
                 }));
             });
         }
 
         private void listView_DragOver(object sender, DragEventArgs e)
         {
-            if(!e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effects = DragDropEffects.None;
-            else
+            if(e.Data.GetDataPresent(DataFormats.FileDrop) && listView.Cursor==null)
                 e.Effects = DragDropEffects.Move;
+            else
+                e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
 
@@ -148,7 +150,10 @@ namespace RenamerWpf
         private void buttonRename_Click(object sender, RoutedEventArgs e)
         {
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
+            TaskbarItemInfo.ProgressValue = 0;
             regexRefresh.Wait();
+            TaskbarItemInfo.ProgressValue = 0.1;
+            var progressAdd = 0.45 / files.Count;
             foreach(var item in files)
             {
                 try
@@ -158,6 +163,7 @@ namespace RenamerWpf
                 catch(InvalidOperationException)
                 {
                 }
+                TaskbarItemInfo.ProgressValue += progressAdd;
             }
             foreach(var item in files)
             {
@@ -168,7 +174,9 @@ namespace RenamerWpf
                 catch(InvalidOperationException)
                 {
                 }
+                TaskbarItemInfo.ProgressValue += progressAdd;
             }
+            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
