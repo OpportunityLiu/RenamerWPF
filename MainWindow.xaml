@@ -1,7 +1,4 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:res="clr-namespace:RenamerWpf.Properties" xmlns:local="clr-namespace:RenamerWpf" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="window" x:Class="RenamerWpf.MainWindow" Title="Renamer" Height="350" Width="525" MinWidth="300" MinHeight="200" Icon="Resources/RenamerWpf.ico">
-    <Window.TaskbarItemInfo>
-        <TaskbarItemInfo/>
-    </Window.TaskbarItemInfo>
     <Window.Resources>
         <local:Int32ToVisibilityConverter x:Key="Int32ToVisibilityConverter" />
         <Rectangle x:Key="StatusbarGrippper" Width="1" Margin="5,0" Height="20" SnapsToDevicePixels="True">
@@ -9,8 +6,8 @@
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Transparent" Offset="0" />
                     <GradientStop Color="Transparent" Offset="1" />
-                    <GradientStop Color="#FFDFEAF7" Offset="0.3" />
-                    <GradientStop Color="#FFDFEAF7" Offset="0.7" />
+                    <GradientStop Color="#7F58CDFC" Offset="0.3" />
+                    <GradientStop Color="#7F58CDFC" Offset="0.7" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
@@ -672,6 +669,9 @@
         <RoutedCommand x:Key="DeleteListViewItem" />
 
     </Window.Resources>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
     <Window.InputBindings>
         <KeyBinding Gesture="Delete" Command="{StaticResource DeleteListViewItem}" />
     </Window.InputBindings>
@@ -777,6 +777,15 @@
             <Button x:Name="buttonRename" Content="{x:Static res:Resources.ButtonRename}" Grid.Column="2" IsDefault="True" Click="buttonRename_Click" />
             <Button x:Name="buttonClear" Content="{x:Static res:Resources.ButtonClear}" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
         </Grid>
+        <Rectangle Grid.Row="2" Margin="0,-5,0,0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="1,0.5" MappingMode="RelativeToBoundingBox" StartPoint="0,0.5">
+                    <GradientStop Color="#FFBAF1BE" Offset="0.541" />
+                    <GradientStop Color="#FF47FD55" Offset="0.4" />
+                    <GradientStop Color="#FF47FD55" Offset="0.689" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
         <StatusBar Grid.Row="2" Margin="10,-5,10,0" Background="Transparent">
             <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" ToolTip="{x:Static res:Resources.HintFileCount}" />
             <StatusBarItem Content="{StaticResource StatusbarGrippper}" />
