@@ -61,6 +61,24 @@ namespace RenamerWpf.Properties {
         }
         
         /// <summary>
+        ///   查找类似 清空(_C) 的本地化字符串。
+        /// </summary>
+        public static string ButtonClear {
+            get {
+                return ResourceManager.GetString("ButtonClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 重命名(_R) 的本地化字符串。
+        /// </summary>
+        public static string ButtonRename {
+            get {
+                return ResourceManager.GetString("ButtonRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Bitmap DefaultFileIcon {
@@ -73,9 +91,9 @@ namespace RenamerWpf.Properties {
         /// <summary>
         ///   查找类似 文件名为空 的本地化字符串。
         /// </summary>
-        public static string EmptyFileNameError {
+        public static string ErrorEmptyFileName {
             get {
-                return ResourceManager.GetString("EmptyFileNameError", resourceCulture);
+                return ResourceManager.GetString("ErrorEmptyFileName", resourceCulture);
             }
         }
         
@@ -83,9 +101,9 @@ namespace RenamerWpf.Properties {
         ///   查找类似 新文件名有误，
         ///文件名不能为空。 的本地化字符串。
         /// </summary>
-        public static string EmptyFileNameErrorInfo {
+        public static string ErrorInfoEmptyFileName {
             get {
-                return ResourceManager.GetString("EmptyFileNameErrorInfo", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoEmptyFileName", resourceCulture);
             }
         }
         
@@ -94,18 +112,9 @@ namespace RenamerWpf.Properties {
         ///文件名不应包含特殊字符，
         ///也不能长于 225 个字符。 的本地化字符串。
         /// </summary>
-        public static string NotAllowedNameErrorInfo {
+        public static string ErrorInfoNotAllowedName {
             get {
-                return ResourceManager.GetString("NotAllowedNameErrorInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 匹配失败 的本地化字符串。
-        /// </summary>
-        public static string RegexMatchNotFoundError {
-            get {
-                return ResourceManager.GetString("RegexMatchNotFoundError", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoNotAllowedName", resourceCulture);
             }
         }
         
@@ -113,18 +122,9 @@ namespace RenamerWpf.Properties {
         ///   查找类似 没有找到可以匹配的项目，‎
         ///请尝试更换正则表达式。 的本地化字符串。
         /// </summary>
-        public static string RegexMatchNotFoundErrorInfo {
+        public static string ErrorInfoRegexMatchNotFound {
             get {
-                return ResourceManager.GetString("RegexMatchNotFoundErrorInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 表达式有误 的本地化字符串。
-        /// </summary>
-        public static string RegexPatternError {
-            get {
-                return ResourceManager.GetString("RegexPatternError", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoRegexMatchNotFound", resourceCulture);
             }
         }
         
@@ -132,18 +132,9 @@ namespace RenamerWpf.Properties {
         ///   查找类似 正则表达式有误，
         ///无法进行匹配。 的本地化字符串。
         /// </summary>
-        public static string RegexPatternErrorInfo {
+        public static string ErrorInfoRegexPattern {
             get {
-                return ResourceManager.GetString("RegexPatternErrorInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 匹配超时 的本地化字符串。
-        /// </summary>
-        public static string RegexTimeOutError {
-            get {
-                return ResourceManager.GetString("RegexTimeOutError", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoRegexPattern", resourceCulture);
             }
         }
         
@@ -151,18 +142,9 @@ namespace RenamerWpf.Properties {
         ///   查找类似 正则匹配超时，
         ///请尝试更换正则表达式。 的本地化字符串。
         /// </summary>
-        public static string RegexTimeOutErrorInfo {
+        public static string ErrorInfoRegexTimeOut {
             get {
-                return ResourceManager.GetString("RegexTimeOutErrorInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 重命名错误 的本地化字符串。
-        /// </summary>
-        public static string RenameError {
-            get {
-                return ResourceManager.GetString("RenameError", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoRegexTimeOut", resourceCulture);
             }
         }
         
@@ -171,9 +153,90 @@ namespace RenamerWpf.Properties {
         ///错误信息：
         ///    {0} 的本地化字符串。
         /// </summary>
-        public static string RenameErrorInfo {
+        public static string ErrorInfoRename {
             get {
-                return ResourceManager.GetString("RenameErrorInfo", resourceCulture);
+                return ResourceManager.GetString("ErrorInfoRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 匹配失败 的本地化字符串。
+        /// </summary>
+        public static string ErrorRegexMatchNotFound {
+            get {
+                return ResourceManager.GetString("ErrorRegexMatchNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 表达式有误 的本地化字符串。
+        /// </summary>
+        public static string ErrorRegexPattern {
+            get {
+                return ResourceManager.GetString("ErrorRegexPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 匹配超时 的本地化字符串。
+        /// </summary>
+        public static string ErrorRegexTimeOut {
+            get {
+                return ResourceManager.GetString("ErrorRegexTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 重命名错误 的本地化字符串。
+        /// </summary>
+        public static string ErrorRename {
+            get {
+                return ResourceManager.GetString("ErrorRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 拖动以添加文件... 的本地化字符串。
+        /// </summary>
+        public static string HintDragToAddFile {
+            get {
+                return ResourceManager.GetString("HintDragToAddFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 查找... 的本地化字符串。
+        /// </summary>
+        public static string LableFind {
+            get {
+                return ResourceManager.GetString("LableFind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 替换为... 的本地化字符串。
+        /// </summary>
+        public static string LableTo {
+            get {
+                return ResourceManager.GetString("LableTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} 个项目 的本地化字符串。
+        /// </summary>
+        public static string StatusFileCount {
+            get {
+                return ResourceManager.GetString("StatusFileCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已选择 {0} 个项目 的本地化字符串。
+        /// </summary>
+        public static string StatusSelectedFileCount {
+            get {
+                return ResourceManager.GetString("StatusSelectedFileCount", resourceCulture);
             }
         }
     }
