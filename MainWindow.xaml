@@ -37,17 +37,13 @@
                                     <MenuItem x:Name="menuitemDelete" Header="删除(_D)" Click="menuitemDelete_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
-                            <Rectangle x:Name="ListViewItemBackground" Margin="11,0,9,0" SnapsToDevicePixels="True">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush Color="{DynamicResource StateLoadedBackgroundColorKey}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
+                            <Rectangle x:Name="ListViewItemBackground" Margin="11,0,9,0" SnapsToDevicePixels="True" Fill="{StaticResource StateLoadedBackgroundBrushKey}" />
                             <Border x:Name="Border" BorderThickness=".8" SnapsToDevicePixels="True" HorizontalAlignment="Stretch" Margin="10,0,8,0">
                                 <Border.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource BorderColorKey}" />
+                                    <SolidColorBrush Color="{StaticResource BorderColorKey}" />
                                 </Border.BorderBrush>
                                 <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource BackgroundColorKey}" />
+                                    <SolidColorBrush Color="{StaticResource BackgroundColorKey}" />
                                 </Border.Background>
                                 <CheckBox x:Name="CheckBox" HorizontalAlignment="Left" Margin="3" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}}" Opacity="0" />
                             </Border>
@@ -633,17 +629,17 @@
                                     </Grid.RenderTransform>
                                     <Path x:Name="optionMark" Data="F1M9.97498,1.22334L4.6983,9.09834 4.52164,9.09834 0,5.19331 1.27664,3.52165 4.255,6.08833 8.33331,1.52588E-05 9.97498,1.22334z" Margin="0.5,1" Opacity="0" Stretch="None">
                                         <Path.Fill>
-                                            <SolidColorBrush Color="{DynamicResource SelectionFillColorKey}" />
+                                            <SolidColorBrush Color="{StaticResource SelectionFillColorKey}" />
                                         </Path.Fill>
                                     </Path>
                                     <Path x:Name="mouseMark" Data="F1M9.97498,1.22334L4.6983,9.09834 4.52164,9.09834 0,5.19331 1.27664,3.52165 4.255,6.08833 8.33331,1.52588E-05 9.97498,1.22334z" Margin="0.5,1" Opacity="0" Stretch="None">
                                         <Path.Fill>
-                                            <SolidColorBrush Color="{DynamicResource SelectionFillColorKey}" />
+                                            <SolidColorBrush Color="{StaticResource SelectionFillColorKey}" />
                                         </Path.Fill>
                                     </Path>
                                     <Rectangle x:Name="indeterminateMark" Margin="2" Opacity="0">
                                         <Rectangle.Fill>
-                                            <SolidColorBrush Color="{DynamicResource SelectionFillColorKey}" />
+                                            <SolidColorBrush Color="{StaticResource SelectionFillColorKey}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
                                 </Grid>
@@ -674,6 +670,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="60" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid Margin="10">
             <ListView x:Name="listView" AllowDrop="True" Drop="listView_Drop" DragOver="listView_DragOver" SelectionChanged="listView_SelectionChanged" VirtualizingPanel.VirtualizationMode="Recycling">
@@ -751,10 +748,7 @@
             </ListView>
             <Label x:Name="lableListViewHint" HorizontalAlignment="Center" Margin="10" IsHitTestVisible="False" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Content="拖动以添加文件..." />
         </Grid>
-        <Grid Grid.Row="1" Margin="10,0" Panel.ZIndex="999">
-            <Grid.Background>
-                <ImageBrush />
-            </Grid.Background>
+        <Grid Grid.Row="1" Margin="10,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="10" />
@@ -771,5 +765,9 @@
             <Button x:Name="buttonRename" Content="重命名(_R)" Grid.Column="2" IsDefault="True" Click="buttonRename_Click" />
             <Button x:Name="buttonClear" Content="清空(_C)" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
         </Grid>
+        <StatusBar Grid.Row="2" Margin="10,0">
+            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{}{0} 个项目" />
+            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="已选择 {0} 个项目" />
+        </StatusBar>
     </Grid>
 </Window>
