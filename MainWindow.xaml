@@ -21,7 +21,6 @@
                 <SolidColorBrush x:Key="StateRenamedBackgroundBrushKey">#507EFD74</SolidColorBrush>
                 <SolidColorBrush x:Key="StateErrorBackgroundBrushKey">#50FF2D2D</SolidColorBrush>
 
-                <Duration x:Key="StateChangeDurationKey">0</Duration>
                 <Duration x:Key="MouseChangeDurationKey">0:0:0.05</Duration>
                 <Duration x:Key="SelectionChangeDurationKey">0</Duration>
                 <Duration x:Key="ActivationChangeDurationKey">0:0:0.07</Duration>
@@ -34,7 +33,7 @@
                         <Grid HorizontalAlignment="Left">
                             <Grid.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem x:Name="menuitemDelete" Header="删除(_D)" Click="menuitemDelete_Click" />
+                                    <MenuItem x:Name="menuitemDelete" Header="{x:Static res:Resources.MenuDelete}" Click="menuitemDelete_Click" />
                                 </ContextMenu>
                             </Grid.ContextMenu>
                             <Rectangle x:Name="ListViewItemBackground" Margin="11,0,9,0" SnapsToDevicePixels="True" Fill="{StaticResource StateLoadedBackgroundBrushKey}" />
@@ -687,10 +686,10 @@
                             </GridViewColumn.CellTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox x:Name="checkboxSelectAll" Checked="checkboxSelectAll_Checked" Unchecked="checkboxSelectAll_Unchecked" />
-                                <TextBlock Text="原文件名" Margin="7,0,0,0" IsHitTestVisible="False" />
+                                <TextBlock Text="{x:Static res:Resources.ViewOldFileName}" Margin="7,0,0,0" IsHitTestVisible="False" />
                             </StackPanel>
                         </GridViewColumn>
-                        <GridViewColumn Header="新文件名" Width="200">
+                        <GridViewColumn Header="{x:Static res:Resources.ViewNewFileName}" Width="200">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock x:Name="textblockNewName" Text="{Binding NewName}" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" Foreground="Black" />
@@ -765,9 +764,9 @@
             <Button x:Name="buttonRename" Content="{x:Static res:Resources.ButtonRename}" Grid.Column="2" IsDefault="True" Click="buttonRename_Click" />
             <Button x:Name="buttonClear" Content="{x:Static res:Resources.ButtonClear}" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
         </Grid>
-        <StatusBar Grid.Row="2" Margin="10,0">
-            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" />
-            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="{x:Static res:Resources.StatusSelectedFileCount}" />
+        <StatusBar Grid.Row="2" Margin="10,-5,10,0" Background="Transparent">
+            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" ToolTip="{x:Static res:Resources.HintFileCount}"/>
+            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="{x:Static res:Resources.StatusSelectedFileCount}" ToolTip="{x:Static res:Resources.HintSelectedFileCount}" />
         </StatusBar>
     </Grid>
 </Window>
