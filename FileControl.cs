@@ -35,6 +35,13 @@ namespace RenamerWpf
             this.OldName = fileInfo.Name;
             this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
             this.Replace(pattern, replacement);
+            this.hashCode = this.fullPath.GetHashCode();
+            Task.Run(new Action(delegate
+            {
+                this.fileIcon = fileIconGetter.GetFileIcon(this.fullPath);
+                this.fileIcon.Freeze();
+                this.NotifyPropertyChanged("FileIcon");
+            }));
         }
 
         /// <summary>
@@ -42,6 +49,8 @@ namespace RenamerWpf
         /// </summary>
         public void RenameToTempFileName()
         {
+            if(this.State != FileState.Prepared)
+                throw new InvalidOperationException("必须先获得 NewName。");
             try
             {
                 File.Move(this.Path, this.tempFullName);
@@ -62,7 +71,7 @@ namespace RenamerWpf
         public void RenameToNewFileName()
         {
             if(this.State != FileState.Renaming)
-                throw new InvalidOperationException("必须先调用 RenameToTempFileName 。");
+                throw new InvalidOperationException("必须先调用 RenameToTempFileName。");
             try
             {
                 File.Move(this.tempFullName, this.path + this.NewName);
@@ -125,7 +134,7 @@ namespace RenamerWpf
         {
             try
             {
-                return this.fullPath == ((FileData)obj).fullPath;
+                return this.hashCode == ((FileData)obj).hashCode;
             }
             catch
             {
@@ -133,13 +142,15 @@ namespace RenamerWpf
             }
         }
 
+        private int hashCode;
+
         /// <summary>
         /// 用作特定类型的哈希函数。
         /// </summary>
         /// <returns>当前 <c>FileData</c> 的哈希代码。</returns>
         public override int GetHashCode()
         {
-            return this.fullPath.GetHashCode();
+            return this.hashCode;
         }
 
         #endregion
@@ -288,8 +299,6 @@ namespace RenamerWpf
         {
             get
             {
-                if(this.fileIcon == null)
-                    this.fileIcon = fileIconGetter.GetFileIcon(this.fullPath);
                 return this.fileIcon;
             }
         }
@@ -373,6 +382,8 @@ namespace RenamerWpf
                 }
             }
 
+            private static object gettingFileIcon=new object();
+
             /// <summary>
             /// 获取文件图标。
             /// </summary>
@@ -383,13 +394,16 @@ namespace RenamerWpf
             /// </exception>
             public static ImageSource GetFileIcon(string p_Path)
             {
-                var _SHFILEINFO = new NativeMethods.SHFILEINFO();
-                var _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
-                if(_IconIntPtr.Equals(IntPtr.Zero))
-                    return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
-                var img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                NativeMethods.DestroyIcon(_SHFILEINFO.hIcon);
-                return img;
+                lock(gettingFileIcon)
+                {
+                    var _SHFILEINFO = new NativeMethods.SHFILEINFO();
+                    var _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
+                    if(_IconIntPtr.Equals(IntPtr.Zero))
+                        return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
+                    var img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    NativeMethods.DestroyIcon(_SHFILEINFO.hIcon);
+                    return img;
+                }
             }
         }
 

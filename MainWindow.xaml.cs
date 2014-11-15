@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace RenamerWpf
 {
@@ -26,26 +18,16 @@ namespace RenamerWpf
         public MainWindow()
         {
             InitializeComponent();
+            regexRefresh = Task.Run(delegate
+            {
+            });
             files = new FileSet();
             gridview = listView.View as GridView;
             listView.View = null;
             listView.ItemsSource = files;
             listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
             files.CollectionChanged += files_CollectionChanged;
-        }
-
-        void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if(files.Count != 0)
-            {
-                listView.View = gridview;
-                lableListViewHint.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                listView.View = null;
-                lableListViewHint.Visibility = Visibility.Visible;
-            }
+            regexRefreshTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -60,6 +42,7 @@ namespace RenamerWpf
 
         private void listView_Drop(object sender, DragEventArgs e)
         {
+            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
             var fileCountOld = files.Count;
             var findText = textboxFind.Text;
             var toText = textboxTo.Text;
@@ -87,7 +70,7 @@ namespace RenamerWpf
                         {
                             //载入文件
                             var tempFileData = new FileData(f, findText, toText);
-                            this.Dispatcher.BeginInvoke(new Action(delegate
+                            Dispatcher.BeginInvoke(new Action(delegate
                             {
                                 files.AddAndCheck(tempFileData);
                             }));
@@ -110,6 +93,10 @@ namespace RenamerWpf
                         directoryHandler(directory);
                     }
                 }
+                Dispatcher.BeginInvoke(new Action(delegate
+                {
+                    TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                }));
             });
         }
 
@@ -131,47 +118,98 @@ namespace RenamerWpf
 
         private void checkboxSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            if(listView.SelectedItems.Count == listView.Items.Count)
-                listView.UnselectAll();
+            listView.UnselectAll();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var sdr = sender as ListView;
-            if(sdr.SelectedItems.Count != sdr.Items.Count)
+            if(listView.SelectedItems.Count != listView.Items.Count)
                 checkboxSelectAll.IsChecked = false;
         }
 
         #endregion
 
+        void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(files.Count != 0)
+            {
+                listView.View = gridview;
+                lableListViewHint.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                listView.View = null;
+                lableListViewHint.Visibility = Visibility.Visible;
+            }
+            if(listView.SelectedItems.Count != listView.Items.Count)
+                checkboxSelectAll.IsChecked = false;
+        }
+
         private void buttonRename_Click(object sender, RoutedEventArgs e)
         {
+            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
+            regexRefresh.Wait();
             foreach(var item in files)
             {
-                if(item.State == FileData.FileState.Prepared)
+                try
+                {
                     item.RenameToTempFileName();
+                }
+                catch(InvalidOperationException)
+                {
+                }
             }
             foreach(var item in files)
             {
-                if(item.State == FileData.FileState.Renaming)
+                try
+                {
                     item.RenameToNewFileName();
+                }
+                catch(InvalidOperationException)
+                {
+                }
             }
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
         {
-            for(; listView.SelectedItem != null; )
+            if(checkboxSelectAll.IsChecked == true)
             {
-                files.Remove((FileData)listView.SelectedItem);
+                files.Clear();
+            }
+            else
+            {
+                for(; listView.SelectedItem != null; )
+                {
+                    files.Remove((FileData)listView.SelectedItem);
+                }
             }
         }
 
+        private Task regexRefresh;
+        private CancellationTokenSource regexRefreshTokenSource;
+        private CancellationToken regexRefreshToken;
+
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
         {
-            foreach(var item in files)
+            regexRefreshTokenSource.Cancel();
+            regexRefreshTokenSource = new CancellationTokenSource();
+            regexRefreshToken = regexRefreshTokenSource.Token;
+            regexRefresh = Task.Run(async delegate()
             {
-                item.Replace(textboxFind.Text, textboxTo.Text);
-            }
+                string find = "", to = "";
+                await Dispatcher.BeginInvoke(new Action(delegate
+                {
+                    find = textboxFind.Text;
+                    to = textboxTo.Text;
+                }));
+                foreach(var item in files)
+                {
+                    if(regexRefreshToken.IsCancellationRequested)
+                        return;
+                    item.Replace(find, to);
+                }
+            }, regexRefreshToken);
         }
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
