@@ -697,44 +697,44 @@
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding State}" Value="Loaded">
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
-                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.NotAllowedNameErrorInfo}" />
+                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoNotAllowedName}" />
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding State}" Value="Loaded" />
-                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.RegexMatchNotFoundError}" />
+                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexMatchNotFound}" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
-                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.RegexMatchNotFoundErrorInfo}" />
+                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexMatchNotFound}" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding State}" Value="Loaded" />
-                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.EmptyFileNameError}" />
+                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorEmptyFileName}" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
-                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.EmptyFileNameErrorInfo}" />
+                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoEmptyFileName}" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding State}" Value="Loaded" />
-                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.RegexPatternError}" />
+                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexPattern}" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
-                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.RegexPatternErrorInfo}" />
+                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexPattern}" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding State}" Value="Error" />
-                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.RegexTimeOutError}" />
+                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexTimeOut}" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
-                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.RegexTimeOutErrorInfo}" />
+                                            <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexTimeOut}" />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding State}" Value="Error" />
-                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.RenameError}" />
+                                                <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRename}" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                             <Setter TargetName="textblockNewName" Property="ToolTip" Value="{Binding RenameErrorInfo}" />
@@ -746,7 +746,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Label x:Name="lableListViewHint" HorizontalAlignment="Center" Margin="10" IsHitTestVisible="False" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Content="拖动以添加文件..." />
+            <Label x:Name="lableListViewHint" HorizontalAlignment="Center" Margin="10" IsHitTestVisible="False" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Content="{x:Static res:Resources.HintDragToAddFile}" />
         </Grid>
         <Grid Grid.Row="1" Margin="10,0">
             <Grid.RowDefinitions>
@@ -760,14 +760,14 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="textboxFind" Tag="查找..." TextChanged="textboxTextChanged" />
-            <TextBox x:Name="textboxTo" Tag="替换为..." TextChanged="textboxTextChanged" Grid.Row="2" />
-            <Button x:Name="buttonRename" Content="重命名(_R)" Grid.Column="2" IsDefault="True" Click="buttonRename_Click" />
-            <Button x:Name="buttonClear" Content="清空(_C)" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
+            <TextBox x:Name="textboxFind" Tag="{x:Static res:Resources.LableFind}" TextChanged="textboxTextChanged" />
+            <TextBox x:Name="textboxTo" Tag="{x:Static res:Resources.LableTo}" TextChanged="textboxTextChanged" Grid.Row="2" />
+            <Button x:Name="buttonRename" Content="{x:Static res:Resources.ButtonRename}" Grid.Column="2" IsDefault="True" Click="buttonRename_Click" />
+            <Button x:Name="buttonClear" Content="{x:Static res:Resources.ButtonClear}" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
         </Grid>
         <StatusBar Grid.Row="2" Margin="10,0">
-            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{}{0} 个项目" />
-            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="已选择 {0} 个项目" />
+            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" />
+            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="{x:Static res:Resources.StatusSelectedFileCount}" />
         </StatusBar>
     </Grid>
 </Window>

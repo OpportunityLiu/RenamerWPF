@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ButtonClear" xml:space="preserve">
+    <value>清空(_C)</value>
+  </data>
+  <data name="ButtonRename" xml:space="preserve">
+    <value>重命名(_R)</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="DefaultFileIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -137,45 +143,60 @@
         hozdAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="EmptyFileNameError" xml:space="preserve">
+  <data name="ErrorEmptyFileName" xml:space="preserve">
     <value>文件名为空</value>
   </data>
-  <data name="EmptyFileNameErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoEmptyFileName" xml:space="preserve">
     <value>新文件名有误，
 文件名不能为空。</value>
   </data>
-  <data name="NotAllowedNameErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoNotAllowedName" xml:space="preserve">
     <value>新文件名有误，
 文件名不应包含特殊字符，
 也不能长于 225 个字符。</value>
   </data>
-  <data name="RegexMatchNotFoundError" xml:space="preserve">
-    <value>匹配失败</value>
-  </data>
-  <data name="RegexMatchNotFoundErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoRegexMatchNotFound" xml:space="preserve">
     <value>没有找到可以匹配的项目，‎
 请尝试更换正则表达式。</value>
   </data>
-  <data name="RegexPatternError" xml:space="preserve">
-    <value>表达式有误</value>
-  </data>
-  <data name="RegexPatternErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoRegexPattern" xml:space="preserve">
     <value>正则表达式有误，
 无法进行匹配。</value>
   </data>
-  <data name="RegexTimeOutError" xml:space="preserve">
-    <value>匹配超时</value>
-  </data>
-  <data name="RegexTimeOutErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoRegexTimeOut" xml:space="preserve">
     <value>正则匹配超时，
 请尝试更换正则表达式。</value>
   </data>
-  <data name="RenameError" xml:space="preserve">
-    <value>重命名错误</value>
-  </data>
-  <data name="RenameErrorInfo" xml:space="preserve">
+  <data name="ErrorInfoRename" xml:space="preserve">
     <value>在重命名操作的过程中出现错误
 错误信息：
     {0}</value>
+  </data>
+  <data name="ErrorRegexMatchNotFound" xml:space="preserve">
+    <value>匹配失败</value>
+  </data>
+  <data name="ErrorRegexPattern" xml:space="preserve">
+    <value>表达式有误</value>
+  </data>
+  <data name="ErrorRegexTimeOut" xml:space="preserve">
+    <value>匹配超时</value>
+  </data>
+  <data name="ErrorRename" xml:space="preserve">
+    <value>重命名错误</value>
+  </data>
+  <data name="HintDragToAddFile" xml:space="preserve">
+    <value>拖动以添加文件...</value>
+  </data>
+  <data name="LableFind" xml:space="preserve">
+    <value>查找...</value>
+  </data>
+  <data name="LableTo" xml:space="preserve">
+    <value>替换为...</value>
+  </data>
+  <data name="StatusFileCount" xml:space="preserve">
+    <value>{0} 个项目</value>
+  </data>
+  <data name="StatusSelectedFileCount" xml:space="preserve">
+    <value>已选择 {0} 个项目</value>
   </data>
 </root>
