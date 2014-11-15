@@ -1,4 +1,7 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:res="clr-namespace:RenamerWpf.Properties" xmlns:local="clr-namespace:RenamerWpf" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="window" x:Class="RenamerWpf.MainWindow" Title="Renamer" Height="350" Width="525" MinWidth="300" MinHeight="200" Icon="Resources/RenamerWpf.ico">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo/>
+    </Window.TaskbarItemInfo>
     <Window.Resources>
         <local:Int32ToVisibilityConverter x:Key="Int32ToVisibilityConverter" />
         <Rectangle x:Key="StatusbarGrippper" Width="1" Margin="5,0" Height="20" SnapsToDevicePixels="True">
