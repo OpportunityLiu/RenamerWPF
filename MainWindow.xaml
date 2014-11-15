@@ -1,6 +1,16 @@
-﻿<Window xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:res="clr-namespace:RenamerWpf.Properties" xmlns:local="clr-namespace:RenamerWpf" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="window" x:Class="RenamerWpf.MainWindow" Title="Renamer" Height="350" Width="525" MinWidth="300" MinHeight="200">
+﻿<Window xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:res="clr-namespace:RenamerWpf.Properties" xmlns:local="clr-namespace:RenamerWpf" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="window" x:Class="RenamerWpf.MainWindow" Title="Renamer" Height="350" Width="525" MinWidth="300" MinHeight="200" Icon="Resources/RenamerWpf.ico">
     <Window.Resources>
-        <local:BooleansToVisibilityConverter x:Key="BooleansToVisibilityConverter" />
+        <local:Int32ToVisibilityConverter x:Key="Int32ToVisibilityConverter" />
+        <Rectangle x:Key="StatusbarGrippper" Width="1" Margin="5,0" Height="20" SnapsToDevicePixels="True">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Transparent" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                    <GradientStop Color="#FFDFEAF7" Offset="0.3" />
+                    <GradientStop Color="#FFDFEAF7" Offset="0.7" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
 
         <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
             <Style.Resources>
@@ -655,7 +665,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <RoutedCommand x:Key="DeleteListViewItem" />
 
     </Window.Resources>
@@ -765,8 +775,9 @@
             <Button x:Name="buttonClear" Content="{x:Static res:Resources.ButtonClear}" Grid.Row="2" Grid.Column="2" Click="buttonClear_Click" />
         </Grid>
         <StatusBar Grid.Row="2" Margin="10,-5,10,0" Background="Transparent">
-            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" ToolTip="{x:Static res:Resources.HintFileCount}"/>
-            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="{x:Static res:Resources.StatusSelectedFileCount}" ToolTip="{x:Static res:Resources.HintSelectedFileCount}" />
+            <StatusBarItem Content="{Binding ItemsSource.Count, ElementName=listView}" ContentStringFormat="{x:Static res:Resources.StatusFileCount}" ToolTip="{x:Static res:Resources.HintFileCount}" />
+            <StatusBarItem Content="{StaticResource StatusbarGrippper}" />
+            <StatusBarItem Content="{Binding SelectedItems.Count, ElementName=listView, Mode=OneWay}" ContentStringFormat="{x:Static res:Resources.StatusSelectedFileCount}" ToolTip="{x:Static res:Resources.HintSelectedFileCount}" Visibility="{Binding SelectedItems.Count, Converter={StaticResource Int32ToVisibilityConverter}, ElementName=listView, Mode=OneWay}" />
         </StatusBar>
     </Grid>
 </Window>

@@ -123,26 +123,6 @@
   <data name="ButtonRename" xml:space="preserve">
     <value>_Rename</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="DefaultFileIcon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAvlJREFUaEPVWbFqHDEU9P8X51TXhbg6uPrq68JVV9kkDoRL43ROF2Mc4qDsbBgY
-        HiOt1kh32WJ4T6MnvRlpheF8lVJaNCy5JFhySbDkkmDJJcGSirvb2/TtdEqIrfD94SHdf/o4bO97zoEl
-        FWj48+kp/Xh8bAbsd/p6l24+vB9a+L61sKQCBv68/m6Gl+fnETCCm91sNkMb37sGllQ4AxDA/NfLv1w5
-        5o7D6QNYt9/vRxPb7XZo5ftPwZIKNaCCHFcSrkbJ7Xa70QDexFs/J0sqSjfghJa4GGEA4vE5Ib7lJiyp
-        iAbmfjKlehjA54ScJua+CUsqogEnpMS5SFM0oCaAOSYsqci9gShM83jqGjkH4BEfDod0PB5HIAfwLtbr
-        9dDea1JYUpG7AUbNS8JdxGljfwj+cv95zBH5sGtMWFLhboBR81rxsc6Bn1RzA4A2zomkAHIqGrnWccw5
-        oJsBNtZcxbkazjNSHCNqdK0aeHd9PUjwughLKnI3kBMexWg+VUNgDKxWq0GC10VYUlF6A6VIYdGonnxO
-        PGuaG2CzqajCkHOs4jnGHMaRQ97cgArLxShWRcc6jrUGPPdo/ohrDOSi5k48T57z4Lr/HdBmjPHkKUzr
-        43qFrj2LAUbFVA3GNOZwFgNoxFx5nSdYw/l4O7m6s9wAc4rCGGKm5iNYq2u6GEAz5mykHHMI5nzNiUeg
-        vqmBKJJNOCYoNDdPgC8Ba5vfgH4GGnmyudxBxTpgfVMD3FQjQDEqmLlytcIJrO1yAyoGHJthTnOtA1Rc
-        DbBPtxtQ8QS5uSfuarFHcwMUTJFsRg5RxaigKXA/mu9iIAqjEUadZ00JpbouBrCxRhXPWCuewJoYsZ57
-        dnnEaEShDhSXQ01dFwPcnLmKrhGl0BPPxS4GELH5XPG1dUQXAxQfTTgBDlgzJzY3oKc4Jby2LgeY6GbA
-        NXSACNTnTrgUgYsZmGOSe+qarga0eQl6mlMxh2YG8EsxNrsEmhjAPxsuhSY/bP3vsORykK7+Atfe+7UZ
-        hozdAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="ErrorEmptyFileName" xml:space="preserve">
     <value>Empty file name</value>
   </data>
