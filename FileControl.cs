@@ -188,8 +188,11 @@ namespace RenamerWpf
         /// </summary>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
+        /// <exception cref="InvalidOperationException"><c>FileData.State</c> 错误。</exception>
         public void Replace(string pattern, string replacement)
         {
+            if(this.state != FileState.Loaded && this.state != FileState.Prepared)
+                throw new InvalidOperationException("FileData.State 错误，必须为 FileData.FileState.Loaded 或 FileData.FileState.Prepared。");
             try
             {
                 var tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
@@ -239,8 +242,11 @@ namespace RenamerWpf
         {
             private set
             {
-                this.newName = value;
-                NotifyPropertyChanged();
+                if(value != this.newName)
+                {
+                    this.newName = value;
+                    NotifyPropertyChanged();
+                }
             }
             get
             {
@@ -301,33 +307,6 @@ namespace RenamerWpf
             {
                 return this.fileIcon;
             }
-        }
-
-        /// <summary>
-        /// 表示文件状态的枚举。
-        /// </summary>
-        public enum FileState
-        {
-            /// <summary>
-            /// 读取文件信息完毕。
-            /// </summary>
-            Loaded,
-            /// <summary>
-            /// 已经准备好新文件名。
-            /// </summary>
-            Prepared,
-            /// <summary>
-            /// 正在重命名。
-            /// </summary>
-            Renaming,
-            /// <summary>
-            /// 已经重命名。
-            /// </summary>
-            Renamed,
-            /// <summary>
-            /// 出现错误。
-            /// </summary>
-            Error
         }
 
         /// <summary>
@@ -427,6 +406,33 @@ namespace RenamerWpf
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+
+    /// <summary>
+    /// 表示文件状态的枚举。
+    /// </summary>
+    public enum FileState
+    {
+        /// <summary>
+        /// 读取文件信息完毕。
+        /// </summary>
+        Loaded,
+        /// <summary>
+        /// 已经准备好新文件名。
+        /// </summary>
+        Prepared,
+        /// <summary>
+        /// 正在重命名。
+        /// </summary>
+        Renaming,
+        /// <summary>
+        /// 已经重命名。
+        /// </summary>
+        Renamed,
+        /// <summary>
+        /// 出现错误。
+        /// </summary>
+        Error
     }
 
     public class FileSet : ObservableCollection<FileData>

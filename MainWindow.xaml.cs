@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace RenamerWpf
 {
@@ -22,8 +23,6 @@ namespace RenamerWpf
             {
             });
             files = new FileSet();
-            gridview = listView.View as GridView;
-            listView.View = null;
             listView.ItemsSource = files;
             listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
             files.CollectionChanged += files_CollectionChanged;
@@ -34,11 +33,6 @@ namespace RenamerWpf
         /// 文件列表。
         /// </summary>
         private FileSet files;
-
-        /// <summary>
-        /// 用于 <c>ListView.View</c> 的 <c>GridView</c>。
-        /// </summary>
-        private GridView gridview;
 
         private void listView_Drop(object sender, DragEventArgs e)
         {
@@ -104,7 +98,7 @@ namespace RenamerWpf
 
         private void listView_DragOver(object sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.FileDrop) && listView.Cursor==null)
+            if(e.Data.GetDataPresent(DataFormats.FileDrop) && TaskbarItemInfo.ProgressState == System.Windows.Shell.TaskbarItemProgressState.None)
                 e.Effects = DragDropEffects.Move;
             else
                 e.Effects = DragDropEffects.None;
@@ -133,16 +127,6 @@ namespace RenamerWpf
 
         void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if(files.Count != 0)
-            {
-                listView.View = gridview;
-                lableListViewHint.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                listView.View = null;
-                lableListViewHint.Visibility = Visibility.Visible;
-            }
             if(listView.SelectedItems.Count != listView.Items.Count)
                 checkboxSelectAll.IsChecked = false;
         }
@@ -151,32 +135,42 @@ namespace RenamerWpf
         {
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
             TaskbarItemInfo.ProgressValue = 0;
-            regexRefresh.Wait();
-            TaskbarItemInfo.ProgressValue = 0.1;
-            var progressAdd = 0.45 / files.Count;
-            foreach(var item in files)
+            while(!regexRefresh.Wait(100))
+                TaskbarItemInfo.ProgressValue += (1 - TaskbarItemInfo.ProgressValue) / 50;
+            var progressAdd = (1 - TaskbarItemInfo.ProgressValue) / 2 / files.Count;
+            Task.Run(delegate
             {
-                try
+                var addProgress=new Action(delegate
+                { 
+                    TaskbarItemInfo.ProgressValue += progressAdd;
+                });
+                foreach(var item in files)
                 {
-                    item.RenameToTempFileName();
+                    try
+                    {
+                        item.RenameToTempFileName();
+                    }
+                    catch(InvalidOperationException)
+                    {
+                    }
+                    Dispatcher.BeginInvoke(addProgress);
                 }
-                catch(InvalidOperationException)
+                foreach(var item in files)
                 {
+                    try
+                    {
+                        item.RenameToNewFileName();
+                    }
+                    catch(InvalidOperationException)
+                    {
+                    }
+                    Dispatcher.BeginInvoke(addProgress);
                 }
-                TaskbarItemInfo.ProgressValue += progressAdd;
-            }
-            foreach(var item in files)
-            {
-                try
+                Dispatcher.BeginInvoke(new Action(delegate
                 {
-                    item.RenameToNewFileName();
-                }
-                catch(InvalidOperationException)
-                {
-                }
-                TaskbarItemInfo.ProgressValue += progressAdd;
-            }
-            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                    TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                }));
+            });
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
@@ -215,7 +209,13 @@ namespace RenamerWpf
                 {
                     if(regexRefreshToken.IsCancellationRequested)
                         return;
-                    item.Replace(find, to);
+                    try
+                    {
+                        item.Replace(find, to);
+                    }
+                    catch(InvalidOperationException)
+                    {
+                    }
                 }
             }, regexRefreshToken);
         }
@@ -239,13 +239,57 @@ namespace RenamerWpf
     /// <summary>
     /// 提供将 <c>int32</c> 转换为 <c>Visibility</c> 的转换器。
     /// </summary>
-    public class Int32ToVisibilityConverter : IValueConverter
+    public class Int32ToObjectConverter : IValueConverter
+    {
+        #region IValueConverter 成员
+
+        /// <summary>
+        /// 转换值。
+        /// </summary>
+        /// <param name="value">绑定源生成的值。</param>
+        /// <param name="targetType">绑定目标属性的类型。</param>
+        /// <param name="parameter">要使用的转换器参数，数组，表示大于 0，等于 0，小于 0 时的返回值。</param>
+        /// <param name="culture">要用在转换器中的区域性。</param>
+        /// <returns> 转换后的值。 如果该方法返回 null，则使用有效的 null 值。</returns>
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            try
+            {
+                var returns = (Array)parameter;
+                if(returns.Length != 3)
+                    throw new ArgumentException("parameter");
+                var val = (Int32)value;
+                if(val > 0)
+                    return returns.GetValue(0);
+                else if(val == 0)
+                    return returns.GetValue(1);
+                else
+                    return returns.GetValue(2);
+            }
+            catch(Exception ex)
+            {
+                throw new ArgumentException(ex.Message, ex);
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }   
+    
+    /// <summary>
+    /// 提供将 <c>ProgressState</c> 转换为 <c>Visibility</c> 的转换器。
+    /// </summary>
+    public class ProgressStateToBooleanConverter : IValueConverter
     {
         #region IValueConverter 成员
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if((Int32)value == 0)
+            if(((System.Windows.Shell.TaskbarItemProgressState)value)== System.Windows.Shell.TaskbarItemProgressState.None)
                 return Visibility.Collapsed;
             else
                 return Visibility.Visible;
