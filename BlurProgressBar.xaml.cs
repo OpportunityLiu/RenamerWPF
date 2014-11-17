@@ -24,17 +24,47 @@ namespace RenamerWpf
         public BlurProgressBar()
         {
             InitializeComponent();
+            VisualStateManager.GoToState(this,this.ProgressState.ToString(), true);
         }
 
-        public static readonly DependencyProperty ProgressStateProperty = DependencyProperty.Register("ProgessState", typeof(BlurProgressState), typeof(BlurProgressBar));
+        public static readonly DependencyProperty ProgressStateProperty = DependencyProperty.Register("ProgressState", typeof(BlurProgressState), typeof(BlurProgressBar),new FrameworkPropertyMetadata(BlurProgressState.Normal, FrameworkPropertyMetadataOptions.AffectsRender,OnProgressStateChanged));
+
+        private static void OnProgressStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((BlurProgressBar)d).RaiseEvent(new ProgressStateChangedEventArgs((BlurProgressState)e.OldValue, (BlurProgressState)e.NewValue));
+            VisualStateManager.GoToState((BlurProgressBar)d, e.NewValue.ToString(), true);
+        }
+
+        public static readonly RoutedEvent ProgressStateChangedEvent = EventManager.RegisterRoutedEvent("ProgressStateChanged", RoutingStrategy.Direct, typeof(ProgressStateChangedEventHandler), typeof(BlurProgressBar));
+
+        public event ProgressStateChangedEventHandler ProgressStateChanged
+        {
+            add
+            {
+                AddHandler(ProgressStateChangedEvent, value);
+            }
+            remove
+            {
+                RemoveHandler(ProgressStateChangedEvent, value);
+            }
+            
+        }
+
+        public delegate void ProgressStateChangedEventHandler(object sender,ProgressStateChangedEventArgs e);
 
         public BlurProgressState ProgressState
         {
-            get;
-            set;
+            get
+            {
+                return (BlurProgressState)GetValue(ProgressStateProperty);
+            }
+            set
+            {
+                SetValue(ProgressStateProperty, value);
+            }
         }
 
-        public static readonly DependencyProperty ProgressValueProperty = DependencyProperty.Register("ProgessValue", typeof(double), typeof(BlurProgressBar), new PropertyMetadata(0.0, OnProgressValueChanged));
+        public static readonly DependencyProperty ProgressValueProperty = DependencyProperty.Register("ProgressValue", typeof(double), typeof(BlurProgressBar), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender, OnProgressValueChanged));
 
         private static void OnProgressValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -76,5 +106,27 @@ namespace RenamerWpf
         /// 显示进度指示器。
         /// </summary>
         Normal
+    }
+
+    public class ProgressStateChangedEventArgs:RoutedEventArgs
+    {
+        public ProgressStateChangedEventArgs(BlurProgressState oldValue, BlurProgressState newValue)
+        {
+            base.RoutedEvent = BlurProgressBar.ProgressStateChangedEvent;
+            this.OldValue = oldValue;
+            this.NewValue = newValue;
+        }
+
+        public BlurProgressState OldValue
+        {
+            get;
+            private set;
+        }
+
+        public BlurProgressState NewValue
+        {
+            get;
+            private set;
+        }
     }
 }

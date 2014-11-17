@@ -37,6 +37,7 @@ namespace RenamerWpf
         private void listView_Drop(object sender, DragEventArgs e)
         {
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+            blurProgressBar.ProgressState = BlurProgressState.Indeterminate;
             listView.Cursor = Cursors.Wait;
             var fileCountOld = files.Count;
             var findText = textboxFind.Text;
@@ -91,6 +92,7 @@ namespace RenamerWpf
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
                     TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                    blurProgressBar.ProgressState = BlurProgressState.None;
                     listView.Cursor = null;
                 }));
             });
@@ -134,6 +136,7 @@ namespace RenamerWpf
         private void buttonRename_Click(object sender, RoutedEventArgs e)
         {
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
+            blurProgressBar.ProgressState = BlurProgressState.Normal;
             TaskbarItemInfo.ProgressValue = 0;
             while(!regexRefresh.Wait(100))
                 TaskbarItemInfo.ProgressValue += (1 - TaskbarItemInfo.ProgressValue) / 50;
@@ -169,6 +172,7 @@ namespace RenamerWpf
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
                     TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                    blurProgressBar.ProgressState = BlurProgressState.None;
                 }));
             });
         }

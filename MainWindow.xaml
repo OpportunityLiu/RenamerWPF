@@ -696,7 +696,15 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                                                    <Image Source="{Binding FileIcon}" Width="16" Height="16" Margin="22,0,2,0" />
+                                                    <Image Width="16" Height="16" Margin="22,0,2,0">
+                                                        <Image.Source>
+                                                        <Binding Mode="OneWay" Path="FileIcon">
+                                                                <Binding.TargetNullValue>
+                                                                    <ImageSource>Resources/loading.gif</ImageSource>
+                                                                </Binding.TargetNullValue>
+                                                        </Binding>
+                                                        </Image.Source>
+                                                    </Image>
                                                     <TextBlock Text="{Binding OldName}" Foreground="Black" ToolTip="{Binding Path}" />
                                                 </StackPanel>
                                             </DataTemplate>
@@ -814,7 +822,20 @@
                     </Binding>
                 </StatusBarItem.Visibility>
             </StatusBarItem>
+            <StatusBarItem Content="{StaticResource StatusbarGrippper}">
+                <StatusBarItem.Visibility>
+                    <Binding Converter="{StaticResource Int32ToObjectConverter}" ElementName="listView" Mode="OneWay" Path="SelectedItems.Count">
+                        <Binding.ConverterParameter>
+                            <x:ArrayExtension Type="Visibility">
+                                <Visibility>Visible</Visibility>
+                                <Visibility>Hidden</Visibility>
+                                <Visibility>Hidden</Visibility>
+                            </x:ArrayExtension>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </StatusBarItem.Visibility>
+            </StatusBarItem>
         </StatusBar>
-        <local:BlurProgressBar x:Name="pb" ProgressValue="1" Margin="0,5,0,0" Grid.Row="2" VerticalAlignment="Bottom" Foreground="#FF44FFF6"/>
+        <local:BlurProgressBar x:Name="blurProgressBar" Margin="0,5,0,0" Grid.Row="2" VerticalAlignment="Bottom" Foreground="#FF44FFF6" ProgressState="None" ProgressValue="{Binding TaskbarItemInfo.ProgressValue, ElementName=window}" />
     </Grid>
 </Window>
