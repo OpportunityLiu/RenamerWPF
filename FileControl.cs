@@ -39,7 +39,6 @@ namespace RenamerWpf
             Task.Run(new Action(delegate
             {
                 this.fileIcon = fileIconGetter.GetFileIcon(this.fullPath);
-                this.fileIcon.Freeze();
                 this.NotifyPropertyChanged("FileIcon");
             }));
         }
@@ -296,7 +295,7 @@ namespace RenamerWpf
             }
         }
 
-        private ImageSource fileIcon;
+        private ImageSource fileIcon = null;
 
         /// <summary>
         /// 文件的图标。
@@ -379,9 +378,9 @@ namespace RenamerWpf
                     var _IconIntPtr = NativeMethods.SHGetFileInfo(p_Path, 0, ref _SHFILEINFO, (uint)Marshal.SizeOf(_SHFILEINFO), (uint)(NativeMethods.SHGFI.SHGFI_ICON | NativeMethods.SHGFI.SHGFI_LARGEICON | NativeMethods.SHGFI.SHGFI_USEFILEATTRIBUTES));
                     if(_IconIntPtr.Equals(IntPtr.Zero))
                         return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
-                    var img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    var img = Imaging.CreateBitmapSourceFromHIcon(_SHFILEINFO.hIcon, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
                     NativeMethods.DestroyIcon(_SHFILEINFO.hIcon);
-                    return img;
+                    return (ImageSource)img;
                 }
             }
         }
