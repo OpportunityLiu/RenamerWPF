@@ -42,35 +42,35 @@ namespace RenamerWpf
                 Action<DirectoryInfo> directoryHandler = null;
                 Action<FileInfo> fileHandler = null;
                 directoryHandler = delegate(DirectoryInfo d)
+                {
+                    try
                     {
-                        try
-                        {
-                            foreach(var item in d.GetFiles())
-                                fileHandler(item);
-                            foreach(var item in d.GetDirectories())
-                                directoryHandler(item);
-                        }
-                        catch(UnauthorizedAccessException)
-                        {
-                            //没有读取权限时直接放弃该目录的读取
-                        }
-                    };
+                        foreach(var item in d.GetFiles())
+                            fileHandler(item);
+                        foreach(var item in d.GetDirectories())
+                            directoryHandler(item);
+                    }
+                    catch(UnauthorizedAccessException)
+                    {
+                        //没有读取权限时直接放弃该目录的读取
+                    }
+                };
                 fileHandler = delegate(FileInfo f)
+                {
+                    try
                     {
-                        try
-                        {
-                            //载入文件
-                            var tempFileData = new FileData(f, findText, toText);
-                            //Dispatcher.BeginInvoke(new Action(delegate
-                            //{
-                            files.AddAndCheck(tempFileData, Dispatcher);
-                            //}));
-                        }
-                        catch(PathTooLongException)
-                        {
-                            //放弃读取
-                        }
-                    };
+                        //载入文件
+                        var tempFileData = new FileData(f, findText, toText);
+                        //Dispatcher.BeginInvoke(new Action(delegate
+                        //{
+                        files.AddAndCheck(tempFileData, Dispatcher);
+                        //}));
+                    }
+                    catch(PathTooLongException)
+                    {
+                        //放弃读取
+                    }
+                };
                 foreach(String item in e.Data.GetData(DataFormats.FileDrop) as String[])
                 {
                     if(File.Exists(item))
@@ -187,7 +187,9 @@ namespace RenamerWpf
             }
         }
 
-        private Task regexRefresh=Task.Run(delegate{});
+        private Task regexRefresh = Task.Run(delegate
+        {
+        });
         private CancellationTokenSource regexRefreshTokenSource = new CancellationTokenSource();
         private CancellationToken regexRefreshToken;
 

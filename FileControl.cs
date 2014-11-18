@@ -22,6 +22,18 @@ namespace RenamerWpf
     /// </summary>
     public class FileData : INotifyPropertyChanged
     {
+        static FileData()
+        {
+            var bannedChars = "";
+            foreach(var item in Path.GetInvalidFileNameChars())
+            {
+                bannedChars += @"\x" + ((byte)item).ToString("X2");
+            }
+            //var regexStr = "^([^\\\\\\s\\*\\?\\\"\\|<>/:](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\\\\\s\\*\\?\\\"\\|\\.<>/:]|[^\\\\\\s\\*\\?\\\"\\|\\.<>/:])$";
+            var regexStr = "^[^" + bannedChars + "]+$";
+            FileData.fileNameTest = new Regex(regexStr, RegexOptions.Compiled);
+        }
+
         /// <summary>
         /// 通过文件的绝对路径建立文件信息类。
         /// </summary>
@@ -32,15 +44,15 @@ namespace RenamerWpf
         {
             if(fileInfo == null)
                 throw new ArgumentNullException("fileInfo");
-            this.fullPath = fileInfo.FullName;
-            this.path = fileInfo.DirectoryName + "\\";
+            this.fullName = fileInfo.FullName;
+            this.directory = fileInfo.DirectoryName + Path.DirectorySeparatorChar;
             this.OldName = fileInfo.Name;
-            this.tempFullName = this.fullPath + "." + System.IO.Path.GetRandomFileName();
+            this.tempFullName = this.fullName + "." + System.IO.Path.GetRandomFileName();
             this.Replace(pattern, replacement);
-            this.hashCode = this.fullPath.GetHashCode();
+            this.hashCode = this.fullName.GetHashCode();
             Task.Run(new Action(delegate
             {
-                this.fileIcon = fileIconGetter.GetFileIcon(this.fullPath);
+                this.fileIcon = fileIconGetter.GetFileIcon(this.fullName);
                 this.NotifyPropertyChanged("FileIcon");
             }));
         }
@@ -54,7 +66,7 @@ namespace RenamerWpf
                 throw new InvalidOperationException("必须先获得 NewName。");
             try
             {
-                File.Move(this.Path, this.tempFullName);
+                File.Move(this.FullName, this.tempFullName);
                 this.State = FileState.Renaming;
             }
             catch(Exception ex)
@@ -75,7 +87,7 @@ namespace RenamerWpf
                 throw new InvalidOperationException("必须先调用 RenameToTempFileName。");
             try
             {
-                File.Move(this.tempFullName, this.path + this.NewName);
+                File.Move(this.tempFullName, this.directory + this.NewName);
                 this.State = FileState.Renamed;
             }
             catch(Exception ex)
@@ -99,7 +111,7 @@ namespace RenamerWpf
         /// <summary>
         /// 用于测试是否符合文件名要求的正则表达式。
         /// </summary>
-        private static readonly Regex fileNameTest = new Regex("^([^\\\\\\s\\*\\?\\\"\\|<>/:](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\\\\\s\\*\\?\\\"\\|\\.<>/:]|[^\\\\\\s\\*\\?\\\"\\|\\.<>/:])$", RegexOptions.Compiled);
+        private static readonly Regex fileNameTest;
 
         /// <summary>
         /// 对 <c>fileName</c> 进行判断并试图格式化。
@@ -159,19 +171,18 @@ namespace RenamerWpf
         /// <summary>
         /// 不包含文件名的路径。
         /// </summary>
-        private readonly string path;
+        private readonly string directory;
 
-        private readonly string fullPath;
+        private readonly string fullName;
 
         /// <summary>
         /// 文件的完整路径。
         /// </summary>
-        public string Path
+        public string FullName
         {
             get
             {
-                //path != Path
-                return this.fullPath;
+                return this.fullName;
             }
         }
 
@@ -445,6 +456,7 @@ namespace RenamerWpf
         /// <param name="item">
         /// 要添加到 <c>FileSet</c> 的末尾处的对象。
         /// 对于引用类型，该值可以为 <c>null</c>。</param>
+        [Obsolete("请使用 Add 代替。")]
         public void AddAndCheck(FileData item,Dispatcher dispatcher)
         {
             foreach(var i in this)
@@ -462,7 +474,7 @@ namespace RenamerWpf
 
         private HashSet<FileSystemInfo> pathSet = new HashSet<FileSystemInfo>();
 
-        public override void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
+        public void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             foreach(var path in pathSet)
             {
@@ -476,7 +488,7 @@ namespace RenamerWpf
             dispatcher.BeginInvoke(new Action(()=> base.Add(new FileData(item,pattern,replacement)))).Wait();  
         }
 
-        public override void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
+        public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             foreach(var path in pathSet)
             {
@@ -487,6 +499,7 @@ namespace RenamerWpf
                               where i.IsChildOf(item)
                               select i;
             //TODO:枚举 添加 排除childOfItem
+
             //清理 childOfItem in pathSet
             foreach(var remove in childOfItem)
             {
@@ -500,8 +513,9 @@ namespace RenamerWpf
 
     }
 
-    public static class Path
+    public static class ExtendMethods
     {
+        #region FileSystemInfo
         public static bool IsChildOf(this FileSystemInfo item, FileSystemInfo testParent)
         {
             return item.IsChildOf(testParent.FullName);
@@ -511,5 +525,6 @@ namespace RenamerWpf
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
