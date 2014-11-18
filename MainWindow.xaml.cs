@@ -20,7 +20,7 @@ namespace RenamerWpf
         {
             InitializeComponent();
             listView.ItemsSource = files;
-            listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
+            listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("FullName", System.ComponentModel.ListSortDirection.Ascending));
             files.CollectionChanged += files_CollectionChanged;
         }
 
@@ -39,49 +39,51 @@ namespace RenamerWpf
             var toText = textboxTo.Text;
             Task.Run(delegate
             {
-                Action<DirectoryInfo> directoryHandler = null;
-                Action<FileInfo> fileHandler = null;
-                directoryHandler = delegate(DirectoryInfo d)
-                {
-                    try
-                    {
-                        foreach(var item in d.GetFiles())
-                            fileHandler(item);
-                        foreach(var item in d.GetDirectories())
-                            directoryHandler(item);
-                    }
-                    catch(UnauthorizedAccessException)
-                    {
-                        //没有读取权限时直接放弃该目录的读取
-                    }
-                };
-                fileHandler = delegate(FileInfo f)
-                {
-                    try
-                    {
-                        //载入文件
-                        var tempFileData = new FileData(f, findText, toText);
-                        //Dispatcher.BeginInvoke(new Action(delegate
-                        //{
-                        files.AddAndCheck(tempFileData, Dispatcher);
-                        //}));
-                    }
-                    catch(PathTooLongException)
-                    {
-                        //放弃读取
-                    }
-                };
+                //Action<DirectoryInfo> directoryHandler = null;
+                //Action<FileInfo> fileHandler = null;
+                //directoryHandler = delegate(DirectoryInfo d)
+                //{
+                //    try
+                //    {
+                //        foreach(var item in d.GetFiles())
+                //            fileHandler(item);
+                //        foreach(var item in d.GetDirectories())
+                //            directoryHandler(item);
+                //    }
+                //    catch(UnauthorizedAccessException)
+                //    {
+                //        //没有读取权限时直接放弃该目录的读取
+                //    }
+                //};
+                //fileHandler = delegate(FileInfo f)
+                //{
+                //    try
+                //    {
+                //        //载入文件
+                //        var tempFileData = new FileData(f, findText, toText);
+                //        //Dispatcher.BeginInvoke(new Action(delegate
+                //        //{
+                //        files.AddAndCheck(tempFileData, Dispatcher);
+                //        //}));
+                //    }
+                //    catch(PathTooLongException)
+                //    {
+                //        //放弃读取
+                //    }
+                //};
                 foreach(String item in e.Data.GetData(DataFormats.FileDrop) as String[])
                 {
                     if(File.Exists(item))
                     {
                         var file = new FileInfo(item);
-                        fileHandler(file);
+                        files.Add(file, Dispatcher, findText, toText);
+                        //fileHandler(file);
                     }
                     else if(Directory.Exists(item))
                     {
                         var directory = new DirectoryInfo(item);
-                        directoryHandler(directory);
+                        files.Add(directory, Dispatcher, findText, toText);
+                        //directoryHandler(directory);
                     }
                 }
                 Dispatcher.BeginInvoke(new Action(delegate
