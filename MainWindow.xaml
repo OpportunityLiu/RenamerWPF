@@ -252,10 +252,10 @@
                             </VisualStateManager.VisualStateGroups>
                             <Border x:Name="HeaderBorder" BorderThickness="{StaticResource BorderThicknessKey}" Padding="5,2" Height="25">
                                 <Border.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource BorderColorKey}" />
+                                    <SolidColorBrush Color="{StaticResource BorderColorKey}" />
                                 </Border.BorderBrush>
                                 <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource BackgroundColorKey}" />
+                                    <SolidColorBrush Color="{StaticResource BackgroundColorKey}" />
                                 </Border.Background>
                                 <ContentPresenter x:Name="HeaderContent" Margin="0,0,1,1" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
@@ -273,7 +273,7 @@
                                 <Canvas x:Name="PART_FloatingHeaderCanvas">
                                     <Rectangle Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}">
                                         <Rectangle.Fill>
-                                            <SolidColorBrush Color="{DynamicResource FloatingBackgroundColorKey}" />
+                                            <SolidColorBrush Color="{StaticResource FloatingBackgroundColorKey}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
                                 </Canvas>
@@ -342,7 +342,7 @@
                                     <SolidColorBrush Color="{StaticResource FocusedBorderBrushColorKey}" />
                                 </Border.BorderBrush>
                             </Border>
-                            <TextBlock x:Name="TextBlock" Margin="5,3" Foreground="{DynamicResource HintTextBrushKey}" Text="{TemplateBinding Tag}" IsHitTestVisible="False" AllowDrop="False" Visibility="Hidden" />
+                            <TextBlock x:Name="TextBlock" Margin="5,3" Foreground="{StaticResource HintTextBrushKey}" Text="{TemplateBinding Tag}" IsHitTestVisible="False" AllowDrop="False" Visibility="Hidden" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
@@ -526,7 +526,7 @@
                     <Setter Property="Control.Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="0.8 1.6" />
+                                <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="0.8 1.6" />
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -604,7 +604,7 @@
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="checkBoxBorder">
-                                                <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" />
+                                                <EasingColorKeyFrame KeyTime="0" Value="{StaticResource {x:Static SystemColors.ControlDarkColorKey}}" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -715,7 +715,7 @@
                                                         </Binding>
                                                         </Image.Source>
                                                     </Image>
-                                                    <TextBlock Text="{Binding OldName}" Foreground="Black" ToolTip="{Binding Path}" />
+                                                    <TextBlock Text="{Binding OldName}" Foreground="Black" ToolTip="{Binding FullName}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>

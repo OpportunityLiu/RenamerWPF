@@ -50,11 +50,11 @@ namespace RenamerWpf
             this.tempFullName = this.fullName + "." + System.IO.Path.GetRandomFileName();
             this.Replace(pattern, replacement);
             this.hashCode = this.fullName.GetHashCode();
-            Task.Run(new Action(delegate
+            Task.Run(() =>
             {
                 this.fileIcon = fileIconGetter.GetFileIcon(this.fullName);
                 this.NotifyPropertyChanged("FileIcon");
-            }));
+            });
         }
 
         /// <summary>
@@ -464,53 +464,91 @@ namespace RenamerWpf
                 if(i.Equals(item))
                     return;
             }
-            dispatcher.BeginInvoke(new Action(delegate
-            {
-                base.Add(item);
-            })).Wait();  
+            dispatcher.BeginInvoke(new Action(() => base.Add(item))).Wait();
         }
-
-        private object syncRootOfSet=new object();
 
         private HashSet<FileSystemInfo> pathSet = new HashSet<FileSystemInfo>();
 
         public void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             foreach(var path in pathSet)
-            {
                 if(item.FullName==path.FullName || item.IsChildOf(path))
                     return;
-            }
-            lock(this.syncRootOfSet)
+            lock(this.pathSet)
                 //添加 item -> pathset
                 if(!this.pathSet.Add(item))
                     throw new InvalidOperationException("元素已经存在。");
-            dispatcher.BeginInvoke(new Action(()=> base.Add(new FileData(item,pattern,replacement)))).Wait();  
+            var action = new Action<FileData>(d => base.Add(d));
+            try
+            {
+                var data = new FileData(item, pattern, replacement);
+                dispatcher.BeginInvoke(action, new object[] { data }).Wait();
+            }
+            //放弃读取。
+            catch(UnauthorizedAccessException)
+            {
+            }
+            catch(PathTooLongException)
+            {
+            }
         }
 
         public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             foreach(var path in pathSet)
-            {
-                if(item.FullName==path.FullName || item.IsChildOf(path))
+                if(item.FullName == path.FullName || item.IsChildOf(path))
                     return;
-            }
-            var childOfItem = from i in this.pathSet 
-                              where i.IsChildOf(item)
-                              select i;
-            //TODO:枚举 添加 排除childOfItem
-
+            var childNameOfItem = from i in this.pathSet
+                                  where i.IsChildOf(item)
+                                  select i.FullName;
+            var childOfItem = from i in this.pathSet
+                                  where i.IsChildOf(item)
+                                  select i;
+            //枚举 添加 排除childOfItem
+            Action<FileData> fileHandler = d => 
+                dispatcher.BeginInvoke(new Action(() => base.Add(d))).Wait();
+            Action<DirectoryInfo> directoryHandler = null;
+            directoryHandler = d =>
+                {
+                    try
+                    {
+                        foreach(var file in d.GetFiles())
+                            if(!childNameOfItem.Contains(file.FullName))
+                                fileHandler(new FileData(file, pattern, replacement));
+                        foreach(var directory in d.GetDirectories())
+                            if(!childNameOfItem.Contains(directory.FullName))
+                                directoryHandler(directory);
+                    }
+                    //放弃读取。
+                    catch(UnauthorizedAccessException)
+                    {
+                    }
+                    catch(PathTooLongException)
+                    {
+                    }
+                };
+            directoryHandler(item);
             //清理 childOfItem in pathSet
-            foreach(var remove in childOfItem)
+            lock(this.pathSet)
             {
-                this.pathSet.Remove(remove);
-            }
-            //添加 item -> pathset
-            lock(this.syncRootOfSet)
+                while(this.pathSet.Remove(childOfItem.FirstOrDefault()));
+                //添加 item -> pathset
                 if(!this.pathSet.Add(item))
                     throw new InvalidOperationException("元素已经存在。");
+            }
         }
 
+        protected override void ClearItems()
+        {
+            base.ClearItems();
+            this.pathSet.Clear();
+        }
+
+        protected override void RemoveItem(int index)
+        {
+             base.RemoveItem(index);
+            //TODO:
+        }
     }
 
     public static class ExtendMethods
@@ -523,7 +561,7 @@ namespace RenamerWpf
 
         public static bool IsChildOf(this FileSystemInfo item, string testParent)
         {
-            throw new NotImplementedException();
+            return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar);
         }
         #endregion
     }
