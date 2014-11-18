@@ -14,7 +14,7 @@ namespace RenamerWpf
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public sealed partial class MainWindow : Window,IDisposable
     {
         public MainWindow()
         {
@@ -34,59 +34,22 @@ namespace RenamerWpf
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
             blurProgressBar.ProgressState = BlurProgressState.Indeterminate;
             listView.Cursor = Cursors.Wait;
-            var fileCountOld = files.Count;
             var findText = textboxFind.Text;
             var toText = textboxTo.Text;
-            Task.Run(delegate
+            Task.Run(() =>
             {
-                //Action<DirectoryInfo> directoryHandler = null;
-                //Action<FileInfo> fileHandler = null;
-                //directoryHandler = delegate(DirectoryInfo d)
-                //{
-                //    try
-                //    {
-                //        foreach(var item in d.GetFiles())
-                //            fileHandler(item);
-                //        foreach(var item in d.GetDirectories())
-                //            directoryHandler(item);
-                //    }
-                //    catch(UnauthorizedAccessException)
-                //    {
-                //        //没有读取权限时直接放弃该目录的读取
-                //    }
-                //};
-                //fileHandler = delegate(FileInfo f)
-                //{
-                //    try
-                //    {
-                //        //载入文件
-                //        var tempFileData = new FileData(f, findText, toText);
-                //        //Dispatcher.BeginInvoke(new Action(delegate
-                //        //{
-                //        files.AddAndCheck(tempFileData, Dispatcher);
-                //        //}));
-                //    }
-                //    catch(PathTooLongException)
-                //    {
-                //        //放弃读取
-                //    }
-                //};
                 foreach(String item in e.Data.GetData(DataFormats.FileDrop) as String[])
                 {
                     if(File.Exists(item))
                     {
-                        var file = new FileInfo(item);
-                        files.Add(file, Dispatcher, findText, toText);
-                        //fileHandler(file);
+                        files.Add(new FileInfo(item), Dispatcher, findText, toText);
                     }
                     else if(Directory.Exists(item))
                     {
-                        var directory = new DirectoryInfo(item);
-                        files.Add(directory, Dispatcher, findText, toText);
-                        //directoryHandler(directory);
+                        files.Add(new DirectoryInfo(item), Dispatcher, findText, toText);
                     }
                 }
-                Dispatcher.BeginInvoke(new Action(delegate
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
                     TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
                     blurProgressBar.ProgressState = BlurProgressState.None;
@@ -113,7 +76,8 @@ namespace RenamerWpf
 
         private void checkboxSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            listView.UnselectAll();
+            if(listView.SelectedItems.Count == files.Count)
+                listView.UnselectAll();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -198,6 +162,7 @@ namespace RenamerWpf
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
         {
             regexRefreshTokenSource.Cancel();
+            regexRefreshTokenSource.Dispose();
             regexRefreshTokenSource = new CancellationTokenSource();
             regexRefreshToken = regexRefreshTokenSource.Token;
             regexRefresh = Task.Run(async delegate()
@@ -237,6 +202,15 @@ namespace RenamerWpf
         {
             e.CanExecute = true;
         }
+
+        #region IDisposable 成员
+
+        public void Dispose()
+        {
+            regexRefreshTokenSource.Dispose();
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -260,7 +234,7 @@ namespace RenamerWpf
             {
                 var returns = (Array)parameter;
                 if(returns.Length != 3)
-                    throw new ArgumentException("parameter");
+                    throw new ArgumentException("必须使用长度为 3 的一维数组。","parameter");
                 var val = (Int32)value;
                 if(val > 0)
                     return returns.GetValue(0);

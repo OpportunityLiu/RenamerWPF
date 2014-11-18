@@ -14,6 +14,7 @@ using RenamerWpf.Properties;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Linq;
+using System.Globalization;
 
 namespace RenamerWpf
 {
@@ -22,17 +23,6 @@ namespace RenamerWpf
     /// </summary>
     public class FileData : INotifyPropertyChanged
     {
-        static FileData()
-        {
-            var bannedChars = "";
-            foreach(var item in Path.GetInvalidFileNameChars())
-            {
-                bannedChars += @"\x" + ((byte)item).ToString("X2");
-            }
-            //var regexStr = "^([^\\\\\\s\\*\\?\\\"\\|<>/:](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\\\\\s\\*\\?\\\"\\|\\.<>/:]|[^\\\\\\s\\*\\?\\\"\\|\\.<>/:])$";
-            var regexStr = "^[^" + bannedChars + "]+$";
-            FileData.fileNameTest = new Regex(regexStr, RegexOptions.Compiled);
-        }
 
         /// <summary>
         /// 通过文件的绝对路径建立文件信息类。
@@ -106,12 +96,23 @@ namespace RenamerWpf
         /// <summary>
         /// 用于删除文件名两边的空格以进行格式化的正则表达式。
         /// </summary>
-        private static readonly Regex fileNameFormatter = new Regex(@"^\s*(.+?)[\s\.]*$", RegexOptions.Compiled);
+        private static readonly Regex fileNameFormatter = FileData.InitializeFileNameFormatter();
+
+        private static Regex InitializeFileNameFormatter()
+        {
+            var regexStr = "^([^";
+            foreach(var item in Path.GetInvalidFileNameChars())
+            {
+                regexStr += @"\x" + ((byte)item).ToString("X2", CultureInfo.CurrentCulture);
+            }
+            regexStr += "]+)$";
+            return new Regex(regexStr, RegexOptions.Compiled);
+        }
 
         /// <summary>
         /// 用于测试是否符合文件名要求的正则表达式。
         /// </summary>
-        private static readonly Regex fileNameTest;
+        private static readonly Regex fileNameTest = new Regex(@"^\s*(.+?)[\s\.]*$", RegexOptions.Compiled);
 
         /// <summary>
         /// 对 <c>fileName</c> 进行判断并试图格式化。
@@ -136,37 +137,38 @@ namespace RenamerWpf
             throw new ArgumentException(fileName);
         }
 
-        #region object
+        private int hashCode;
 
-        /// <summary>
-        /// 确定指定的对象是否相等。
-        /// </summary>
-        /// <param name="obj">要与当前对象进行比较的对象。</param>
-        /// <returns>如果指定的对象相等，则为 <c>true</c>；否则为 <c>false</c>。</returns>
+        public static bool operator ==(FileData left, FileData right)
+        {
+            if((object)left == null && (object)right == null)
+                return true;
+            if((object)left == null || (object)right == null)
+                return false;
+            return left.hashCode == right.hashCode;
+        }
+
+        public static bool operator !=(FileData left, FileData right)
+        {
+            return !(left == right);
+        }
+
         public override bool Equals(object obj)
         {
             try
             {
-                return this.hashCode == ((FileData)obj).hashCode;
+                return this == (FileData)obj;
             }
-            catch
+            catch(InvalidCastException)
             {
                 return false;
             }
         }
 
-        private int hashCode;
-
-        /// <summary>
-        /// 用作特定类型的哈希函数。
-        /// </summary>
-        /// <returns>当前 <c>FileData</c> 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return this.hashCode;
         }
-
-        #endregion
 
         /// <summary>
         /// 不包含文件名的路径。
@@ -456,33 +458,22 @@ namespace RenamerWpf
         /// <param name="item">
         /// 要添加到 <c>FileSet</c> 的末尾处的对象。
         /// 对于引用类型，该值可以为 <c>null</c>。</param>
-        [Obsolete("请使用 Add 代替。")]
-        public void AddAndCheck(FileData item,Dispatcher dispatcher)
+        private void addAndCheck(FileData item, Dispatcher dispatcher)
         {
             foreach(var i in this)
             {
-                if(i.Equals(item))
+                if(i == item)
                     return;
             }
             dispatcher.BeginInvoke(new Action(() => base.Add(item))).Wait();
         }
 
-        private HashSet<FileSystemInfo> pathSet = new HashSet<FileSystemInfo>();
-
         public void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
-            foreach(var path in pathSet)
-                if(item.FullName==path.FullName || item.IsChildOf(path))
-                    return;
-            lock(this.pathSet)
-                //添加 item -> pathset
-                if(!this.pathSet.Add(item))
-                    throw new InvalidOperationException("元素已经存在。");
-            var action = new Action<FileData>(d => base.Add(d));
             try
             {
                 var data = new FileData(item, pattern, replacement);
-                dispatcher.BeginInvoke(action, new object[] { data }).Wait();
+                this.addAndCheck(data, dispatcher);
             }
             //放弃读取。
             catch(UnauthorizedAccessException)
@@ -495,29 +486,16 @@ namespace RenamerWpf
 
         public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
-            foreach(var path in pathSet)
-                if(item.FullName == path.FullName || item.IsChildOf(path))
-                    return;
-            var childNameOfItem = from i in this.pathSet
-                                  where i.IsChildOf(item)
-                                  select i.FullName;
-            var childOfItem = from i in this.pathSet
-                                  where i.IsChildOf(item)
-                                  select i;
-            //枚举 添加 排除childOfItem
-            Action<FileData> fileHandler = d => 
-                dispatcher.BeginInvoke(new Action(() => base.Add(d))).Wait();
+            Action<FileData> fileHandler = d => this.addAndCheck(d, dispatcher);
             Action<DirectoryInfo> directoryHandler = null;
             directoryHandler = d =>
                 {
                     try
                     {
                         foreach(var file in d.GetFiles())
-                            if(!childNameOfItem.Contains(file.FullName))
-                                fileHandler(new FileData(file, pattern, replacement));
+                            fileHandler(new FileData(file, pattern, replacement));
                         foreach(var directory in d.GetDirectories())
-                            if(!childNameOfItem.Contains(directory.FullName))
-                                directoryHandler(directory);
+                            directoryHandler(directory);
                     }
                     //放弃读取。
                     catch(UnauthorizedAccessException)
@@ -528,26 +506,6 @@ namespace RenamerWpf
                     }
                 };
             directoryHandler(item);
-            //清理 childOfItem in pathSet
-            lock(this.pathSet)
-            {
-                while(this.pathSet.Remove(childOfItem.FirstOrDefault()));
-                //添加 item -> pathset
-                if(!this.pathSet.Add(item))
-                    throw new InvalidOperationException("元素已经存在。");
-            }
-        }
-
-        protected override void ClearItems()
-        {
-            base.ClearItems();
-            this.pathSet.Clear();
-        }
-
-        protected override void RemoveItem(int index)
-        {
-             base.RemoveItem(index);
-            //TODO:
         }
     }
 
@@ -556,12 +514,20 @@ namespace RenamerWpf
         #region FileSystemInfo
         public static bool IsChildOf(this FileSystemInfo item, FileSystemInfo testParent)
         {
+            if(item == null)
+                throw new ArgumentNullException("item");
+            if(testParent == null)
+                throw new ArgumentNullException("testParent");
             return item.IsChildOf(testParent.FullName);
         }
 
         public static bool IsChildOf(this FileSystemInfo item, string testParent)
         {
-            return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar);
+            if(item == null)
+                throw new ArgumentNullException("item");
+            if(testParent == null)
+                throw new ArgumentNullException("testParent");
+            return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar, StringComparison.Ordinal);
         }
         #endregion
     }
