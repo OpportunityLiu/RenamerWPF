@@ -31,13 +31,14 @@ namespace RenamerWpf
 
         private static void OnProgressStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((BlurProgressBar)d).RaiseEvent(new ProgressStateChangedEventArgs((BlurProgressState)e.OldValue, (BlurProgressState)e.NewValue));
-            VisualStateManager.GoToState((BlurProgressBar)d, e.NewValue.ToString(), true);
+            var pb = (BlurProgressBar)d;
+            pb.RaiseEvent(new ProgressStateChangedEventArgs((BlurProgressState)e.OldValue, (BlurProgressState)e.NewValue));
+            VisualStateManager.GoToState(pb, e.NewValue.ToString(), true);
         }
 
-        public static readonly RoutedEvent ProgressStateChangedEvent = EventManager.RegisterRoutedEvent("ProgressStateChanged", RoutingStrategy.Direct, typeof(ProgressStateChangedEventHandler), typeof(BlurProgressBar));
+        public static readonly RoutedEvent ProgressStateChangedEvent = EventManager.RegisterRoutedEvent("ProgressStateChanged", RoutingStrategy.Direct, typeof(EventHandler<ProgressStateChangedEventArgs>), typeof(BlurProgressBar));
 
-        public event ProgressStateChangedEventHandler ProgressStateChanged
+        public event EventHandler<ProgressStateChangedEventArgs> ProgressStateChanged
         {
             add
             {
@@ -49,8 +50,6 @@ namespace RenamerWpf
             }
             
         }
-
-        public delegate void ProgressStateChangedEventHandler(object sender,ProgressStateChangedEventArgs e);
 
         public BlurProgressState ProgressState
         {
@@ -68,12 +67,14 @@ namespace RenamerWpf
 
         private static void OnProgressValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            var test = (double)e.NewValue;
             if((double)e.NewValue > 1.0)
                 d.SetValue(e.Property, 1.0);
-            else if((double)e.NewValue < 0.0 || ((double)e.NewValue) == double.NaN)
+            else if(test < 0.0 || double.IsNaN(test))
                 d.SetValue(e.Property, 0.0);
-            ((BlurProgressBar)d).Progress0.Width = new GridLength((double)d.GetValue(ProgressValueProperty), GridUnitType.Star);
-            ((BlurProgressBar)d).Progress1.Width = new GridLength(1.0-(double)d.GetValue(ProgressValueProperty), GridUnitType.Star);
+            var pb = (BlurProgressBar)d;
+            pb.Progress0.Width = new GridLength((double)d.GetValue(ProgressValueProperty), GridUnitType.Star);
+            pb.Progress1.Width = new GridLength(1.0-(double)d.GetValue(ProgressValueProperty), GridUnitType.Star);
         }
 
         public double ProgressValue
@@ -108,7 +109,7 @@ namespace RenamerWpf
         Normal
     }
 
-    public class ProgressStateChangedEventArgs:RoutedEventArgs
+    public class ProgressStateChangedEventArgs : RoutedEventArgs
     {
         public ProgressStateChangedEventArgs(BlurProgressState oldValue, BlurProgressState newValue)
         {
