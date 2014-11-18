@@ -19,20 +19,15 @@ namespace RenamerWpf
         public MainWindow()
         {
             InitializeComponent();
-            regexRefresh = Task.Run(delegate
-            {
-            });
-            files = new FileSet();
             listView.ItemsSource = files;
             listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Path", System.ComponentModel.ListSortDirection.Ascending));
             files.CollectionChanged += files_CollectionChanged;
-            regexRefreshTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
         /// 文件列表。
         /// </summary>
-        private FileSet files;
+        private FileSet files = new FileSet();
 
         private void listView_Drop(object sender, DragEventArgs e)
         {
@@ -192,8 +187,8 @@ namespace RenamerWpf
             }
         }
 
-        private Task regexRefresh;
-        private CancellationTokenSource regexRefreshTokenSource;
+        private Task regexRefresh=Task.Run(delegate{});
+        private CancellationTokenSource regexRefreshTokenSource = new CancellationTokenSource();
         private CancellationToken regexRefreshToken;
 
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
@@ -241,7 +236,7 @@ namespace RenamerWpf
     }
 
     /// <summary>
-    /// 提供将 <c>int32</c> 转换为 <c>Visibility</c> 的转换器。
+    /// 提供将 <c>Int32</c> 转换为 <c>Object</c> 的转换器。
     /// </summary>
     public class Int32ToObjectConverter : IValueConverter
     {

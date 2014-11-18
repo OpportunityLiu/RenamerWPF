@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using RenamerWpf.Properties;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Linq;
 
 namespace RenamerWpf
 {
@@ -437,6 +438,7 @@ namespace RenamerWpf
 
     public class FileSet : ObservableCollection<FileData>
     {
+
         /// <summary>
         /// 将不重复的对象添加到 <c>FileSet</c> 的结尾处。
         /// </summary>
@@ -454,6 +456,60 @@ namespace RenamerWpf
             {
                 base.Add(item);
             })).Wait();  
+        }
+
+        private object syncRootOfSet=new object();
+
+        private HashSet<FileSystemInfo> pathSet = new HashSet<FileSystemInfo>();
+
+        public override void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
+        {
+            foreach(var path in pathSet)
+            {
+                if(item.FullName==path.FullName || item.IsChildOf(path))
+                    return;
+            }
+            lock(this.syncRootOfSet)
+                //添加 item -> pathset
+                if(!this.pathSet.Add(item))
+                    throw new InvalidOperationException("元素已经存在。");
+            dispatcher.BeginInvoke(new Action(()=> base.Add(new FileData(item,pattern,replacement)))).Wait();  
+        }
+
+        public override void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
+        {
+            foreach(var path in pathSet)
+            {
+                if(item.FullName==path.FullName || item.IsChildOf(path))
+                    return;
+            }
+            var childOfItem = from i in this.pathSet 
+                              where i.IsChildOf(item)
+                              select i;
+            //TODO:枚举 添加 排除childOfItem
+            //清理 childOfItem in pathSet
+            foreach(var remove in childOfItem)
+            {
+                this.pathSet.Remove(remove);
+            }
+            //添加 item -> pathset
+            lock(this.syncRootOfSet)
+                if(!this.pathSet.Add(item))
+                    throw new InvalidOperationException("元素已经存在。");
+        }
+
+    }
+
+    public static class Path
+    {
+        public static bool IsChildOf(this FileSystemInfo item, FileSystemInfo testParent)
+        {
+            return item.IsChildOf(testParent.FullName);
+        }
+
+        public static bool IsChildOf(this FileSystemInfo item, string testParent)
+        {
+            throw new NotImplementedException();
         }
     }
 }
