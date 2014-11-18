@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using RenamerWpf.Properties;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace RenamerWpf
 {
@@ -442,14 +443,17 @@ namespace RenamerWpf
         /// <param name="item">
         /// 要添加到 <c>FileSet</c> 的末尾处的对象。
         /// 对于引用类型，该值可以为 <c>null</c>。</param>
-        public void AddAndCheck(FileData item)
+        public void AddAndCheck(FileData item,Dispatcher dispatcher)
         {
             foreach(var i in this)
             {
                 if(i.Equals(item))
                     return;
             }
-            base.Add(item);
+            dispatcher.BeginInvoke(new Action(delegate
+            {
+                base.Add(item);
+            })).Wait();  
         }
     }
 }
