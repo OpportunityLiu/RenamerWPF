@@ -694,7 +694,7 @@
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <Grid Margin="10">
-            <ListView x:Name="listView" AllowDrop="True" Drop="listView_Drop" DragOver="listView_DragOver" SelectionChanged="listView_SelectionChanged" VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListView x:Name="listView" AllowDrop="True" Drop="listView_Drop" DragOver="listView_DragOver" SelectionChanged="listView_SelectionChanged"  VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.Resources>
                 </ListView.Resources>
                 <ListView.View>
