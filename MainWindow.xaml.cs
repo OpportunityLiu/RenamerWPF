@@ -66,10 +66,10 @@ namespace RenamerWpf
                         {
                             //载入文件
                             var tempFileData = new FileData(f, findText, toText);
-                            Dispatcher.BeginInvoke(new Action(delegate
-                            {
-                                files.AddAndCheck(tempFileData);
-                            }));
+                            //Dispatcher.BeginInvoke(new Action(delegate
+                            //{
+                            files.AddAndCheck(tempFileData, Dispatcher);
+                            //}));
                         }
                         catch(PathTooLongException)
                         {

@@ -11,6 +11,16 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+        <Rectangle x:Key="StatusbarGrippper1" Width="1" Margin="5,0" Height="20" SnapsToDevicePixels="True">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Transparent" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                    <GradientStop Color="#7F58CDFC" Offset="0.3" />
+                    <GradientStop Color="#7F58CDFC" Offset="0.7" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
 
         <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
             <Style.Resources>
@@ -822,7 +832,7 @@
                     </Binding>
                 </StatusBarItem.Visibility>
             </StatusBarItem>
-            <StatusBarItem Content="{StaticResource StatusbarGrippper}">
+            <StatusBarItem Content="{StaticResource StatusbarGrippper1}">
                 <StatusBarItem.Visibility>
                     <Binding Converter="{StaticResource Int32ToObjectConverter}" ElementName="listView" Mode="OneWay" Path="SelectedItems.Count">
                         <Binding.ConverterParameter>
