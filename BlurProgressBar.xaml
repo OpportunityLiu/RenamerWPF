@@ -1,54 +1,54 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="userControl" x:Class="RenamerWpf.BlurProgressBar" mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="300" Foreground="#FF79FF5E" xmlns:local="clr-namespace:RenamerWpf">
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:local="clr-namespace:RenamerWpf" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Name="userControl" x:Class="RenamerWpf.BlurProgressBar" mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="300" Foreground="#FF79FF5E">
     <UserControl.Resources>
         <Storyboard x:Key="OnLoaded1" RepeatBehavior="Forever">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.7" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.85" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.15" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.3" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.15" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.85" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.7" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.85" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.15" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.3" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.15" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.85" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.7" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.85" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.15" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.3" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="rectangle">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.15" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.85" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.7" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0.85" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.15" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.3" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)" Storyboard.TargetName="IndeterminePresenter">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0.15" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.1" Value="0.85" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1" />
+        		<EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+        	</DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
     <UserControl.Triggers>
@@ -56,101 +56,115 @@
             <BeginStoryboard Storyboard="{StaticResource OnLoaded1}" />
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid Height="30" VerticalAlignment="Top">
-        <Grid.Effect>
-            <BlurEffect Radius="8" />
-        </Grid.Effect>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateProgressState">
-                <VisualStateGroup.Transitions>
-                    <VisualTransition GeneratedDuration="0:0:1" />
-                    <VisualTransition From="None" GeneratedDuration="0:0:1" To="Normal">
-                    	<VisualTransition.GeneratedEasingFunction>
-                    		<BackEase EasingMode="EaseOut" />
-                    	</VisualTransition.GeneratedEasingFunction>
-                    	<Storyboard/>
-                    </VisualTransition>
-                    <VisualTransition From="Normal" GeneratedDuration="0:0:1" To="None">
-                        <VisualTransition.GeneratedEasingFunction>
-                            <BackEase EasingMode="EaseIn" />
-                        </VisualTransition.GeneratedEasingFunction>
-                    </VisualTransition>
-                </VisualStateGroup.Transitions>
-                <VisualState x:Name="None">
-                    <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="Normal">
-                    <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
-                        	<EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="Indeterminate">
-                    <Storyboard>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0" />
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
-                        	<EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <Grid x:Name="NormalPresenter" Height="30" Opacity="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="Progress0" Width="0*" />
-                <ColumnDefinition x:Name="Progress1" Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Grid HorizontalAlignment="Right" Height="20" VerticalAlignment="Center" Width="40" Margin="0,0,-10,0">
-                <Ellipse Stroke="#00000000" StrokeThickness="0" Margin="0" HorizontalAlignment="Right" Width="20" Height="20">
-                    <Ellipse.Fill>
-                        <SolidColorBrush Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" />
-                    </Ellipse.Fill>
-                </Ellipse>
-                <ed:RegularPolygon InnerRadius="1" Margin="0,-3.292,16.708,-3.292" PointCount="3" Stretch="Fill" Stroke="#00000000" StrokeThickness="0" RenderTransformOrigin="0.5,0.5" Width="19" Height="26.584" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <ed:RegularPolygon.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform Angle="-90" />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </ed:RegularPolygon.RenderTransform>
-                    <ed:RegularPolygon.Fill>
-                        <SolidColorBrush Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" />
-                    </ed:RegularPolygon.Fill>
-                </ed:RegularPolygon>
-            </Grid>
-            <Rectangle x:Name="rectangle" Height="5">
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                        <GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.15" />
-                        <GradientStop Color="{Binding Background.Color, ElementName=userControl, FallbackValue=#0079FF5E}" Offset="0.3" />
-                        <GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.45" />
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-        </Grid>
-        <Rectangle x:Name="IndeterminePresenter" Height="5" Margin="0" Opacity="0">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                    <GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.15" />
-                    <GradientStop Color="{Binding Background.Color, ElementName=userControl, FallbackValue=#0079FF5E}" Offset="0.3" />
-                    <GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.45" />
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-    </Grid>
+	<Grid Height="30" VerticalAlignment="Top">
+		<Grid.Effect>
+			<BlurEffect Radius="8" />
+		</Grid.Effect>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="VisualStateProgressState">
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0:0:1" />
+					<VisualTransition From="None" GeneratedDuration="0:0:1" To="Normal">
+						<VisualTransition.GeneratedEasingFunction>
+							<BackEase EasingMode="EaseOut" />
+						</VisualTransition.GeneratedEasingFunction>
+					</VisualTransition>
+					<VisualTransition From="Normal" GeneratedDuration="0:0:5" To="None">
+						<VisualTransition.GeneratedEasingFunction>
+							<ElasticEase EasingMode="EaseInOut" Springiness="0"/>
+						</VisualTransition.GeneratedEasingFunction>
+						<Storyboard>
+							<DoubleAnimation Duration="0:0:8" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
+								<DoubleAnimation.EasingFunction>
+									<ElasticEase EasingMode="EaseInOut" Springiness="0"/>
+								</DoubleAnimation.EasingFunction>
+							</DoubleAnimation>
+							<DoubleAnimation Duration="0:0:8" To="-1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
+								<DoubleAnimation.EasingFunction>
+									<ElasticEase EasingMode="EaseInOut" Springiness="0"/>
+								</DoubleAnimation.EasingFunction>
+							</DoubleAnimation>
+						</Storyboard>
+					</VisualTransition>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="None">
+					<Storyboard>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+						</DoubleAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Normal">
+					<Storyboard>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+						</DoubleAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="Indeterminate">
+					<Storyboard>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="NormalPresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0" />
+						</DoubleAnimationUsingKeyFrames>
+						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminePresenter">
+							<EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
+						</DoubleAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<VisualStateManager.CustomVisualStateManager>
+			<ei:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+		<Grid x:Name="NormalPresenter" Height="30" Opacity="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition x:Name="Progress0" Width="0*" />
+				<ColumnDefinition x:Name="Progress1" Width="1*" />
+			</Grid.ColumnDefinitions>
+			<Grid HorizontalAlignment="Right" Height="20" VerticalAlignment="Center" Width="40" Margin="0,0,-10,0">
+				<Ellipse Stroke="#00000000" StrokeThickness="0" Margin="0" HorizontalAlignment="Right" Width="20" Height="20">
+					<Ellipse.Fill>
+						<SolidColorBrush Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" />
+					</Ellipse.Fill>
+				</Ellipse>
+				<ed:RegularPolygon InnerRadius="1" Margin="0,-3.292,16.708,-3.292" PointCount="3" Stretch="Fill" Stroke="#00000000" StrokeThickness="0" RenderTransformOrigin="0.5,0.5" Width="19" Height="26.584" HorizontalAlignment="Right" VerticalAlignment="Center">
+					<ed:RegularPolygon.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform />
+							<SkewTransform />
+							<RotateTransform Angle="-90" />
+							<TranslateTransform />
+						</TransformGroup>
+					</ed:RegularPolygon.RenderTransform>
+					<ed:RegularPolygon.Fill>
+						<SolidColorBrush Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" />
+					</ed:RegularPolygon.Fill>
+				</ed:RegularPolygon>
+			</Grid>
+			<Rectangle x:Name="rectangle" Height="5">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+						<GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.15" />
+						<GradientStop Color="{Binding Background.Color, ElementName=userControl, FallbackValue=#0079FF5E}" Offset="0.3" />
+						<GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.45" />
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+		</Grid>
+		<Rectangle x:Name="IndeterminePresenter" Height="5" Margin="0" Opacity="0">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+					<GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.15" />
+					<GradientStop Color="{Binding Background.Color, ElementName=userControl, FallbackValue=#0079FF5E}" Offset="0.3" />
+					<GradientStop Color="{Binding Foreground.Color, ElementName=userControl, FallbackValue=#FF79FF5E}" Offset="0.45" />
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+	</Grid>
 </UserControl>
