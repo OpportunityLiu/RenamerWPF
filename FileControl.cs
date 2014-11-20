@@ -94,25 +94,25 @@ namespace RenamerWpf
         private readonly string tempFullName;
 
         /// <summary>
-        /// 用于删除文件名两边的空格以进行格式化的正则表达式。
+        /// 用于测试是否符合文件名要求的正则表达式。
         /// </summary>
-        private static readonly Regex fileNameFormatter = FileData.InitializeFileNameFormatter();
+        private static readonly Regex fileNameTest = FileData.InitializeFileNameTest();
 
-        private static Regex InitializeFileNameFormatter()
+        private static Regex InitializeFileNameTest()
         {
-            var regexStr = "^([^";
+            var regexStr = "^[^";
             foreach(var item in Path.GetInvalidFileNameChars())
             {
                 regexStr += @"\x" + ((byte)item).ToString("X2", CultureInfo.CurrentCulture);
             }
-            regexStr += "]+)$";
+            regexStr += "]+$";
             return new Regex(regexStr, RegexOptions.Compiled);
         }
 
         /// <summary>
-        /// 用于测试是否符合文件名要求的正则表达式。
+        /// 用于删除文件名两边的空格以进行格式化的正则表达式。
         /// </summary>
-        private static readonly Regex fileNameTest = new Regex(@"^\s*(.+?)[\s\.]*$", RegexOptions.Compiled);
+        private static readonly Regex fileNameFormatter = new Regex(@"^\s*(.+?)[\s\.]*$", RegexOptions.Compiled);
 
         /// <summary>
         /// 对 <c>fileName</c> 进行判断并试图格式化。
