@@ -74,7 +74,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>RenamerWpf.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>RenamerWpf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -173,7 +173,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="RenamerWpf.pfx" />
+    <None Include="RenamerWpf.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
