@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="ActivityLog.xsl"?>
+<BuildInformation>
+  <BuildInformationNode Id="637399e2-1492-43da-9d0f-ea01bc3123c0" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="1" />
+    <InformationField Name="ActivityType" Value="DynamicActivity" />
+    <InformationField Name="DisplayName" Value="Overall Build Process" />
+    <InformationField Name="Duration" Value="00:01:32" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T09:39:47.3711494Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T09:41:20.1412004Z" />
+  </Fields>
+<Children><BuildInformationNode Id="1e08ad79-3a1e-4911-ba49-f4f33bd0ede7" ParentId="637399e2-1492-43da-9d0f-ea01bc3123c0" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="AdvancedBuildSettings" Value="{&quot;MSBuildArguments&quot;:&quot;&quot;,&quot;MSBuildPlatform&quot;:&quot;Auto&quot;,&quot;PreActionScriptPath&quot;:&quot;&quot;,&quot;PreActionScriptArguments&quot;:&quot;&quot;,&quot;PostActionScriptPath&quot;:&quot;&quot;,&quot;PostActionScriptArguments&quot;:&quot;&quot;,&quot;RunCodeAnalysis&quot;:&quot;AsConfigured&quot;}" />
+    <InformationField Name="ProjectsToBuild" Value="String[] Array" />
+    <InformationField Name="AdvancedTestSettings" Value="{&quot;AnalyzeTestImpact&quot;:true,&quot;DisableTests&quot;:false,&quot;PreActionScriptPath&quot;:&quot;&quot;,&quot;PreActionScriptArguments&quot;:&quot;&quot;,&quot;PostActionScriptPath&quot;:&quot;&quot;,&quot;PostActionScriptArguments&quot;:&quot;&quot;}" />
+    <InformationField Name="CreateWorkItem" Value="True" />
+    <InformationField Name="SymbolStorePath" />
+    <InformationField Name="ConfigurationsToBuild" />
+    <InformationField Name="AutomatedTests" Value="BuildParameter[] Array" />
+    <InformationField Name="OutputLocation" Value="SingleFolder" />
+    <InformationField Name="AgentSettings" Value="{&quot;MaxExecutionTime&quot;:&quot;00:00:00&quot;,&quot;MaxWaitTime&quot;:&quot;04:00:00&quot;,&quot;Name&quot;:&quot;*&quot;,&quot;Tags&quot;:[],&quot;TagComparison&quot;:&quot;MatchExactly&quot;}" />
+    <InformationField Name="CreateLabel" Value="True" />
+    <InformationField Name="UpdateAssociatedWorkItems" Value="True" />
+    <InformationField Name="CleanBuild" Value="True" />
+    <InformationField Name="GetVersion" />
+    <InformationField Name="CleanWorkspace" Value="True" />
+    <InformationField Name="BuildNumberFormat" Value="$(BuildDefinitionName)_$(Date:yyyyMMdd)$(Rev:.r)" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="4222a217-99f8-4ba8-a3b3-dfd6e5003624" ParentId="637399e2-1492-43da-9d0f-ea01bc3123c0" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="2" />
+    <InformationField Name="ActivityType" Value="Sequence" />
+    <InformationField Name="DisplayName" Value="Overall build process" />
+    <InformationField Name="Duration" Value="00:01:32" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T09:39:48.0651842Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T09:41:20.1412004Z" />
+  </Fields>
+<Children><BuildInformationNode Id="c0f62d93-c36e-415b-9467-a404bda24872" ParentId="4222a217-99f8-4ba8-a3b3-dfd6e5003624" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="3" />
+    <InformationField Name="ActivityType" Value="SetBuildNumber" />
+    <InformationField Name="DisplayName" Value="Update build number" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T09:39:48.0711849Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T09:39:48.5312089Z" />
+  </Fields>
+<Children><BuildInformationNode Id="30351d44-3ca8-4044-a494-1abc584b854b" ParentId="c0f62d93-c36e-415b-9467-a404bda24872" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="BuildNumberFormat" Value="$(BuildDefinitionName)_$(Date:yyyyMMdd)$(Rev:.r)" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="a45be703-4d8e-4cf1-8dc3-fc8da1356abd" ParentId="c0f62d93-c36e-415b-9467-a404bda24872" Type="ActivityOutput">
+  <Fields>
+    <InformationField Name="DropLocation" Value="$/RenamerWPF/Drops/RenamreWpf/RenamreWpf_20141120.1" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="33622bd6-b66a-446f-a842-a4ef98c9dbf8" ParentId="4222a217-99f8-4ba8-a3b3-dfd6e5003624" Type="AgentScopeActivityTracking">
+  <Fields>
+    <InformationField Name="ReservationStatus" Value="AgentReleased" />
+    <InformationField Name="ReservedAgentUri" Value="vstfs:///Build/Agent/6180" />
+    <InformationField Name="ReservedAgentName" Value="Hosted Build Agent" />
+    <InformationField Name="ActivityInstanceId" Value="13" />
+    <InformationField Name="ActivityType" Value="AgentScope" />
+    <InformationField Name="DisplayName" Value="Run on agent" />
+    <InformationField Name="Duration" Value="00:01:31" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T09:39:48.6722158Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T09:41:20.1412004Z" />
+    <InformationField Name="PossibleAgents" Value="vstfs:///Build/Agent/6180=Hosted Build Agent" />
+  </Fields>
+<Children><BuildInformationNode Id="2932a099-0a2c-462d-9f9c-60d297a9978d" ParentId="33622bd6-b66a-446f-a842-a4ef98c9dbf8" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="MaxWaitTime" Value="04:00:00" />
+    <InformationField Name="MaxExecutionTime" Value="00:00:00" />
+    <InformationField Name="ReservationSpec" Value="Name=*, Tags=" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="19edc402-fff1-46aa-a4f0-982380426830" ParentId="33622bd6-b66a-446f-a842-a4ef98c9dbf8" Type="ActivityOutput">
+  <Fields>
+    <InformationField Name="Result" Value="Hosted Build Agent (vstfs:///Build/Agent/6180)" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode></Children></BuildInformationNode></Children></BuildInformationNode>
+</BuildInformation>
