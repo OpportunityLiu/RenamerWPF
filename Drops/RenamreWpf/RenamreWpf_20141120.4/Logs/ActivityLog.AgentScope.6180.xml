@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="ActivityLog.xsl"?>
+<BuildInformation>
+  <BuildInformationNode Id="7eb7ca59-fb6b-4a72-bf8e-feee772edf7c" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="3" />
+    <InformationField Name="ActivityType" Value="InitializeEnvironment" />
+    <InformationField Name="DisplayName" Value="Initialize environment" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:14.7209561Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:08:14.7429481Z" />
+  </Fields>
+<Children><BuildInformationNode Id="1c9868b3-e3d8-418e-aec4-5b6ea85dc48c" ParentId="7eb7ca59-fb6b-4a72-bf8e-feee772edf7c" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="EnvironmentVariables" />
+    <InformationField Name="SourceFolder" Value="src" />
+    <InformationField Name="BinariesFolder" Value="bin" />
+    <InformationField Name="TestResultsFolder" Value="tst" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode>
+  <BuildInformationNode Id="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="4" />
+    <InformationField Name="ActivityType" Value="TfGetSources" />
+    <InformationField Name="DisplayName" Value="Get sources from Team Foundation Version Control" />
+    <InformationField Name="Duration" Value="00:00:04" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:14.7979509Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:08:19.5309002Z" />
+  </Fields>
+<Children><BuildInformationNode Id="fa876063-ecdf-44e2-95d2-436978822890" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="The workspace 1_6180_main1 does not exist." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:15.4899497Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="643fb37b-27b5-47d9-a2b3-5ae1f80e7703" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF;C2" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2779499Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="e09af0eb-e24b-47a1-8601-6b042837d1bb" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole;C17" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2829514Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="5c337936-56d1-4a12-a501-7cba3b619929" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\App.config;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2829514Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="35274548-725a-4664-ac19-34a1ce9cbcf1" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\App.xaml;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2969510Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="ed80a7b2-e225-473a-ab55-ba8190cb4b80" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\App.xaml.cs;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2979508Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="b458ecc9-8e9d-4cc4-b7b0-5e33136226b4" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\BlurProgressBar.xaml;C42" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.2999594Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="c2c7af5b-8467-4971-b698-3a36fac33ae3" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\BlurProgressBar.xaml.cs;C41" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3009503Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="3a1b5ef3-9b22-4a3d-b20d-5da39d2b1fca" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\FileControl.cs;C42" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3019499Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="885c019d-27ff-4f79-a3a0-d75a0cb06efc" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\MainWindow.xaml;C40" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3029499Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="eb0a39cf-f735-4d8b-9b03-f255d0e779d9" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\MainWindow.xaml.cs;C41" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3039504Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="6050eb5c-b8fa-4b90-a854-2172968c0ee8" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3049504Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="d801c4e2-943f-494c-8e93-3a0fbcfb01ad" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamerWpf.csproj;C54" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.3059504Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="8e6a54d8-74ac-49b0-8c58-3b4f67a94587" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamerWPF.csproj.user;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.5509491Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="705cb2b7-048c-42b3-9792-d9e308d6cf98" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamerWpf.csproj.vspscc;C7" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6689499Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="9cc02c90-6718-45e4-ba1b-72630fb28397" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamerWpf.snk;C54" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6719503Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="5ab9027d-c1b9-46e9-829f-09d85fb80589" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.sln;C31" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6729498Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="aa6a6cec-e256-4c6e-9e10-e39fdb3c8e46" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.vssscc;C7" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6739500Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="021ee7e3-da41-46b7-ae35-eb9b6ab67eee" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Resources;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6779515Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="1cbb43e9-7f6d-49fc-9b1d-7c0d5259fc25" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\AssemblyInfo.cs;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6789494Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="2d95a674-1c22-4946-a572-7ca43575401a" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Resources.Designer.cs;C36" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6799500Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="3831370f-84d9-4e03-b1ce-823d7c020c89" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Resources.en.resx;C30" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6829500Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="6289436c-bf3c-4d57-9969-bff0c3d2a6d0" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Resources.resx;C36" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.6839500Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="f3bf3a83-cb86-4a96-9828-25a9f144fe78" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Resources.zh-Hant.resx;C30" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7359496Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="1ebb2ebc-2df1-4db6-8949-f73af51e0030" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Settings.Designer.cs;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7569499Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="1c7cc862-4a2b-4939-9560-ff5d478c6f4b" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Properties\Settings.settings;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7659503Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="998229b0-45c8-4e99-9f22-7efc6bb6456e" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Resources\DefaultFileIcon.png;C6" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7839505Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="8d8652a5-ee7f-4125-8b90-790ed2f19a22" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Resources\loading.gif;C36" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7879505Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="c44583f3-a6b1-49bb-88a2-114ea7893953" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\Resources\RenamerWpf.ico;C30" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.7914436Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="4bba70c4-0448-4091-8dbc-5a2cf60103bc" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\Visual Micro;C21" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8339512Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="1b8f9d70-c65d-4307-9cdd-a9cb72cc58f3" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.ino;C21" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8349503Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="bae1508f-9c35-4fec-87dd-7140b447cf44" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.sln;C26" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8369504Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="0aee4470-9244-4e5d-9411-ab96828a2919" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.vcxproj;C25" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8389497Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="b61909ec-ad7f-4eff-a365-9e8fcf7e6207" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.vcxproj.filters;C25" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8429492Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="a75a28f4-51a5-49a5-be9a-71bfc6195fa1" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.vcxproj.vspscc;C22" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8459506Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="8f64b48e-006e-4579-8819-62440cb6ba1c" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\WormHole.vssscc;C22" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8519505Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="05ae6d56-f531-4db2-9b75-8e11874a4399" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Low" />
+    <InformationField Name="Message" Value="Getting C:\a\src\Documents\Arduino\WormHole\Visual Micro\.WormHole.vsarduino.h;C21" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:17.8929502Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="e07560e7-81ca-4d12-acd6-37b46a24bf29" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="GetStatus">
+  <Fields>
+    <InformationField Name="NumFailures" Value="0" />
+    <InformationField Name="NumOperations" Value="36" />
+    <InformationField Name="NumFiles" Value="31" />
+    <InformationField Name="NumBytes" Value="555088" />
+    <InformationField Name="NumConflicts" Value="0" />
+    <InformationField Name="NumResolvedConflicts" Value="0" />
+    <InformationField Name="NumUpdated" Value="36" />
+    <InformationField Name="NumWarnings" Value="0" />
+    <InformationField Name="NoActionNeeded" Value="False" />
+    <InformationField Name="HaveResolvableWarnings" Value="False" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="0833ca4f-13b0-4e4b-91ab-87c426b80be0" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="31 file(s) were downloaded with a total size of 0.53 MB." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:18.2109504Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="4575e64c-ada0-4a83-9ae1-2ce95438a2cc" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="Label RenamreWpf_20141120.4@$/RenamerWPF (version W1_6180_main1;LOCAL AUTHORITY\Elastic Build (liuzhengyuan13)) was successfully created." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:19.0069016Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="10e7762b-a7d2-4c13-ab60-a84f82ea6d15" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="Setting the source get version of the build to C54." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:19.5309002Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="45ae3d2d-986a-4910-937e-53d0f72b5ec2" ParentId="20c5be71-0682-4851-ae76-5ca5cf33200c" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="WorkingFolder" />
+    <InformationField Name="LabelName" />
+    <InformationField Name="NoCIOption" Value="True" />
+    <InformationField Name="BinariesFolder" />
+    <InformationField Name="Enabled" Value="True" />
+    <InformationField Name="CreateLabel" Value="True" />
+    <InformationField Name="TestResultsFolder" />
+    <InformationField Name="VersionOverride" />
+    <InformationField Name="CleanWorkspace" Value="True" />
+    <InformationField Name="WorkspaceName" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode>
+  <BuildInformationNode Id="19098f67-de09-4001-96a2-e8de85c1f18b" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="306" />
+    <InformationField Name="ActivityType" Value="AssociateChanges" />
+    <InformationField Name="DisplayName" Value="Associate the changesets that occurred since the last good build" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:19.5329012Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:08:19.7099006Z" />
+  </Fields>
+<Children><BuildInformationNode Id="f41628a5-2c08-41cf-855e-bbf7a6306081" ParentId="19098f67-de09-4001-96a2-e8de85c1f18b" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="Warning: Cannot find the last label '': no changesets will be associated with the build." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:19.6839000Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="f49feecb-014a-4411-abde-a3b54e207eb5" ParentId="19098f67-de09-4001-96a2-e8de85c1f18b" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="No changesets are submitted to build 'RenamreWpf_20141120.4'." />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:19.7038990Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="fdc4e9b0-eb6a-4c12-bdcc-4ef87605452d" ParentId="19098f67-de09-4001-96a2-e8de85c1f18b" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="UpdateWorkItems" Value="True" />
+    <InformationField Name="PreviousBuild" />
+    <InformationField Name="Enabled" Value="True" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode>
+  <BuildInformationNode Id="c818572d-253f-4253-afc4-8c1e0307feb4" Type="OpenedWorkItem">
+  <Fields>
+    <InformationField Name="AssignedTo" Value="刘正元" />
+    <InformationField Name="Status" Value="New" />
+    <InformationField Name="Title" Value="Build Failure in Build: RenamreWpf_20141120.4" />
+    <InformationField Name="WorkItemId" Value="6" />
+    <InformationField Name="WorkItemUri" Value="vstfs:///WorkItemTracking/WorkItem/6" />
+  </Fields>
+<Children /></BuildInformationNode>
+  <BuildInformationNode Id="a2e465ad-0cd0-4be8-bc59-64dc70c6ef98" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="346" />
+    <InformationField Name="ActivityType" Value="TryCatch" />
+    <InformationField Name="DisplayName" Value="Try" />
+    <InformationField Name="Duration" Value="00:00:55" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:19.7099006Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8347234Z" />
+  </Fields>
+<Children><BuildInformationNode Id="5733f019-a08d-423b-a99a-ac524875d6e1" ParentId="a2e465ad-0cd0-4be8-bc59-64dc70c6ef98" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="515" />
+    <InformationField Name="ActivityType" Value="Sequence" />
+    <InformationField Name="DisplayName" Value="Perform Final Actions On Agent" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:14.2925159Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8167237Z" />
+  </Fields>
+<Children><BuildInformationNode Id="0da7fe6c-8aa1-4239-b0f6-e0bb90fcec53" ParentId="5733f019-a08d-423b-a99a-ac524875d6e1" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="516" />
+    <InformationField Name="ActivityType" Value="DropBinaries" />
+    <InformationField Name="DisplayName" Value="Copy binaries to drop" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:14.2925159Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.6655167Z" />
+  </Fields>
+<Children><BuildInformationNode Id="947e41e5-0804-4eff-a753-a9250a78304d" ParentId="0da7fe6c-8aa1-4239-b0f6-e0bb90fcec53" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="Enabled" Value="True" />
+    <InformationField Name="DestinationPath" />
+    <InformationField Name="SourcePath" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="f991eaff-2a09-4e25-a2fe-d0b115c3eed2" ParentId="5733f019-a08d-423b-a99a-ac524875d6e1" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="525" />
+    <InformationField Name="ActivityType" Value="ResetEnvironment" />
+    <InformationField Name="DisplayName" Value="Reset the Environment" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:14.6665170Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8167237Z" />
+  </Fields>
+<Children><BuildInformationNode Id="83e74be2-ab9d-4305-99a2-c662c69b40e5" ParentId="f991eaff-2a09-4e25-a2fe-d0b115c3eed2" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="Skipped execution of GetLocalWorkspacesFromEnvironment,ForEach&lt;Workspace&gt; because of BuildReason Manual" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:09:14.8157239Z" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="02827b16-7a23-466d-b2c9-3d39be86a60c" ParentId="a2e465ad-0cd0-4be8-bc59-64dc70c6ef98" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="347" />
+    <InformationField Name="ActivityType" Value="Sequence" />
+    <InformationField Name="DisplayName" Value="Compile, Test and Publish" />
+    <InformationField Name="Duration" Value="00:00:55" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:19.7108998Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8347234Z" />
+  </Fields>
+<Children><BuildInformationNode Id="14e8357b-4e71-453b-b707-54fca05ee2c2" ParentId="02827b16-7a23-466d-b2c9-3d39be86a60c" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="348" />
+    <InformationField Name="ActivityType" Value="RunScript" />
+    <InformationField Name="DisplayName" Value="Run optional script before MSBuild" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:19.7399004Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:08:19.7479000Z" />
+  </Fields>
+<Children><BuildInformationNode Id="18d4af6c-7a49-48ad-b4db-d9b829d01e29" ParentId="14e8357b-4e71-453b-b707-54fca05ee2c2" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="EnvironmentVariables" />
+    <InformationField Name="Enabled" Value="True" />
+    <InformationField Name="Arguments" />
+    <InformationField Name="FilePath" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="526b1c75-08a2-4850-8c1c-a16cc6d8d603" ParentId="14e8357b-4e71-453b-b707-54fca05ee2c2" Type="ActivityOutput">
+  <Fields>
+    <InformationField Name="Result" Value="0" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" ParentId="02827b16-7a23-466d-b2c9-3d39be86a60c" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="354" />
+    <InformationField Name="ActivityType" Value="RunMSBuild" />
+    <InformationField Name="DisplayName" Value="Run MSBuild" />
+    <InformationField Name="Duration" Value="00:00:55" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:08:19.7539001Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8347234Z" />
+  </Fields>
+<Children><BuildInformationNode Id="ed57b09d-d70c-40a7-b840-3ce10dae84c3" ParentId="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="C:\lightrail\Services\Mms\BuildProvisioner\Tools\nuget.exe restore &quot;C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.sln&quot; -NonInteractive " />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:19.8199004Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="fa2425a0-e8b7-453f-8d5d-d76d34bec039" ParentId="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="C:\Program Files (x86)\MSBuild\12.0\bin\amd64\MSBuild.exe /nologo /noconsolelogger &quot;C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.sln&quot; /nr:False /fl /flp:&quot;logfile=C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.log;encoding=Unicode;verbosity=normal&quot; /p:SkipInvalidConfigurations=true  /m /p:OutDir=&quot;C:\a\bin\\&quot; /p:VCBuildOverride=&quot;C:\a\src\OneDrive\Documents\Computer\Programming\C#Projects\RenamerWPF\RenamreWpf.sln.vsprops&quot;  /dl:WorkflowCentralLogger,&quot;C:\lightrail\Services\Mms\BuildProvisioner\Tools\Microsoft.TeamFoundation.Build.Server.Logger.dll&quot;;&quot;Verbosity=Normal;BuildUri=vstfs:///Build/Build/4;IgnoreDuplicateProjects=False;InformationNodeId=12;TargetsNotLogged=GetNativeManifest,GetCopyToOutputDirectoryItems,GetTargetPath;TFSUrl=https://liuzhengyuan13.visualstudio.com/DefaultCollection;&quot;*WorkflowForwardingLogger,&quot;C:\lightrail\Services\Mms\BuildProvisioner\Tools\Microsoft.TeamFoundation.Build.Server.Logger.dll&quot;;&quot;Verbosity=Normal;&quot; /p:BuildId=&quot;b7f23d9e-5469-44fc-852d-bcb2b2b98a25,vstfs:///Build/Build/4&quot; /p:BuildLabel=&quot;RenamreWpf_20141120.4&quot; /p:BuildTimestamp=&quot;Thu, 20 Nov 2014 10:07:56 GMT&quot; /p:BuildSourceVersion=&quot;LRenamreWpf_20141120.4@$/RenamerWPF&quot; /p:BuildDefinition=&quot;RenamreWpf&quot;" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:08:41.1318419Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="cb7e4064-973c-4ced-9425-865291e16378" ParentId="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" Type="BuildMessage">
+  <Fields>
+    <InformationField Name="Importance" Value="Normal" />
+    <InformationField Name="Message" Value="Building the projects in this solution one at a time. To enable parallel build, please add the &quot;/m&quot; switch.&#xD;&#xA;" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:09:10.5455171Z" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="e159e1f9-5813-452e-bbd2-6f01b5301a39" ParentId="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="ProjectsToBuild" Value="String[] Array" />
+    <InformationField Name="MSBuildMultiProc" Value="True" />
+    <InformationField Name="Verbosity" Value="Normal" />
+    <InformationField Name="ToolPlatform" Value="Auto" />
+    <InformationField Name="Targets" />
+    <InformationField Name="RunCodeAnalysis" Value="AsConfigured" />
+    <InformationField Name="CommandLineArguments" Value="/p:SkipInvalidConfigurations=true " />
+    <InformationField Name="ConfigurationsToBuild" />
+    <InformationField Name="OutputLocation" Value="SingleFolder" />
+    <InformationField Name="Enabled" Value="True" />
+    <InformationField Name="ToolVersion" />
+    <InformationField Name="CleanBuild" Value="True" />
+    <InformationField Name="OutDir" />
+    <InformationField Name="RestoreNuGetPackages" Value="True" />
+  </Fields>
+<Children /></BuildInformationNode><BuildInformationNode Id="d0f16f9e-3e64-4c74-bbbf-01c3655cb3bb" ParentId="ea4e717d-490d-4c52-b5ce-0e24b1d7d3a1" Type="BuildError">
+  <Fields>
+    <InformationField Name="ErrorType" />
+    <InformationField Name="Message" Value="&#xD;&#xA;Exception Message: MSBuild error 1 has ended this build. You can find more specific information about the cause of this error in above messages. (type BuildProcessTerminateException)&#xD;&#xA;Exception Stack Trace:    at System.Activities.Statements.Throw.Execute(CodeActivityContext context)&#xD;&#xA;   at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance, ActivityExecutor executor, BookmarkManager bookmarkManager)&#xD;&#xA;   at System.Activities.Runtime.ActivityExecutor.ExecuteActivityWorkItem.ExecuteBody(ActivityExecutor executor, BookmarkManager bookmarkManager, Location resultLocation)&#xD;&#xA;" />
+    <InformationField Name="Timestamp" Value="2014-11-20T10:09:14.0935158Z" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="6f33e0f6-7427-4ee7-bfe5-46fe2f00e77d" ParentId="a2e465ad-0cd0-4be8-bc59-64dc70c6ef98" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="469" />
+    <InformationField Name="ActivityType" Value="Sequence" />
+    <InformationField Name="DisplayName" Value="Handle Exception" />
+    <InformationField Name="Duration" Value="00:00:04" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:10.6825164Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8363306Z" />
+  </Fields>
+<Children><BuildInformationNode Id="9e7d0f42-fd64-41ec-aac0-157cfba4880d" ParentId="6f33e0f6-7427-4ee7-bfe5-46fe2f00e77d" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="470" />
+    <InformationField Name="ActivityType" Value="CreateBuildFailureBug" />
+    <InformationField Name="DisplayName" Value="Create a bug for the build failure" />
+    <InformationField Name="Duration" Value="00:00:03" />
+    <InformationField Name="State" Value="Closed" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:10.6845153Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.0925151Z" />
+  </Fields>
+<Children><BuildInformationNode Id="51588309-c656-484c-8475-d46bd7e2c9df" ParentId="9e7d0f42-fd64-41ec-aac0-157cfba4880d" Type="ActivityInput">
+  <Fields>
+    <InformationField Name="Enabled" Value="True" />
+    <InformationField Name="WorkItemTypeName" />
+    <InformationField Name="FieldValues" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode><BuildInformationNode Id="a91e0e11-87a5-4167-a8b6-f62cb0ec0fca" ParentId="6f33e0f6-7427-4ee7-bfe5-46fe2f00e77d" Type="ActivityTracking">
+  <Fields>
+    <InformationField Name="ActivityInstanceId" Value="514" />
+    <InformationField Name="ActivityType" Value="Rethrow" />
+    <InformationField Name="DisplayName" Value="Rethrow the exception so the build will stop" />
+    <InformationField Name="Duration" Value="00:00:00" />
+    <InformationField Name="State" Value="Canceled" />
+    <InformationField Name="StartTime" Value="2014-11-20T10:09:14.0935158Z" />
+    <InformationField Name="FinishTime" Value="2014-11-20T10:09:14.8363306Z" />
+  </Fields>
+<Children /></BuildInformationNode></Children></BuildInformationNode></Children></BuildInformationNode>
+</BuildInformation>
