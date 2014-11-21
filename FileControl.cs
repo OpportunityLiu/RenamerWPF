@@ -605,7 +605,7 @@ namespace RenamerWpf
             try
             {
                 var data = new FileData(item, pattern, replacement);
-                if(!this.Contains(data))
+                if(!this.Contains(data) && dispatcher != null)
                     dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
             }
             //放弃读取。
@@ -628,7 +628,7 @@ namespace RenamerWpf
         {
             Action<FileData> fileHandler = data =>
             {
-                if(!this.Contains(data))
+                if(!this.Contains(data) && dispatcher != null)
                     dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
             };
             Action<DirectoryInfo> directoryHandler = null;
