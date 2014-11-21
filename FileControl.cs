@@ -372,7 +372,7 @@ namespace RenamerWpf
                 /// <param name="sizeFileInfo">结构体大小。</param>
                 /// <param name="flags">枚举类型。</param>
                 /// <returns><c>0</c>，表示失败。</returns>
-                [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+                [DllImport("shell32.dll",CharSet= CharSet.Unicode, BestFitMapping = false)]
                 private static extern IntPtr SHGetFileInfo(string path, uint attributes, ref FileInfo fileInfo, uint sizeFileInfo, uint flags);
 
                 /// <summary>
@@ -388,8 +388,8 @@ namespace RenamerWpf
                 public static FileInfo GetFileInfo(string path, Flags flags, uint attributes = 0)
                 {
                     var fileInfo = new FileInfo();
-                    var iconIntPtr = (int)SHGetFileInfo(path, attributes, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)flags);
-                    if(iconIntPtr == 0)
+                    var iconIntPtr = SHGetFileInfo(path, attributes, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)flags);
+                    if(iconIntPtr.Equals(IntPtr.Zero))
                         throw new NotImplementedException("SHGetFileInfo 返回了错误的值。");
                     return fileInfo;
                 }
@@ -492,14 +492,14 @@ namespace RenamerWpf
                 {
                     try
                     {
-                        var fileInfo = NativeMethods.GetFileInfo(path, (NativeMethods.Flags.Icon | NativeMethods.Flags.LargeIcon));
+                        var fileInfo = NativeMethods.GetFileInfo(path, (NativeMethods.Flags.Icon | NativeMethods.Flags.OpenIcon));
                         var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
                         NativeMethods.DestroyIcon(fileInfo.IconPtr);
                         return (ImageSource)img;
                     }
-                    catch(COMException)
+                    catch(NotImplementedException)
                     {
-                        return new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative));
+                        return (ImageSource)new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative)).GetAsFrozen();
                     }
                 }
             }

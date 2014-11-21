@@ -170,11 +170,14 @@ namespace RenamerWpf
         {
             if(isInOperation())
                 return;
-            if(checkboxSelectAll.IsChecked == true)
+            if(listView.SelectedItems.Count == files.Count)
                 files.Clear();
             else
-                while(listView.SelectedItem != null)
-                    files.Remove((FileData)listView.SelectedItem);
+            {
+                object sel;
+                while((sel = listView.SelectedItem) != null)
+                    files.Remove((FileData)sel);
+            }
         }
 
         private Task regexRefresh = Task.Run(() =>
