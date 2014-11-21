@@ -10,7 +10,6 @@ using System.Reflection;
 
 namespace RenamerWpf
 {
-
     /// <summary>
     /// 主窗口。
     /// </summary>
@@ -222,6 +221,11 @@ namespace RenamerWpf
             }, regexRefreshTokenSource.Token);
         }
 
+        /// <summary>
+        /// 检测当前是否正在执行操作，并发出提示。
+        /// </summary>
+        /// <param name="showWarning">是否发出提示。</param>
+        /// <returns>当前是否正在执行操作。</returns>
         private bool isInOperation(bool showWarning = true)
         {
             if(TaskbarItemInfo.ProgressState != System.Windows.Shell.TaskbarItemProgressState.None)
