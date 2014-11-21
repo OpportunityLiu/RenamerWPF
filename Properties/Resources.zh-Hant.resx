@@ -173,6 +173,9 @@
   <data name="HintSelectedFileCount" xml:space="preserve">
     <value>所選檔案數量</value>
   </data>
+  <data name="HintWait" xml:space="preserve">
+    <value>請等待當前操作完成。</value>
+  </data>
   <data name="LableFind" xml:space="preserve">
     <value>查找...</value>
   </data>

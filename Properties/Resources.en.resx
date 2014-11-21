@@ -172,6 +172,9 @@ Error message:
   <data name="HintSelectedFileCount" xml:space="preserve">
     <value>Selected item count</value>
   </data>
+  <data name="HintWait" xml:space="preserve">
+    <value>Please wait for the current operation to complete.</value>
+  </data>
   <data name="LableFind" xml:space="preserve">
     <value>Find what...</value>
   </data>

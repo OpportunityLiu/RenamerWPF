@@ -12,10 +12,13 @@ namespace RenamerWpf
 {
 
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// 主窗口。
     /// </summary>
-    public sealed partial class MainWindow : Window,IDisposable
+    public sealed partial class MainWindow : Window, IDisposable
     {
+        /// <summary>
+        /// 生成 <c>MainWindow</c> 类的新实例。
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -88,7 +91,7 @@ namespace RenamerWpf
 
         #endregion
 
-        void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if(listView.SelectedItems.Count != listView.Items.Count)
                 checkboxSelectAll.IsChecked = false;
@@ -96,6 +99,11 @@ namespace RenamerWpf
 
         private void buttonRename_Click(object sender, RoutedEventArgs e)
         {
+            if(TaskbarItemInfo.ProgressState != System.Windows.Shell.TaskbarItemProgressState.None)
+            {
+                MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, "Renamer", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
             TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
             blurProgressBar.ProgressState = BlurProgressState.Normal;
             TaskbarItemInfo.ProgressValue = 0;
@@ -104,10 +112,7 @@ namespace RenamerWpf
             var progressAdd = (1 - TaskbarItemInfo.ProgressValue) / 2 / files.Count;
             Task.Run(delegate
             {
-                var addProgress=new Action(delegate
-                { 
-                    TaskbarItemInfo.ProgressValue += progressAdd;
-                });
+                var addProgress = new Action(() => TaskbarItemInfo.ProgressValue += progressAdd);
                 foreach(var item in files)
                 {
                     try
@@ -205,6 +210,9 @@ namespace RenamerWpf
 
         #region IDisposable 成员
 
+        /// <summary>
+        /// 执行与释放或重置非托管资源相关的应用程序定义的任务。
+        /// </summary>
         public void Dispose()
         {
             regexRefreshTokenSource.Dispose();
@@ -234,7 +242,7 @@ namespace RenamerWpf
             {
                 var returns = (Array)parameter;
                 if(returns.Length != 3)
-                    throw new ArgumentException("必须使用长度为 3 的一维数组。","parameter");
+                    throw new ArgumentException("必须使用长度为 3 的一维数组。", "parameter");
                 var val = (Int32)value;
                 if(val > 0)
                     return returns.GetValue(0);
@@ -249,29 +257,9 @@ namespace RenamerWpf
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }   
-    
-    /// <summary>
-    /// 提供将 <c>ProgressState</c> 转换为 <c>Visibility</c> 的转换器。
-    /// </summary>
-    public class ProgressStateToBooleanConverter : IValueConverter
-    {
-        #region IValueConverter 成员
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if(((System.Windows.Shell.TaskbarItemProgressState)value)== System.Windows.Shell.TaskbarItemProgressState.None)
-                return Visibility.Collapsed;
-            else
-                return Visibility.Visible;
-        }
-
+        /// <summary>
+        /// 转换值，未实现此功能。
+        /// </summary>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
