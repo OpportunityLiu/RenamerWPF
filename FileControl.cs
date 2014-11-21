@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -13,7 +11,6 @@ using System.Windows.Media.Imaging;
 using RenamerWpf.Properties;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using System.Linq;
 using System.Globalization;
 
 namespace RenamerWpf
@@ -139,20 +136,11 @@ namespace RenamerWpf
 
         private int hashCode;
 
-        public static bool operator ==(FileData left, FileData right)
-        {
-            if((object)left == null && (object)right == null)
-                return true;
-            if((object)left == null || (object)right == null)
-                return false;
-            return left.hashCode == right.hashCode;
-        }
-
-        public static bool operator !=(FileData left, FileData right)
-        {
-            return !(left == right);
-        }
-
+        /// <summary>
+        /// 提供基于哈希值的相等比较。
+        /// </summary>
+        /// <param name="obj">要比较的 <c>object</c>。</param>
+        /// <returns>如果 <paramref name="obj"/> 为 <c>FileData</c> 类型且哈希值相等，返回 <c>true</c>，否则返回 <c>false</c>。</returns>
         public override bool Equals(object obj)
         {
             try
@@ -165,6 +153,10 @@ namespace RenamerWpf
             }
         }
 
+        /// <summary>
+        /// 获取相应 <c>FileData</c> 的哈希值。
+        /// </summary>
+        /// <returns><c>FileData</c> 实例的哈希值。</returns>
         public override int GetHashCode()
         {
             return this.hashCode;
@@ -412,8 +404,8 @@ namespace RenamerWpf
         /// <summary>
         /// 在属性更改时产生相应的事件。
         /// </summary>
-        /// <param name="propertyName">更改的属性名，无特殊情况应保持参数默认值。</param>
-        private void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
+        /// <param name="propertyName">更改的属性名，参数默认值表示当前更改的属性。</param>
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if(PropertyChanged != null)
             {
@@ -449,6 +441,9 @@ namespace RenamerWpf
         Error
     }
 
+    /// <summary>
+    /// 表示 <c>FlieDate</c> 的无重复项集合。
+    /// </summary>
     public class FileSet : ObservableCollection<FileData>
     {
 
@@ -457,17 +452,26 @@ namespace RenamerWpf
         /// </summary>
         /// <param name="item">
         /// 要添加到 <c>FileSet</c> 的末尾处的对象。
-        /// 对于引用类型，该值可以为 <c>null</c>。</param>
+        /// 对于引用类型，该值可以为 <c>null</c>。
+        /// </param>
+        /// <param name="dispatcher">用于更新数据的队列。</param>
         private void addAndCheck(FileData item, Dispatcher dispatcher)
         {
             foreach(var i in this)
             {
-                if(i == item)
+                if(i.Equals(item))
                     return;
             }
             dispatcher.BeginInvoke(new Action(() => base.Add(item))).Wait();
         }
 
+        /// <summary>
+        /// 添加单个文件到当前 <c>FileSet</c>。
+        /// </summary>
+        /// <param name="item">要添加的文件。</param>
+        /// <param name="dispatcher">用于更新数据的队列。</param>
+        /// <param name="pattern">要匹配的正则表达式模式。</param>
+        /// <param name="replacement">替换字符串。</param>
         public void Add(FileInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             try
@@ -484,6 +488,13 @@ namespace RenamerWpf
             }
         }
 
+        /// <summary>
+        /// 添加目录内的文件到当前 <c>FileSet</c>。
+        /// </summary>
+        /// <param name="item">要添加的目录。</param>
+        /// <param name="dispatcher">用于更新数据的队列。</param>
+        /// <param name="pattern">要匹配的正则表达式模式。</param>
+        /// <param name="replacement">替换字符串。</param>
         public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
             Action<FileData> fileHandler = d => this.addAndCheck(d, dispatcher);
@@ -509,9 +520,20 @@ namespace RenamerWpf
         }
     }
 
+    /// <summary>
+    /// 表示扩展方法静态类。
+    /// </summary>
     public static class ExtendMethods
     {
         #region FileSystemInfo
+        /// <summary>
+        /// 测试 <paramref name="testParent"/> 是否为 <paramref name="item"/> 的父目录。 
+        /// </summary>
+        /// <param name="item">待测试的子目录。</param>
+        /// <param name="testParent">待测试的父目录。</param>
+        /// <returns>
+        /// 若 <paramref name="testParent"/> 为 <paramref name="item"/> 的父目录，则返回 <c>true</c>，否则返回 <c>false</c>。
+        /// </returns>
         public static bool IsChildOf(this FileSystemInfo item, FileSystemInfo testParent)
         {
             if(item == null)
@@ -521,6 +543,14 @@ namespace RenamerWpf
             return item.IsChildOf(testParent.FullName);
         }
 
+        /// <summary>
+        /// 测试 <paramref name="testParent"/> 是否为 <paramref name="item"/> 的父目录。 
+        /// </summary>
+        /// <param name="item">待测试的子目录。</param>
+        /// <param name="testParent">待测试的父目录。</param>
+        /// <returns>
+        /// 若 <paramref name="testParent"/> 为 <paramref name="item"/> 的父目录，则返回 <c>true</c>，否则返回 <c>false</c>。
+        /// </returns>
         public static bool IsChildOf(this FileSystemInfo item, string testParent)
         {
             if(item == null)

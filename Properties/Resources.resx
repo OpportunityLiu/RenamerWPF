@@ -330,4 +330,7 @@
   <data name="ViewOldFileName" xml:space="preserve">
     <value>原文件名</value>
   </data>
+  <data name="HintWait" xml:space="preserve">
+    <value>请等待当前操作完成。</value>
+  </data>
 </root>

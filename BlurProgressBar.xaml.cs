@@ -17,16 +17,22 @@ using RenamerWpf;
 namespace RenamerWpf
 {
     /// <summary>
-    /// BlurProgressBar.xaml 的交互逻辑
+    /// 表示用于贴附在控件边缘的进度条。
     /// </summary>
     public partial class BlurProgressBar : UserControl
     {
+        /// <summary>
+        /// 生成 <c>BlurProgressBar</c> 类的新实例。
+        /// </summary>
         public BlurProgressBar()
         {
             InitializeComponent();
             VisualStateManager.GoToState(this,this.ProgressState.ToString(), true);
         }
 
+        /// <summary>
+        /// 标识 <c>BlurProgressBar.ProgressState</c> 依赖项属性。
+        /// </summary>
         public static readonly DependencyProperty ProgressStateProperty = DependencyProperty.Register("ProgressState", typeof(BlurProgressState), typeof(BlurProgressBar),new FrameworkPropertyMetadata(BlurProgressState.Normal, FrameworkPropertyMetadataOptions.AffectsRender,OnProgressStateChanged));
 
         private static void OnProgressStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -36,8 +42,14 @@ namespace RenamerWpf
             VisualStateManager.GoToState(pb, e.NewValue.ToString(), true);
         }
 
+        /// <summary>
+        /// 标识 <c>BlurProgressBar.ProgressStateChanged</c> 路由事件。
+        /// </summary>
         public static readonly RoutedEvent ProgressStateChangedEvent = EventManager.RegisterRoutedEvent("ProgressStateChanged", RoutingStrategy.Direct, typeof(EventHandler<ProgressStateChangedEventArgs>), typeof(BlurProgressBar));
 
+        /// <summary>
+        /// 当 <c>BlurProgressBar.ProgressState</c> 更改时发生。
+        /// </summary>
         public event EventHandler<ProgressStateChangedEventArgs> ProgressStateChanged
         {
             add
@@ -51,6 +63,9 @@ namespace RenamerWpf
             
         }
 
+        /// <summary>
+        /// 表示当前 <c>BlurProgressBar</c> 的状态。
+        /// </summary>
         public BlurProgressState ProgressState
         {
             get
@@ -63,6 +78,9 @@ namespace RenamerWpf
             }
         }
 
+        /// <summary>
+        /// 标识 <c>BlurProgressBar.ProgressValue</c> 依赖项属性。
+        /// </summary>
         public static readonly DependencyProperty ProgressValueProperty = DependencyProperty.Register("ProgressValue", typeof(double), typeof(BlurProgressBar), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender, OnProgressValueChanged));
 
         private static void OnProgressValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -77,6 +95,9 @@ namespace RenamerWpf
             pb.Progress1.Width = new GridLength(1.0-(double)d.GetValue(ProgressValueProperty), GridUnitType.Star);
         }
 
+        /// <summary>
+        /// 表示当前的进度值，<c>0~1</c>。
+        /// </summary>
         public double ProgressValue
         {
             get
@@ -109,8 +130,16 @@ namespace RenamerWpf
         Normal
     }
 
+    /// <summary>
+    /// 包含 <c>ProgressStateChanged</c> 事件关联的状态信息和事件数据。
+    /// </summary>
     public class ProgressStateChangedEventArgs : RoutedEventArgs
     {
+        /// <summary>
+        /// 初始化 <c>ProgressStateChangedEventArgs</c> 类的新实例。
+        /// </summary>
+        /// <param name="oldValue">更改前的属性值。</param>
+        /// <param name="newValue">更改后的属性值。</param>
         public ProgressStateChangedEventArgs(BlurProgressState oldValue, BlurProgressState newValue)
         {
             base.RoutedEvent = BlurProgressBar.ProgressStateChangedEvent;
@@ -118,12 +147,18 @@ namespace RenamerWpf
             this.NewValue = newValue;
         }
 
+        /// <summary>
+        /// 更改前的属性值。
+        /// </summary>
         public BlurProgressState OldValue
         {
             get;
             private set;
         }
-
+        
+        /// <summary>
+        /// 更改后的属性值。
+        /// </summary>
         public BlurProgressState NewValue
         {
             get;

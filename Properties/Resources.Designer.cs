@@ -223,6 +223,15 @@ namespace RenamerWpf.Properties {
         }
         
         /// <summary>
+        ///   查找类似 请等待当前操作完成。 的本地化字符串。
+        /// </summary>
+        public static string HintWait {
+            get {
+                return ResourceManager.GetString("HintWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 查找... 的本地化字符串。
         /// </summary>
         public static string LableFind {
