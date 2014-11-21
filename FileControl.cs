@@ -22,7 +22,6 @@ namespace RenamerWpf
     /// </summary>
     public class FileData : INotifyPropertyChanged
     {
-
         /// <summary>
         /// 通过文件的绝对路径建立文件信息类。
         /// </summary>
@@ -594,25 +593,6 @@ namespace RenamerWpf
     /// </summary>
     public class FileSet : ObservableCollection<FileData>
     {
-
-        /// <summary>
-        /// 将不重复的对象添加到 <c>RenamerWpf.FileSet</c> 的结尾处。
-        /// </summary>
-        /// <param name="item">
-        /// 要添加到 <c>RenamerWpf.FileSet</c> 的末尾处的对象。
-        /// 对于引用类型，该值可以为 <c>null</c>。
-        /// </param>
-        /// <param name="dispatcher">用于更新数据的队列。</param>
-        private void addAndCheck(FileData item, Dispatcher dispatcher)
-        {
-            foreach(var i in this)
-            {
-                if(i.Equals(item))
-                    return;
-            }
-            dispatcher.BeginInvoke(new Action(() => base.Add(item))).Wait();
-        }
-
         /// <summary>
         /// 添加单个文件到当前 <c>RenamerWpf.FileSet</c>。
         /// </summary>
@@ -625,7 +605,8 @@ namespace RenamerWpf
             try
             {
                 var data = new FileData(item, pattern, replacement);
-                this.addAndCheck(data, dispatcher);
+                if(!this.Contains(data))
+                    dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
             }
             //放弃读取。
             catch(UnauthorizedAccessException)
@@ -645,15 +626,19 @@ namespace RenamerWpf
         /// <param name="replacement">替换字符串。</param>
         public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
-            Action<FileData> fileHandler = d => this.addAndCheck(d, dispatcher);
+            Action<FileData> fileHandler = data =>
+            {
+                if(!this.Contains(data))
+                    dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
+            };
             Action<DirectoryInfo> directoryHandler = null;
-            directoryHandler = d =>
+            directoryHandler = data =>
                 {
                     try
                     {
-                        foreach(var file in d.GetFiles())
+                        foreach(var file in data.GetFiles())
                             fileHandler(new FileData(file, pattern, replacement));
-                        foreach(var directory in d.GetDirectories())
+                        foreach(var directory in data.GetDirectories())
                             directoryHandler(directory);
                     }
                     //放弃读取。
@@ -837,5 +822,4 @@ namespace RenamerWpf
             info.AddValue("reason", this.reason);
         }
     }
-
 }
