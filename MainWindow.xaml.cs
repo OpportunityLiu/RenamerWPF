@@ -21,7 +21,7 @@ namespace RenamerWpf
         public MainWindow()
         {
             InitializeComponent();
-            Title = App.ResourceAssembly.GetName().Name;
+            Title = ((AssemblyTitleAttribute)App.ResourceAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title;
             listView.ItemsSource = files;
             listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("FullName", System.ComponentModel.ListSortDirection.Ascending));
             files.CollectionChanged += files_CollectionChanged;
@@ -224,6 +224,8 @@ namespace RenamerWpf
             }, regexRefreshTokenSource.Token);
         }
 
+        private System.Windows.Threading.DispatcherOperation showMessageBox;
+
         /// <summary>
         /// 检测当前是否正在执行操作，并发出提示。
         /// </summary>
@@ -233,8 +235,8 @@ namespace RenamerWpf
         {
             if(TaskbarItemInfo.ProgressState != System.Windows.Shell.TaskbarItemProgressState.None)
             {
-                if(showWarning)
-                    MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, App.ResourceAssembly.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                if(showWarning && (showMessageBox == null || showMessageBox.Status == System.Windows.Threading.DispatcherOperationStatus.Completed))
+                    showMessageBox = Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, ((AssemblyTitleAttribute)App.ResourceAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title, MessageBoxButton.OK, MessageBoxImage.Exclamation)));
                 return true;
             }
             else

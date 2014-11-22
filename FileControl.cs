@@ -372,7 +372,7 @@ namespace RenamerWpf
                 /// <param name="sizeFileInfo">结构体大小。</param>
                 /// <param name="flags">枚举类型。</param>
                 /// <returns><c>0</c>，表示失败。</returns>
-                [DllImport("shell32.dll",CharSet= CharSet.Unicode, BestFitMapping = false)]
+                [DllImport("shell32.dll", CharSet = CharSet.Ansi, BestFitMapping = false)]
                 private static extern IntPtr SHGetFileInfo(string path, uint attributes, ref FileInfo fileInfo, uint sizeFileInfo, uint flags);
 
                 /// <summary>
@@ -626,18 +626,14 @@ namespace RenamerWpf
         /// <param name="replacement">替换字符串。</param>
         public void Add(DirectoryInfo item, Dispatcher dispatcher, string pattern, string replacement)
         {
-            Action<FileData> fileHandler = data =>
-            {
-                if(!this.Contains(data) && dispatcher != null)
-                    dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
-            };
+            Action<FileInfo> fileHandler = data => this.Add(data, dispatcher, pattern, replacement);
             Action<DirectoryInfo> directoryHandler = null;
             directoryHandler = data =>
                 {
                     try
                     {
                         foreach(var file in data.GetFiles())
-                            fileHandler(new FileData(file, pattern, replacement));
+                            fileHandler(file);
                         foreach(var directory in data.GetDirectories())
                             directoryHandler(directory);
                     }

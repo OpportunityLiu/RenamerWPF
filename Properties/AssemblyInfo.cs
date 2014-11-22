@@ -9,11 +9,11 @@ using System;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Renamer")]
-[assembly: AssemblyDescription("Renamer 2.0")]
+[assembly: AssemblyDescription("Renamer WPF Version")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Opportunity")]
 [assembly: AssemblyProduct("Renamer")]
-[assembly: AssemblyCopyright("Copyright Opportunity©  2014")]
+[assembly: AssemblyCopyright("Opportunity 2014")]
 [assembly: AssemblyTrademark("Opportunity")]
 [assembly: AssemblyCulture("")]
 
@@ -52,8 +52,8 @@ using System;
 // 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: 
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0")]
+[assembly: AssemblyFileVersion("2.0.1.0")]
 
 [assembly: CLSCompliant(true)]
 [assembly: NeutralResourcesLanguage("zh-Hans")]
