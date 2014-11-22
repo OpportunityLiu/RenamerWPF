@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shell;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Reflection;
+using System.Windows.Threading;
+using RenamerWpf.Properties;
 
 namespace RenamerWpf
 {
@@ -42,16 +45,23 @@ namespace RenamerWpf
             var toText = textboxTo.Text;
             Task.Run(() =>
             {
-                foreach(var item in e.Data.GetData(DataFormats.FileDrop) as string[])
+                try
                 {
-                    if(File.Exists(item))
+                    foreach(var item in e.Data.GetData(DataFormats.FileDrop) as string[])
                     {
-                        files.Add(new FileInfo(item), Dispatcher, findText, toText);
+                        if(File.Exists(item))
+                        {
+                            files.Add(new FileInfo(item), Dispatcher, findText, toText);
+                        }
+                        else if(Directory.Exists(item))
+                        {
+                            files.Add(new DirectoryInfo(item), Dispatcher, findText, toText);
+                        }
                     }
-                    else if(Directory.Exists(item))
-                    {
-                        files.Add(new DirectoryInfo(item), Dispatcher, findText, toText);
-                    }
+                }
+                catch(System.Runtime.InteropServices.COMException)
+                {
+                    //路径过长
                 }
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -67,18 +77,18 @@ namespace RenamerWpf
         /// <param name="state">要设置的状态。</param>
         private void setProgressState(BlurProgressState state)
         {
-            TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+            TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
             blurProgressBar.ProgressState = state;
             switch(state)
             {
                 case BlurProgressState.None:
-                    TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;
                     break;
                 case BlurProgressState.Indeterminate:
-                    TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
                 case BlurProgressState.Normal:
-                    TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
+                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                     break;
                 default:
                     break;
@@ -224,7 +234,7 @@ namespace RenamerWpf
             }, regexRefreshTokenSource.Token);
         }
 
-        private System.Windows.Threading.DispatcherOperation showMessageBox;
+        private DispatcherOperation showMessageBox;
 
         /// <summary>
         /// 检测当前是否正在执行操作，并发出提示。
@@ -235,8 +245,8 @@ namespace RenamerWpf
         {
             if(TaskbarItemInfo.ProgressState != System.Windows.Shell.TaskbarItemProgressState.None)
             {
-                if(showWarning && (showMessageBox == null || showMessageBox.Status == System.Windows.Threading.DispatcherOperationStatus.Completed))
-                    showMessageBox = Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, ((AssemblyTitleAttribute)App.ResourceAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title, MessageBoxButton.OK, MessageBoxImage.Exclamation)));
+                if(showWarning && (showMessageBox == null || showMessageBox.Status == DispatcherOperationStatus.Completed))
+                    showMessageBox = Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation)));
                 return true;
             }
             else
