@@ -434,13 +434,12 @@ namespace RenamerWpf
             /// </summary>
             private static object gettingFileIcon = new object();
 
-            private static ImageSource defaultImage = (ImageSource)new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative)).GetAsFrozen();
-
             /// <summary>
             /// 获取文件图标。
             /// </summary>
             /// <param name="path">文件全路径。</param>
             /// <returns>图标。</returns>
+            /// <exception cref="System.NotImplementedException">获取图标失败。</exception>
             public static ImageSource GetFileIcon(string path)
             {
                 lock(gettingFileIcon)
@@ -448,7 +447,7 @@ namespace RenamerWpf
                     var fileInfo = new NativeMethods.FileInfo();
                     var iconIntPtr = NativeMethods.GetFileInfo(path, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)(NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
                     if(iconIntPtr.Equals(IntPtr.Zero))
-                        return defaultImage;
+                        throw new NotImplementedException("获取图标失败。");
                     var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
                     NativeMethods.DestroyIcon(fileInfo.IconPtr);
                     return (ImageSource)img;

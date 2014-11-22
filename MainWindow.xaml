@@ -700,10 +700,18 @@
                                 <GridView AllowsColumnReorder="False">
                                     <GridViewColumn Width="200">
                                         <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:FileData}">
                                                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                                                    <Image Width="16" Height="16" Margin="22,0,2,0" Source="{Binding FileIcon}" />
-                                                    <TextBlock Text="{Binding OldName}" Foreground="Black" ToolTip="{Binding FullName}" />
+                                                    <Image Width="16" Height="16" Margin="22,0,2,0">
+                                                        <Image.Source>
+                                                            <Binding Path="FileIcon" Mode="OneTime">
+                                                                <Binding.FallbackValue>
+                                                                    <BitmapImage>Resources/DefaultFileIcon.png</BitmapImage>
+                                                                </Binding.FallbackValue>
+                                                            </Binding>
+                                                        </Image.Source>
+                                                    </Image>                                            
+                                                    <TextBlock Text="{Binding OldName, Mode=OneWay}" Foreground="Black" ToolTip="{Binding FullName, Mode=OneWay}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -714,49 +722,49 @@
                                     </GridViewColumn>
                                     <GridViewColumn Header="{x:Static res:Resources.ViewNewFileName}" Width="200">
                                         <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock x:Name="textblockNewName" Text="{Binding NewName}" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" Foreground="Black" />
+                                            <DataTemplate DataType="{x:Type local:FileData}">
+                                                <TextBlock x:Name="textblockNewName" Text="{Binding NewName, Mode=OneWay}" ToolTip="{Binding NewName, Mode=OneWay}" Foreground="Black" />
                                                 <DataTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding State}" Value="Loaded">
+                                                    <DataTrigger Binding="{Binding State, Mode=OneWay}" Value="Loaded">
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoNotAllowedName}" />
                                                     </DataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding State}" Value="Loaded" />
-                                                            <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexMatchNotFound}" />
+                                                            <Condition Binding="{Binding State, Mode=OneWay}" Value="Loaded" />
+                                                            <Condition Binding="{Binding NewName, Mode=OneWay}" Value="{x:Static res:Resources.ErrorRegexMatchNotFound}" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexMatchNotFound}" />
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding State}" Value="Loaded" />
-                                                            <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorEmptyFileName}" />
+                                                            <Condition Binding="{Binding State, Mode=OneWay}" Value="Loaded" />
+                                                            <Condition Binding="{Binding NewName, Mode=OneWay}" Value="{x:Static res:Resources.ErrorEmptyFileName}" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoEmptyFileName}" />
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding State}" Value="Loaded" />
-                                                            <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexPattern}" />
+                                                            <Condition Binding="{Binding State, Mode=OneWay}" Value="Loaded" />
+                                                            <Condition Binding="{Binding NewName, Mode=OneWay}" Value="{x:Static res:Resources.ErrorRegexPattern}" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexPattern}" />
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding State}" Value="Error" />
-                                                            <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRegexTimeOut}" />
+                                                            <Condition Binding="{Binding State, Mode=OneWay}" Value="Error" />
+                                                            <Condition Binding="{Binding NewName, Mode=OneWay}" Value="{x:Static res:Resources.ErrorRegexTimeOut}" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{x:Static res:Resources.ErrorInfoRegexTimeOut}" />
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding State}" Value="Error" />
-                                                            <Condition Binding="{Binding NewName}" Value="{x:Static res:Resources.ErrorRename}" />
+                                                            <Condition Binding="{Binding State, Mode=OneWay}" Value="Error" />
+                                                            <Condition Binding="{Binding NewName, Mode=OneWay}" Value="{x:Static res:Resources.ErrorRename}" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter TargetName="textblockNewName" Property="Foreground" Value="Gray" />
                                                         <Setter TargetName="textblockNewName" Property="ToolTip" Value="{Binding RenameErrorInfo}" />

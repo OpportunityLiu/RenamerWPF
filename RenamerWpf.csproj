@@ -214,10 +214,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\DefaultFileIcon.png" />
+    <Resource Include="Resources\RenamerWpf.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\RenamerWpf.ico" />
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DefaultFileIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
