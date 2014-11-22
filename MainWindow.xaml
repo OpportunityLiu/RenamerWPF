@@ -37,7 +37,6 @@
 
                 <SolidColorBrush x:Key="StateLoadedBackgroundBrushKey">#50ffffff</SolidColorBrush>
                 <SolidColorBrush x:Key="StatePreparedBackgroundBrushKey">#503AD8FE</SolidColorBrush>
-                <SolidColorBrush x:Key="StateRenamingBackgroundBrushKey">#50E6D650</SolidColorBrush>
                 <SolidColorBrush x:Key="StateRenamedBackgroundBrushKey">#507EFD74</SolidColorBrush>
                 <SolidColorBrush x:Key="StateErrorBackgroundBrushKey">#50FF2D2D</SolidColorBrush>
 
@@ -76,9 +75,6 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Prepared">
                                 <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StatePreparedBackgroundBrushKey}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding State}" Value="Renaming">
-                                <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateRenamingBackgroundBrushKey}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding State}" Value="Renamed">
                                 <Setter TargetName="ListViewItemBackground" Property="Fill" Value="{StaticResource StateRenamedBackgroundBrushKey}" />
@@ -706,15 +702,7 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                                                    <Image Width="16" Height="16" Margin="22,0,2,0">
-                                                        <Image.Source>
-                                                        <Binding Mode="OneWay" Path="FileIcon">
-                                                                <Binding.TargetNullValue>
-                                                                    <ImageSource>Resources/loading.gif</ImageSource>
-                                                                </Binding.TargetNullValue>
-                                                        </Binding>
-                                                        </Image.Source>
-                                                    </Image>
+                                                    <Image Width="16" Height="16" Margin="22,0,2,0" Source="{Binding FileIcon}" />
                                                     <TextBlock Text="{Binding OldName}" Foreground="Black" ToolTip="{Binding FullName}" />
                                                 </StackPanel>
                                             </DataTemplate>
