@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -47,51 +46,23 @@ namespace RenamerWpf
             if(this.directory.Length > 248)
                 throw new PathTooLongException("路径过长。");
             this.maxFileNameLength = 260 - this.directory.Length;
-            this.tempFullName = this.fullName+"." + System.IO.Path.GetRandomFileName();
             this.Replace(pattern, replacement);
             this.hashCode = this.fullName.GetHashCode();
         }
 
         /// <summary>
-        /// 将对应的文件重命名为 <c>RenamerWpf.FileData.tempFileName</c>。
+        /// 将对应的文件重命名为 <c>RenamerWpf.FileData.NewName</c>。
         /// </summary>
-        public void RenameToTempFileName()
+        /// <exception cref="InvalidOperationException">没有有效的 <c>RenamerWpf.FileData.NewName</c>。</exception>
+        public void Rename()
         {
             if(this.State != FileState.Prepared)
-                throw new InvalidOperationException("必须先获得有效的 NewName。");
+                throw new InvalidOperationException("没有有效的 RenamerWpf.FileData.NewName");
             try
             {
                 try
                 {
-                    File.Move(this.FullName, this.tempFullName);
-                    this.State = FileState.Renaming;
-                }
-                catch(Exception ex)
-                {
-                    throw new IOException("重命名时发生错误", ex);
-                }
-            }
-            catch(IOException ex)
-            {
-                this.State = FileState.Error;
-                this.NewName = Resources.ErrorRename;
-                this.RenameErrorInfo = Resources.ErrorInfoRename.Replace("{0}", ex.InnerException.Message);
-            }
-        }
-
-        /// <summary>
-        /// 将对应的文件重命名为 <c>RenamerWpf.FileData.NewName</c>，必须先调用 <c>RenamerWpf.FileData.RenameToTempFileName</c>。
-        /// </summary>
-        /// <exception cref="InvalidOperationException">没有预先调用 <c>RenamerWpf.FileData.RenameToTempFileName</c>。</exception>
-        public void RenameToNewFileName()
-        {
-            if(this.State != FileState.Renaming)
-                throw new InvalidOperationException("必须先调用 RenameToTempFileName。");
-            try
-            {
-                try
-                {
-                    File.Move(this.tempFullName, this.directory + this.NewName);
+                    File.Move(this.FullName, this.directory + this.NewName);
                     this.State = FileState.Renamed;
                 }
                 catch(Exception ex)
@@ -124,7 +95,7 @@ namespace RenamerWpf
         }
 
         /// <summary>
-        /// 用于删除文件名两边的空格以进行格式化的正则表达式。
+        /// 用于删除文件名两边的 ' ' 和 '.' 以进行格式化的正则表达式。
         /// </summary>
         private static readonly Regex fileNameFormatter = new Regex(@"^\s*(.*?)[\s\.]*$", RegexOptions.Compiled);
 
@@ -137,12 +108,12 @@ namespace RenamerWpf
         /// <paramref name="fileName"/> 为 <c>null</c>。
         /// </exception>
         /// <exception cref="InvalidNewNameException"><paramref name="fileName"/> 为空字符串或过长或含有非法的字符。</exception>
-        private static string transformToValidFileName(String fileName)
+        private string transformToValidFileName(String fileName)
         {
             if(fileName == null)
                 throw new ArgumentNullException("fileName");
             fileName = fileNameFormatter.Replace(fileName, "$1");
-            if(fileName.Length > 255)
+            if(fileName.Length > this.maxFileNameLength)
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.TooLong);
             if(string.IsNullOrEmpty(fileName))
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.Empty);
@@ -222,11 +193,6 @@ namespace RenamerWpf
         /// 不包含文件名的路径（包含末尾的分隔符）。
         /// </summary>
         private readonly string directory;
-
-        /// <summary>
-        /// 临时文件名，包含路径。
-        /// </summary>
-        private readonly string tempFullName;
 
         private readonly string fullName;
 
@@ -343,7 +309,7 @@ namespace RenamerWpf
                 /// <summary>
                 /// 表示文件信息的结构体。
                 /// </summary>
-                [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+                [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
                 public struct FileInfo
                 {
                     /// <summary>
@@ -379,27 +345,8 @@ namespace RenamerWpf
                 /// <param name="sizeFileInfo">结构体大小。</param>
                 /// <param name="flags">枚举类型。</param>
                 /// <returns><c>0</c>，表示失败。</returns>
-                [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-                private static extern IntPtr SHGetFileInfo(string path, uint attributes, ref FileInfo fileInfo, uint sizeFileInfo, uint flags);
-
-                /// <summary>
-                /// 返回文件的信息。
-                /// </summary>
-                /// <param name="path">文件路径，如果为<c>""</c>，返回文件夹的。</param>
-                /// <param name="flags">枚举类型，表示需要的数据。</param>
-                /// <param name="attributes">文件属性，没有设置相应的 <paramref name="flags"/> 时忽略此项。</param>
-                /// <returns>文件的信息。</returns>
-                /// <exception cref="System.NotImplementedException">
-                /// 调用 <c>shell32.dll</c> 的 <c>SHGetFileInfo</c> 时发生了错误。
-                /// </exception>
-                public static FileInfo GetFileInfo(string path, Flags flags, uint attributes = 0)
-                {
-                    var fileInfo = new FileInfo();
-                    var iconIntPtr = SHGetFileInfo(path, attributes, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)flags);
-                    if(iconIntPtr.Equals(IntPtr.Zero))
-                        throw new NotImplementedException("SHGetFileInfo 返回了错误的值。");
-                    return fileInfo;
-                }
+                [DllImport("shell32.dll", EntryPoint = "SHGetFileInfo", CharSet = CharSet.Unicode)]
+                public static extern IntPtr GetFileInfo(string path, uint attributes, ref FileInfo fileInfo, uint sizeFileInfo, uint flags);
 
                 /// <summary>
                 /// 清理图标并释放内存。
@@ -487,6 +434,8 @@ namespace RenamerWpf
             /// </summary>
             private static object gettingFileIcon = new object();
 
+            private static ImageSource defaultImage = (ImageSource)new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative)).GetAsFrozen();
+
             /// <summary>
             /// 获取文件图标。
             /// </summary>
@@ -496,17 +445,13 @@ namespace RenamerWpf
             {
                 lock(gettingFileIcon)
                 {
-                    try
-                    {
-                        var fileInfo = NativeMethods.GetFileInfo(path, (NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
-                        var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
-                        NativeMethods.DestroyIcon(fileInfo.IconPtr);
-                        return (ImageSource)img;
-                    }
-                    catch(NotImplementedException)
-                    {
-                        return (ImageSource)new BitmapImage(new Uri(@"Resources/DefaultFileIcon.png", UriKind.Relative)).GetAsFrozen();
-                    }
+                    var fileInfo = new NativeMethods.FileInfo();
+                    var iconIntPtr = NativeMethods.GetFileInfo(path, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)(NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
+                    if(iconIntPtr.Equals(IntPtr.Zero))
+                        return defaultImage;
+                    var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
+                    NativeMethods.DestroyIcon(fileInfo.IconPtr);
+                    return (ImageSource)img;
                 }
             }
         }
@@ -580,10 +525,6 @@ namespace RenamerWpf
         /// 已经准备好新文件名。
         /// </summary>
         Prepared,
-        /// <summary>
-        /// 正在重命名。
-        /// </summary>
-        Renaming,
         /// <summary>
         /// 已经重命名。
         /// </summary>

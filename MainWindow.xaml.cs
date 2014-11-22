@@ -145,26 +145,14 @@ namespace RenamerWpf
                 Action addProgress = null;
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    var progressAdd = (1 - TaskbarItemInfo.ProgressValue) / 2 / files.Count;
+                    var progressAdd = (1 - TaskbarItemInfo.ProgressValue) / files.Count;
                     addProgress = new Action(() => Dispatcher.BeginInvoke(new Action(() => TaskbarItemInfo.ProgressValue += progressAdd)));
                 })).Wait();
                 foreach(var item in files)
                 {
                     try
                     {
-                        item.RenameToTempFileName();
-                    }
-                    catch(InvalidOperationException)
-                    {
-                        //跳过错误状态的 item
-                    }
-                    addProgress();
-                }
-                foreach(var item in files)
-                {
-                    try
-                    {
-                        item.RenameToNewFileName();
+                        item.Rename();
                     }
                     catch(InvalidOperationException)
                     {
