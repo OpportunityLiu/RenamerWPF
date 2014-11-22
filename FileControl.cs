@@ -28,21 +28,28 @@ namespace RenamerWpf
         /// <param name="fileInfo">文件的信息</param>
         /// <param name="pattern">要匹配的正则表达式模式。</param>
         /// <param name="replacement">替换字符串。</param>
+        /// <exception cref="System.ArgumentNullException">当参数为空时引发。</exception>
+        /// <exception cref="System.IO.PathTooLongException">读取 <paramref name="fileInfo"/> 信息时发生。</exception>
         public FileData(FileInfo fileInfo, string pattern, string replacement)
         {
             if(fileInfo == null)
                 throw new ArgumentNullException("fileInfo");
-            this.fullName = fileInfo.FullName;
-            this.directory = fileInfo.DirectoryName + Path.DirectorySeparatorChar;
-            this.oldName = fileInfo.Name;
-            this.tempFullName = this.fullName + "." + System.IO.Path.GetRandomFileName();
+            try
+            {
+                this.fullName = fileInfo.FullName;
+                this.directory = fileInfo.DirectoryName + Path.DirectorySeparatorChar;
+                this.oldName = fileInfo.Name;
+            }
+            catch(PathTooLongException)
+            {
+                throw;
+            }
+            if(this.directory.Length > 248)
+                throw new PathTooLongException("路径过长。");
+            this.maxFileNameLength = 260 - this.directory.Length;
+            this.tempFullName = this.fullName+"." + System.IO.Path.GetRandomFileName();
             this.Replace(pattern, replacement);
             this.hashCode = this.fullName.GetHashCode();
-            Task.Run(() =>
-            {
-                this.fileIcon = fileIconGetter.GetFileIcon(this.fullName);
-                this.NotifyPropertyChanged("FileIcon");
-            });
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace RenamerWpf
                     throw new IOException("重命名时发生错误", ex);
                 }
             }
-            catch(AggregateException ex)
+            catch(IOException ex)
             {
                 this.State = FileState.Error;
                 this.NewName = Resources.ErrorRename;
@@ -92,7 +99,7 @@ namespace RenamerWpf
                     throw new IOException("重命名时发生错误", ex);
                 }
             }
-            catch(AggregateException ex)
+            catch(IOException ex)
             {
                 this.State = FileState.Error;
                 this.NewName = Resources.ErrorRename;
@@ -209,6 +216,8 @@ namespace RenamerWpf
 
         #region 属性与字段
 
+        private readonly int maxFileNameLength;
+
         /// <summary>
         /// 不包含文件名的路径（包含末尾的分隔符）。
         /// </summary>
@@ -308,8 +317,6 @@ namespace RenamerWpf
             }
         }
 
-        private ImageSource fileIcon;
-
         /// <summary>
         /// 文件的图标。
         /// </summary>
@@ -317,7 +324,7 @@ namespace RenamerWpf
         {
             get
             {
-                return this.fileIcon;
+                return fileIconGetter.GetFileIcon(this.fullName);
             }
         }
 
@@ -336,7 +343,7 @@ namespace RenamerWpf
                 /// <summary>
                 /// 表示文件信息的结构体。
                 /// </summary>
-                [StructLayout(LayoutKind.Sequential)]
+                [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
                 public struct FileInfo
                 {
                     /// <summary>
@@ -372,7 +379,7 @@ namespace RenamerWpf
                 /// <param name="sizeFileInfo">结构体大小。</param>
                 /// <param name="flags">枚举类型。</param>
                 /// <returns><c>0</c>，表示失败。</returns>
-                [DllImport("shell32.dll", CharSet = CharSet.Ansi, BestFitMapping = false)]
+                [DllImport("shell32.dll", CharSet = CharSet.Auto)]
                 private static extern IntPtr SHGetFileInfo(string path, uint attributes, ref FileInfo fileInfo, uint sizeFileInfo, uint flags);
 
                 /// <summary>
@@ -400,9 +407,8 @@ namespace RenamerWpf
                 /// <param name="iconPtr">图标句柄。</param>
                 /// <returns>
                 /// <c>true</c> 表示成功，<c>false</c> 表示失败。
-                /// 会设置 <c>GetLastError</c>。
                 /// </returns>
-                [DllImport("user32.dll")]
+                [DllImport("user32.dll", SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
                 public static extern bool DestroyIcon(IntPtr iconPtr);
 
@@ -492,7 +498,7 @@ namespace RenamerWpf
                 {
                     try
                     {
-                        var fileInfo = NativeMethods.GetFileInfo(path, (NativeMethods.Flags.Icon | NativeMethods.Flags.OpenIcon));
+                        var fileInfo = NativeMethods.GetFileInfo(path, (NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
                         var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
                         NativeMethods.DestroyIcon(fileInfo.IconPtr);
                         return (ImageSource)img;
@@ -608,12 +614,9 @@ namespace RenamerWpf
                 if(!this.Contains(data) && dispatcher != null)
                     dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
             }
-            //放弃读取。
-            catch(UnauthorizedAccessException)
-            {
-            }
             catch(PathTooLongException)
             {
+                //TODO: 给出提示
             }
         }
 
@@ -642,6 +645,12 @@ namespace RenamerWpf
                     {
                     }
                     catch(PathTooLongException)
+                    {
+                    }
+                    catch(System.Security.SecurityException)
+                    {
+                    }
+                    catch(DirectoryNotFoundException)
                     {
                     }
                 };
