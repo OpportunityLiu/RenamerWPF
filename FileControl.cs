@@ -425,7 +425,7 @@ namespace RenamerWpf
                 lock(gettingFileIcon)
                 {
                     var fileInfo = new NativeMethods.FileInfo();
-                    var iconIntPtr = NativeMethods.GetFileInfo(path, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), (uint)(NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
+                    var iconIntPtr = NativeMethods.GetFileInfo(path, 0, ref fileInfo, (uint)Marshal.SizeOf(typeof(NativeMethods.FileInfo)), (uint)(NativeMethods.Flags.Icon | NativeMethods.Flags.SmallIcon));
                     if(iconIntPtr.Equals(IntPtr.Zero))
                         throw new NotImplementedException("获取图标失败。");
                     var img = Imaging.CreateBitmapSourceFromHIcon(fileInfo.IconPtr, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()).GetAsFrozen();
