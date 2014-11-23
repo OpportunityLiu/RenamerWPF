@@ -99,8 +99,7 @@ namespace RenamerWpf.Properties {
         
         /// <summary>
         ///   查找类似 新文件名有误，
-        ///文件名不应包含特殊字符，
-        ///也不能长于 225 个字符。 的本地化字符串。
+        ///文件名包含特殊字符或长度过长。 的本地化字符串。
         /// </summary>
         public static string ErrorInfoNotAllowedName {
             get {

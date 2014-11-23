@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -78,26 +77,7 @@ namespace RenamerWpf
             }
         }
 
-        /// <summary>
-        /// 用于测试是否符合文件名要求的正则表达式。
-        /// </summary>
-        private static readonly Regex fileNameTest = FileData.InitializeFileNameTest();
-
-        private static Regex InitializeFileNameTest()
-        {
-            var regexStr = "^[^";
-            foreach(var item in Path.GetInvalidFileNameChars())
-            {
-                regexStr += @"\x" + ((byte)item).ToString("X2", CultureInfo.CurrentCulture);
-            }
-            regexStr += "]+$";
-            return new Regex(regexStr, RegexOptions.Compiled);
-        }
-
-        /// <summary>
-        /// 用于删除文件名两边的 ' ' 和 '.' 以进行格式化的正则表达式。
-        /// </summary>
-        private static readonly Regex fileNameFormatter = new Regex(@"^\s*(.*?)[\s\.]*$", RegexOptions.Compiled);
+        private static char[] InvalidFileNameChars = Path.GetInvalidFileNameChars();
 
         /// <summary>
         /// 对 <paramref name="fileName"/> 进行判断并试图格式化。
@@ -112,12 +92,12 @@ namespace RenamerWpf
         {
             if(fileName == null)
                 throw new ArgumentNullException("fileName");
-            fileName = fileNameFormatter.Replace(fileName, "$1");
+            fileName = fileName.TrimStart(' ').TrimEnd(' ', '.');
             if(fileName.Length > this.maxFileNameLength)
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.TooLong);
             if(string.IsNullOrEmpty(fileName))
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.Empty);
-            if(fileNameTest.IsMatch(fileName))
+            if(!fileName.Contains(InvalidFileNameChars))
                 return fileName;
             throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.InvalidChar);
         }
@@ -133,7 +113,7 @@ namespace RenamerWpf
         /// </exception>
         public void Replace(string pattern, string replacement)
         {
-            if(this.state != FileState.Loaded && this.state != FileState.Prepared)
+            if(this.State != FileState.Loaded && this.State != FileState.Prepared)
                 throw new InvalidOperationException("FileData.State 错误，必须为 FileData.FileState.Loaded 或 FileData.FileState.Prepared。");
             string tempName = "";
             try
@@ -165,7 +145,7 @@ namespace RenamerWpf
                         break;
                     case InvalidNewNameException.ExceptionReason.TooLong:
                     case InvalidNewNameException.ExceptionReason.InvalidChar:
-                        this.newName = ex.NewName;
+                        this.NewName = ex.NewName;
                         break;
                     default:
                         break;
@@ -638,6 +618,38 @@ namespace RenamerWpf
             return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar, StringComparison.Ordinal);
         }
         #endregion
+
+        #region string
+
+        /// <summary>
+        /// 返回一个值，该值指示指定的 <c>System.Char</c> 对象是否出现在此字符串中。
+        /// </summary>
+        /// <param name="item">从此字符串中搜寻。</param>
+        /// <param name="value">要搜寻的字符。</param>
+        /// <returns>
+        /// 如果 <paramref name="value"/> 集合中的任意一个字符出现在此字符串中，则为 true；否则为 false。
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// <paramref name="item"/> 为 <c>null</c>，或者 <paramref name="value"/> 为空。
+        /// </exception>
+        public static bool Contains(this string item,params char[] value)
+        {
+            if(item == null)
+                throw new ArgumentNullException("item");
+            if(value == null || value.Length == 0)
+                throw new ArgumentNullException("value");
+            foreach(var i in item)
+            {
+                foreach(var v in value)
+                {
+                    if(i == v)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        #endregion 
     }
 
     /// <summary>
