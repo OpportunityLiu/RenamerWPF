@@ -46,11 +46,6 @@
             </Style.Resources>
             <Setter Property="SnapsToDevicePixels" Value="true" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="CacheMode">
-                <Setter.Value>
-                    <BitmapCache SnapsToDevicePixels="True" />
-                </Setter.Value>
-            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate x:Name="ListBoxItem" TargetType="{x:Type ListBoxItem}">
