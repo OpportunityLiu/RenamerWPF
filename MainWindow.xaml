@@ -46,10 +46,15 @@
             </Style.Resources>
             <Setter Property="SnapsToDevicePixels" Value="true" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="CacheMode">
+                <Setter.Value>
+                    <BitmapCache SnapsToDevicePixels="True" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate x:Name="ListBoxItem" TargetType="{x:Type ListBoxItem}">
-                        <Grid HorizontalAlignment="Left">
+                        <Grid HorizontalAlignment="Left" SnapsToDevicePixels="True">
                             <Grid.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem x:Name="menuitemDelete" Header="{x:Static res:Resources.MenuDelete}" Click="menuitemDelete_Click" />
