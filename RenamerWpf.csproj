@@ -216,9 +216,7 @@
   <ItemGroup>
     <Resource Include="Resources\RenamerWpf.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\DefaultFileIcon.png" />
   </ItemGroup>

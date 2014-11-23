@@ -132,8 +132,7 @@
   </data>
   <data name="ErrorInfoNotAllowedName" xml:space="preserve">
     <value>新檔案名有誤，
-檔案名不應包含特殊字元，
-也不能長於 225 個字元。</value>
+檔案名包含特殊字元或長度過長。</value>
   </data>
   <data name="ErrorInfoRegexMatchNotFound" xml:space="preserve">
     <value>沒有找到可以匹配的項目，‎

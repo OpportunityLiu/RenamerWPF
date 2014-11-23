@@ -132,7 +132,7 @@ file name can't be empty.</value>
   </data>
   <data name="ErrorInfoNotAllowedName" xml:space="preserve">
     <value>Wrong new filename,
-file name should not contain special characters or more than 225 characters.</value>
+file name should not contain special characters or be too long.</value>
   </data>
   <data name="ErrorInfoRegexMatchNotFound" xml:space="preserve">
     <value>Matches are not found,
