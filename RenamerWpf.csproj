@@ -69,7 +69,7 @@
     <StartupObject>RenamerWpf.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>41E1237E74443F10182E9DAE10C88125DE71DB64</ManifestCertificateThumbprint>
@@ -78,7 +78,7 @@
     <ManifestKeyFile>RenamerWpf_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>RenamerWpf.snk</AssemblyOriginatorKeyFile>
