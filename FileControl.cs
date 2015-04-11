@@ -140,15 +140,15 @@ namespace RenamerWpf
             {
                 switch(ex.Reason)
                 {
-                    case InvalidNewNameException.ExceptionReason.Empty:
-                        this.NewName = Resources.ErrorEmptyFileName;
-                        break;
-                    case InvalidNewNameException.ExceptionReason.TooLong:
-                    case InvalidNewNameException.ExceptionReason.InvalidChar:
-                        this.NewName = ex.NewName;
-                        break;
-                    default:
-                        break;
+                case InvalidNewNameException.ExceptionReason.Empty:
+                    this.NewName = Resources.ErrorEmptyFileName;
+                    break;
+                case InvalidNewNameException.ExceptionReason.TooLong:
+                case InvalidNewNameException.ExceptionReason.InvalidChar:
+                    this.NewName = ex.NewName;
+                    break;
+                default:
+                    break;
                 }
                 this.State = FileState.Loaded;
                 return;
@@ -342,70 +342,71 @@ namespace RenamerWpf
                 /// <summary>
                 /// 用于 <c>GetFileInfo</c> 的标识。
                 /// </summary>
-                public enum Flags
+                [Flags]
+                public enum Flags : uint
                 {
                     /// <summary>
                     /// get icon
                     /// </summary>
-                    Icon = 0x000000100,
+                    Icon = 0x00000100u,
                     /// <summary>
                     /// get display name
                     /// </summary>
-                    DisplayName = 0x000000200,
+                    DisplayName = 0x00000200u,
                     /// <summary>
                     /// get type name
                     /// </summary>
-                    TypeName = 0x000000400,
+                    TypeName = 0x00000400u,
                     /// <summary>
                     /// get attributes
                     /// </summary>
-                    Attributes = 0x000000800,
+                    Attributes = 0x00000800u,
                     /// <summary>
                     /// get icon location
                     /// </summary>
-                    IconLocation = 0x000001000,
+                    IconLocation = 0x00001000u,
                     /// <summary>
                     /// return exe type
                     /// </summary>
-                    ExeType = 0x000002000,
+                    ExeType = 0x00002000u,
                     /// <summary>
                     /// get system icon index
                     /// </summary>
-                    SystemIconIndex = 0x000004000,
+                    SystemIconIndex = 0x00004000u,
                     /// <summary>
                     /// put a link overlay on icon
                     /// </summary>
-                    LinkOverlay = 0x000008000,
+                    LinkOverlay = 0x00008000u,
                     /// <summary>
                     /// show icon in selected state
                     /// </summary>
-                    Selected = 0x000010000,
+                    Selected = 0x00010000u,
                     /// <summary>
                     /// get only specified attributes
                     /// </summary>
-                    SpecifiedAttributes = 0x000020000,
+                    SpecifiedAttributes = 0x00020000u,
                     /// <summary>
                     /// get large icon
                     /// </summary>
-                    LargeIcon = 0x000000000,
+                    LargeIcon = 0x00000000u,
                     /// <summary>
                     /// get small icon
                     /// </summary>
-                    SmallIcon = 0x000000001,
+                    SmallIcon = 0x00000001u,
                     /// <summary>
                     /// get open icon
                     /// </summary>
-                    OpenIcon = 0x000000002,
+                    OpenIcon = 0x00000002u,
                     /// <summary>
                     /// get shell size icon
                     /// </summary>
-                    ShellSizeIcon = 0x000000004,
+                    ShellSizeIcon = 0x00000004u,
                     /// <summary>
                     /// Indicates that the function should not attempt to access the file specified by pszPath. 
                     /// Rather, it should act as if the file specified by pszPath exists with the file attributes passed in dwFileAttributes. 
                     /// This flag cannot be combined with the <c>Attributes</c> or <c>ExeType</c> flags. 
                     /// </summary>
-                    UseFileAttributes = 0x000000010
+                    UseFileAttributes = 0x00000010u
                 }
             }
 
@@ -632,7 +633,7 @@ namespace RenamerWpf
         /// <exception cref="System.ArgumentNullException">
         /// <paramref name="item"/> 为 <c>null</c>，或者 <paramref name="value"/> 为空。
         /// </exception>
-        public static bool Contains(this string item,params char[] value)
+        public static bool Contains(this string item, params char[] value)
         {
             if(item == null)
                 throw new ArgumentNullException("item");
@@ -649,7 +650,7 @@ namespace RenamerWpf
             return false;
         }
 
-        #endregion 
+        #endregion
     }
 
     /// <summary>
