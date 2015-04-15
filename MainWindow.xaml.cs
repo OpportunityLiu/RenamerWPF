@@ -35,7 +35,7 @@ namespace RenamerWpf
         /// </summary>
         private FileSet files = new FileSet();
 
-        private void listView_Drop(object sender, DragEventArgs e)
+        private async void listView_Drop(object sender, DragEventArgs e)
         {
             if(isInOperation())
                 return;
@@ -43,7 +43,7 @@ namespace RenamerWpf
             listView.Cursor = Cursors.Wait;
             var findText = textboxFind.Text;
             var toText = textboxTo.Text;
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 try
                 {
@@ -63,12 +63,9 @@ namespace RenamerWpf
                 {
                     //路径过长
                 }
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    setProgressState(BlurProgressState.None);
-                    listView.Cursor = null;
-                }));
             });
+            setProgressState(BlurProgressState.None);
+            listView.Cursor = null;
         }
 
         /// <summary>
@@ -131,14 +128,14 @@ namespace RenamerWpf
                 checkboxSelectAll.IsChecked = false;
         }
 
-        private void buttonRename_Click(object sender, RoutedEventArgs e)
+        private async void buttonRename_Click(object sender, RoutedEventArgs e)
         {
             if(files.Count == 0 || isInOperation())
                 return;
             regexHandle();
             setProgressState(BlurProgressState.Normal);
             TaskbarItemInfo.ProgressValue = 0;
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 while(!regexRefresh.Wait(100))
                     Dispatcher.BeginInvoke(new Action(() => TaskbarItemInfo.ProgressValue += (1 - TaskbarItemInfo.ProgressValue) / 50));
@@ -160,8 +157,8 @@ namespace RenamerWpf
                     }
                     addProgress();
                 }
-                Dispatcher.BeginInvoke(new Action(() => setProgressState(BlurProgressState.None)));
             });
+            setProgressState(BlurProgressState.None);
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
@@ -198,14 +195,14 @@ namespace RenamerWpf
             regexRefreshTokenSource.Dispose();
             //新的匹配操作
             regexRefreshTokenSource = new CancellationTokenSource();
-            regexRefresh = Task.Run(() =>
+            regexRefresh = Task.Run(async () =>
             {
-                string find = "", to = "";
-                Dispatcher.BeginInvoke(new Action(delegate
+                string find = null, to = null;
+                await Dispatcher.BeginInvoke(new Action(delegate
                 {
                     find = textboxFind.Text;
                     to = textboxTo.Text;
-                })).Wait();
+                }));
                 foreach(var item in files)
                 {
                     if(regexRefreshTokenSource.Token.IsCancellationRequested)
@@ -243,9 +240,8 @@ namespace RenamerWpf
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
-            if(isInOperation())
-                return;
-            files.Clear();
+            if(!isInOperation())
+                files.Clear();
         }
 
         private void DeleteListViewItem_CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

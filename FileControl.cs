@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -73,7 +74,7 @@ namespace RenamerWpf
             {
                 this.State = FileState.Error;
                 this.NewName = Resources.ErrorRename;
-                this.RenameErrorInfo = Resources.ErrorInfoRename.Replace("{0}", ex.InnerException.Message);
+                this.RenameErrorInfo = string.Format(CultureInfo.CurrentCulture, Resources.ErrorInfoRename, ex.InnerException.Message);
             }
         }
 
@@ -443,8 +444,6 @@ namespace RenamerWpf
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
-
         /// <summary>
         /// 在属性更改时产生相应的事件。
         /// </summary>
@@ -456,6 +455,8 @@ namespace RenamerWpf
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion
 
         private int hashCode;
 
@@ -470,14 +471,9 @@ namespace RenamerWpf
         /// </returns>
         public override bool Equals(object obj)
         {
-            try
-            {
+            if(obj is FileData)
                 return this.hashCode == ((FileData)obj).hashCode;
-            }
-            catch(InvalidCastException)
-            {
-                return false;
-            }
+            return false;
         }
 
         /// <summary>
