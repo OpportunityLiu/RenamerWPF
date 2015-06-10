@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using RenamerWpf.Properties;
+using System.Linq;
 
 namespace RenamerWpf
 {
@@ -98,7 +99,7 @@ namespace RenamerWpf
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.TooLong);
             if(string.IsNullOrEmpty(fileName))
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.Empty);
-            if(!fileName.Contains(InvalidFileNameChars))
+            if(fileName.IndexOfAny(InvalidFileNameChars) == -1)
                 return fileName;
             throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.InvalidChar);
         }
@@ -614,38 +615,6 @@ namespace RenamerWpf
                 throw new ArgumentNullException("testParent");
             return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar, StringComparison.Ordinal);
         }
-        #endregion
-
-        #region string
-
-        /// <summary>
-        /// 返回一个值，该值指示指定的 <c>System.Char</c> 对象是否出现在此字符串中。
-        /// </summary>
-        /// <param name="item">从此字符串中搜寻。</param>
-        /// <param name="value">要搜寻的字符。</param>
-        /// <returns>
-        /// 如果 <paramref name="value"/> 集合中的任意一个字符出现在此字符串中，则为 true；否则为 false。
-        /// </returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// <paramref name="item"/> 为 <c>null</c>，或者 <paramref name="value"/> 为空。
-        /// </exception>
-        public static bool Contains(this string item, params char[] value)
-        {
-            if(item == null)
-                throw new ArgumentNullException("item");
-            if(value == null || value.Length == 0)
-                throw new ArgumentNullException("value");
-            foreach(var i in item)
-            {
-                foreach(var v in value)
-                {
-                    if(i == v)
-                        return true;
-                }
-            }
-            return false;
-        }
-
         #endregion
     }
 
