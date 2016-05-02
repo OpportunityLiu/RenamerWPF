@@ -33,7 +33,7 @@ namespace RenamerWpf
         public FileData(FileInfo fileInfo, string pattern, string replacement)
         {
             if(fileInfo == null)
-                throw new ArgumentNullException("fileInfo");
+                throw new ArgumentNullException(nameof(fileInfo));
             try
             {
                 this.fullName = fileInfo.FullName;
@@ -79,7 +79,7 @@ namespace RenamerWpf
             }
         }
 
-        private static char[] InvalidFileNameChars = Path.GetInvalidFileNameChars();
+        private static readonly char[] InvalidFileNameChars = Path.GetInvalidFileNameChars();
 
         /// <summary>
         /// 对 <paramref name="fileName"/> 进行判断并试图格式化。
@@ -90,10 +90,10 @@ namespace RenamerWpf
         /// <paramref name="fileName"/> 为 <c>null</c>。
         /// </exception>
         /// <exception cref="InvalidNewNameException"><paramref name="fileName"/> 为空字符串或过长或含有非法的字符。</exception>
-        private string transformToValidFileName(String fileName)
+        private string transformToValidFileName(string fileName)
         {
             if(fileName == null)
-                throw new ArgumentNullException("fileName");
+                return "";
             fileName = fileName.TrimStart(' ').TrimEnd(' ', '.');
             if(fileName.Length > this.maxFileNameLength)
                 throw new InvalidNewNameException(fileName, InvalidNewNameException.ExceptionReason.TooLong);
@@ -117,7 +117,7 @@ namespace RenamerWpf
         {
             if(this.State != FileState.Loaded && this.State != FileState.Prepared)
                 throw new InvalidOperationException("FileData.State 错误，必须为 FileData.FileState.Loaded 或 FileData.FileState.Prepared。");
-            string tempName = "";
+            string tempName;
             try
             {
                 tempName = Regex.Replace(this.OldName, pattern, replacement, RegexOptions.None);
@@ -415,7 +415,7 @@ namespace RenamerWpf
             /// <summary>
             /// 正在进行操作。
             /// </summary>
-            private static object gettingFileIcon = new object();
+            private static readonly object gettingFileIcon = new object();
 
             /// <summary>
             /// 获取文件图标。
@@ -459,7 +459,7 @@ namespace RenamerWpf
 
         #endregion
 
-        private int hashCode;
+        private readonly int hashCode;
 
         #region object 成员
 
@@ -529,8 +529,8 @@ namespace RenamerWpf
             try
             {
                 var data = new FileData(item, pattern, replacement);
-                if(!this.Contains(data) && dispatcher != null)
-                    dispatcher.BeginInvoke(new Action(() => this.Add(data))).Wait();
+                if(!this.Contains(data))
+                    dispatcher?.BeginInvoke(new Action(() => this.Add(data))).Wait();
             }
             catch(PathTooLongException)
             {
@@ -593,9 +593,9 @@ namespace RenamerWpf
         public static bool IsChildOf(this FileSystemInfo item, FileSystemInfo testParent)
         {
             if(item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             if(testParent == null)
-                throw new ArgumentNullException("testParent");
+                throw new ArgumentNullException(nameof(testParent));
             return item.IsChildOf(testParent.FullName);
         }
 
@@ -610,9 +610,9 @@ namespace RenamerWpf
         public static bool IsChildOf(this FileSystemInfo item, string testParent)
         {
             if(item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
             if(testParent == null)
-                throw new ArgumentNullException("testParent");
+                throw new ArgumentNullException(nameof(testParent));
             return item.FullName.StartsWith(testParent + Path.DirectorySeparatorChar, StringComparison.Ordinal);
         }
         #endregion
@@ -625,90 +625,72 @@ namespace RenamerWpf
     public class InvalidNewNameException : Exception
     {
         /// <summary>
-        /// 初始化 <c>RenamerWpf.InvalidNewNameException</c> 的新实例。
+        /// 初始化 <see cref="InvalidNewNameException"/> 的新实例。
         /// </summary>
         public InvalidNewNameException()
-            : base()
         {
-            this.newName = "";
-            this.reason = new ExceptionReason();
+            this.NewName = "";
+            this.Reason = new ExceptionReason();
         }
 
         /// <summary>
-        /// 初始化 <c>RenamerWpf.InvalidNewNameException</c> 的新实例。
+        /// 初始化 <see cref="InvalidNewNameException"/> 的新实例。
         /// </summary>
         /// <param name="message">错误信息。</param>
         public InvalidNewNameException(string message)
             : base(message)
         {
-            this.newName = "";
-            this.reason = new ExceptionReason();
+            this.NewName = "";
+            this.Reason = new ExceptionReason();
         }
 
         /// <summary>
-        /// 初始化 <c>RenamerWpf.InvalidNewNameException</c> 的新实例。
+        /// 初始化 <see cref="InvalidNewNameException"/> 的新实例。
         /// </summary>
         /// <param name="message">错误信息。</param>
         /// <param name="inner">导致当前异常的异常。</param>
         public InvalidNewNameException(string message, Exception inner)
             : base(message, inner)
         {
-            this.newName = "";
-            this.reason = new ExceptionReason();
+            this.NewName = "";
+            this.Reason = new ExceptionReason();
         }
 
         /// <summary>
-        /// 初始化 <c>RenamerWpf.InvalidNewNameException</c> 的新实例。
+        /// 初始化 <see cref="InvalidNewNameException"/> 的新实例。
         /// </summary>
         /// <param name="newName">无效的新文件名。</param>
         /// <param name="reason">新文件名无效的原因。</param>
         public InvalidNewNameException(string newName, ExceptionReason reason)
-            : base()
         {
-            this.newName = newName;
-            this.reason = reason;
+            this.NewName = newName;
+            this.Reason = reason;
         }
 
         /// <summary>
-        /// 用序列化数据初始化 <c>RenamerWpf.InvalidNewNameException</c> 的新实例。
+        /// 用序列化数据初始化 <see cref="InvalidNewNameException"/> 的新实例。
         /// </summary>
-        /// <param name="info"><c>System.Runtime.Serialization.SerializationInfo</c>，它存有有关所引发的异常的序列化对象数据。</param>
-        /// <param name="context"><c>System.Runtime.Serialization.StreamingContext</c>，它包含有关源或目标的上下文信息。</param>
+        /// <param name="info"><see cref="SerializationInfo"/>，它存有有关所引发的异常的序列化对象数据。</param>
+        /// <param name="context"><see cref="StreamingContext"/>，它包含有关源或目标的上下文信息。</param>
         protected InvalidNewNameException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.newName = info.GetString("newName");
-            this.reason = (ExceptionReason)info.GetValue("reason", typeof(ExceptionReason));
+            this.NewName = info.GetString(nameof(this.NewName));
+            this.Reason = (ExceptionReason)info.GetValue(nameof(this.Reason), typeof(ExceptionReason));
         }
-
-        private readonly string newName;
 
         /// <summary>
         /// 无效的新文件名。
         /// </summary>
-        public string NewName
-        {
-            get
-            {
-                return this.newName;
-            }
-        }
-
-        private readonly ExceptionReason reason;
+        public string NewName { get; }
 
         /// <summary>
         /// 新文件名无效的原因。
         /// </summary>
-        public ExceptionReason Reason
-        {
-            get
-            {
-                return this.reason;
-            }
-        }
+        public ExceptionReason Reason { get; }
 
         /// <summary>
-        /// 表示产生 <c>RenamerWpf.InvalidNewNameException</c> 异常的原因。
+        /// 表示产生 <see cref="InvalidNewNameException"/> 异常的原因。
         /// </summary>
         public enum ExceptionReason
         {
@@ -729,20 +711,16 @@ namespace RenamerWpf
         /// <summary>
         /// 当在派生类中重写时，用关于异常的信息设置 <c>System.Runtime.Serialization.SerializationInfo。</c>
         /// </summary>
-        /// <param name="info">
-        /// <c>System.Runtime.Serialization.SerializationInfo</c>，它存有有关所引发的异常的序列化对象数据。
-        /// </param>
-        /// <param name="context">
-        /// <c>System.Runtime.Serialization.StreamingContext</c>，它包含有关源或目标的上下文信息。
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <param name="info"><see cref="SerializationInfo"/>，它存有有关所引发的异常的序列化对象数据。</param>
+        /// <param name="context"><see cref="StreamingContext"/>，它包含有关源或目标的上下文信息。</param>
+        /// <exception cref="ArgumentNullException">
         /// <paramref name="info"/> 参数是空引用（Visual Basic 中为 <c>Nothing</c>）。
         /// </exception>
-        protected virtual new void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("newName", this.newName);
-            info.AddValue("reason", this.reason);
+            info.AddValue(nameof(this.NewName), this.NewName);
+            info.AddValue(nameof(this.Reason), this.Reason);
         }
     }
 }
