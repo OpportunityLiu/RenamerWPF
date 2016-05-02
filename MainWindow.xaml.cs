@@ -9,25 +9,24 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using RenamerWpf.Properties;
 
 namespace RenamerWpf
 {
     /// <summary>
     /// 主窗口。
     /// </summary>
-    public sealed partial class MainWindow : Window, IDisposable
+    public sealed partial class MainWindow : IDisposable
     {
         /// <summary>
-        /// 生成 <c>RenamerWpf.MainWindow</c> 类的新实例。
+        /// 生成 <see cref="RenamerWpf.MainWindow"/> 类的新实例。
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
-            Title = ((AssemblyTitleAttribute)App.ResourceAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title;
-            listView.ItemsSource = files;
-            listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("FullName", System.ComponentModel.ListSortDirection.Ascending));
-            files.CollectionChanged += files_CollectionChanged;
+            this.InitializeComponent();
+            this.Title = ((AssemblyTitleAttribute)Application.ResourceAssembly.GetCustomAttribute(typeof(AssemblyTitleAttribute))).Title;
+            this.listView.ItemsSource = this.files;
+            this.listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("FullName", System.ComponentModel.ListSortDirection.Ascending));
+            this.files.CollectionChanged += this.files_CollectionChanged;
         }
 
         /// <summary>
@@ -37,12 +36,12 @@ namespace RenamerWpf
 
         private async void listView_Drop(object sender, DragEventArgs e)
         {
-            if(isInOperation())
+            if(this.isInOperation())
                 return;
-            setProgressState(BlurProgressState.Indeterminate);
-            listView.Cursor = Cursors.Wait;
-            var findText = textboxFind.Text;
-            var toText = textboxTo.Text;
+            this.setProgressState(BlurProgressState.Indeterminate);
+            this.listView.Cursor = Cursors.Wait;
+            var findText = this.textboxFind.Text;
+            var toText = this.textboxTo.Text;
             await Task.Run(() =>
             {
                 try
@@ -51,11 +50,11 @@ namespace RenamerWpf
                     {
                         if(File.Exists(item))
                         {
-                            files.Add(new FileInfo(item), Dispatcher, findText, toText);
+                            this.files.Add(new FileInfo(item), this.Dispatcher, findText, toText);
                         }
                         else if(Directory.Exists(item))
                         {
-                            files.Add(new DirectoryInfo(item), Dispatcher, findText, toText);
+                            this.files.Add(new DirectoryInfo(item), this.Dispatcher, findText, toText);
                         }
                     }
                 }
@@ -64,8 +63,8 @@ namespace RenamerWpf
                     //路径过长
                 }
             });
-            setProgressState(BlurProgressState.None);
-            listView.Cursor = null;
+            this.setProgressState(BlurProgressState.None);
+            this.listView.Cursor = null;
         }
 
         /// <summary>
@@ -74,21 +73,21 @@ namespace RenamerWpf
         /// <param name="state">要设置的状态。</param>
         private void setProgressState(BlurProgressState state)
         {
-            TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
-            blurProgressBar.ProgressState = state;
+            this.TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
+            this.blurProgressBar.ProgressState = state;
             switch(state)
             {
-                case BlurProgressState.None:
-                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;
-                    break;
-                case BlurProgressState.Indeterminate:
-                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
-                    break;
-                case BlurProgressState.Normal:
-                    TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
-                    break;
-                default:
-                    break;
+            case BlurProgressState.None:
+                this.TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;
+                break;
+            case BlurProgressState.Indeterminate:
+                this.TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
+                break;
+            case BlurProgressState.Normal:
+                this.TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+                break;
+            default:
+                break;
             }
         }
 
@@ -105,47 +104,47 @@ namespace RenamerWpf
 
         private void checkboxSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            listView.SelectAll();
+            this.listView.SelectAll();
         }
 
         private void checkboxSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            if(listView.SelectedItems.Count == files.Count)
-                listView.UnselectAll();
+            if(this.listView.SelectedItems.Count == this.files.Count)
+                this.listView.UnselectAll();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(listView.SelectedItems.Count != listView.Items.Count)
-                checkboxSelectAll.IsChecked = false;
+            if(this.listView.SelectedItems.Count != this.listView.Items.Count)
+                this.checkboxSelectAll.IsChecked = false;
         }
 
         #endregion
 
         private void files_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if(listView.SelectedItems.Count != listView.Items.Count)
-                checkboxSelectAll.IsChecked = false;
+            if(this.listView.SelectedItems.Count != this.listView.Items.Count)
+                this.checkboxSelectAll.IsChecked = false;
         }
 
         private async void buttonRename_Click(object sender, RoutedEventArgs e)
         {
-            if(files.Count == 0 || isInOperation())
+            if(this.files.Count == 0 || this.isInOperation())
                 return;
-            regexHandle();
-            setProgressState(BlurProgressState.Normal);
-            TaskbarItemInfo.ProgressValue = 0;
+            this.regexHandle();
+            this.setProgressState(BlurProgressState.Normal);
+            this.TaskbarItemInfo.ProgressValue = 0;
             await Task.Run(() =>
             {
-                while(!regexRefresh.Wait(100))
-                    Dispatcher.BeginInvoke(new Action(() => TaskbarItemInfo.ProgressValue += (1 - TaskbarItemInfo.ProgressValue) / 50));
+                while(!this.regexRefresh.Wait(100))
+                    this.Dispatcher.BeginInvoke(new Action(() => this.TaskbarItemInfo.ProgressValue += (1 - this.TaskbarItemInfo.ProgressValue) / 50));
                 Action addProgress = null;
-                Dispatcher.BeginInvoke(new Action(() =>
+                this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    var progressAdd = (1 - TaskbarItemInfo.ProgressValue) / files.Count;
-                    addProgress = new Action(() => Dispatcher.BeginInvoke(new Action(() => TaskbarItemInfo.ProgressValue += progressAdd)));
+                    var progressAdd = (1 - this.TaskbarItemInfo.ProgressValue) / this.files.Count;
+                    addProgress = () => this.Dispatcher.BeginInvoke(new Action(() => this.TaskbarItemInfo.ProgressValue += progressAdd));
                 })).Wait();
-                foreach(var item in files)
+                foreach(var item in this.files)
                 {
                     try
                     {
@@ -158,31 +157,32 @@ namespace RenamerWpf
                     addProgress();
                 }
             });
-            setProgressState(BlurProgressState.None);
+            this.setProgressState(BlurProgressState.None);
         }
 
         private void menuitemDelete_Click(object sender, RoutedEventArgs e)
         {
-            if(isInOperation())
+            if(this.isInOperation())
                 return;
-            if(listView.SelectedItems.Count == files.Count)
-                files.Clear();
+            if(this.listView.SelectedItems.Count == this.files.Count)
+                this.files.Clear();
             else
             {
                 object sel;
-                while((sel = listView.SelectedItem) != null)
-                    files.Remove((FileData)sel);
+                while((sel = this.listView.SelectedItem) != null)
+                    this.files.Remove((FileData)sel);
             }
         }
 
         private Task regexRefresh = Task.Run(() =>
         {
         });
+
         private CancellationTokenSource regexRefreshTokenSource = new CancellationTokenSource();
 
         private void textboxTextChanged(object sender, TextChangedEventArgs e)
         {
-            regexHandle();
+            this.regexHandle();
         }
 
         /// <summary>
@@ -191,21 +191,21 @@ namespace RenamerWpf
         private void regexHandle()
         {
             //终止当前的匹配操作并释放资源
-            regexRefreshTokenSource.Cancel();
-            regexRefreshTokenSource.Dispose();
+            this.regexRefreshTokenSource.Cancel();
+            this.regexRefreshTokenSource.Dispose();
             //新的匹配操作
-            regexRefreshTokenSource = new CancellationTokenSource();
-            regexRefresh = Task.Run(async () =>
+            this.regexRefreshTokenSource = new CancellationTokenSource();
+            this.regexRefresh = Task.Run(async () =>
             {
                 string find = null, to = null;
-                await Dispatcher.BeginInvoke(new Action(delegate
+                await this.Dispatcher.BeginInvoke(new Action(delegate
                 {
-                    find = textboxFind.Text;
-                    to = textboxTo.Text;
+                    find = this.textboxFind.Text;
+                    to = this.textboxTo.Text;
                 }));
-                foreach(var item in files)
+                foreach(var item in this.files)
                 {
-                    if(regexRefreshTokenSource.Token.IsCancellationRequested)
+                    if(this.regexRefreshTokenSource.Token.IsCancellationRequested)
                         return;
                     try
                     {
@@ -216,7 +216,7 @@ namespace RenamerWpf
                         //忽略不能进行替换的项（由于 State 错误）
                     }
                 }
-            }, regexRefreshTokenSource.Token);
+            }, this.regexRefreshTokenSource.Token);
         }
 
         private DispatcherOperation showMessageBox;
@@ -228,25 +228,22 @@ namespace RenamerWpf
         /// <returns>当前是否正在执行操作。</returns>
         private bool isInOperation(bool showWarning = true)
         {
-            if(TaskbarItemInfo.ProgressState != System.Windows.Shell.TaskbarItemProgressState.None)
-            {
-                if(showWarning && (showMessageBox == null || showMessageBox.Status == DispatcherOperationStatus.Completed))
-                    showMessageBox = Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(RenamerWpf.Properties.Resources.HintWait, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation)));
-                return true;
-            }
-            else
+            if(this.TaskbarItemInfo.ProgressState == TaskbarItemProgressState.None)
                 return false;
+            if(showWarning && (this.showMessageBox == null || this.showMessageBox.Status == DispatcherOperationStatus.Completed))
+                this.showMessageBox = this.Dispatcher.BeginInvoke(new Action(() => MessageBox.Show(Properties.Resources.HintWait, this.Title, MessageBoxButton.OK, MessageBoxImage.Exclamation)));
+            return true;
         }
 
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
-            if(!isInOperation())
-                files.Clear();
+            if(!this.isInOperation())
+                this.files.Clear();
         }
 
         private void DeleteListViewItem_CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            menuitemDelete_Click(sender, e);
+            this.menuitemDelete_Click(sender, e);
         }
 
         private void DeleteListViewItem_CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -261,14 +258,14 @@ namespace RenamerWpf
         /// </summary>
         public void Dispose()
         {
-            regexRefreshTokenSource.Dispose();
+            this.regexRefreshTokenSource.Dispose();
         }
 
         #endregion
     }
 
     /// <summary>
-    /// 提供将 <c>System.Int32</c> 转换为 <c>System.Object</c> 的转换器。
+    /// 提供将 <see cref="System.Int32"/> 转换为 <see cref="System.Object"/> 的转换器。
     /// </summary>
     public class Int32ToObjectConverter : IValueConverter
     {
@@ -279,8 +276,9 @@ namespace RenamerWpf
         /// </summary>
         /// <param name="value">绑定源生成的值。</param>
         /// <param name="targetType">绑定目标属性的类型。</param>
-        /// <param name="parameter">长度为 3 的 <c>System.Array</c>，表示大于 <c>0</c>，等于 <c>0</c>，小于 <c>0</c> 时的返回值。</param>
+        /// <param name="parameter">长度为 3 的 <see cref="System.Array"/>，表示大于 <c>0</c>，等于 <c>0</c>，小于 <c>0</c> 时的返回值。</param>
         /// <param name="culture">要用在转换器中的区域性。</param>
+        /// <exception cref="ArgumentException"></exception>
         /// <returns> 转换后的值。如果该方法返回 <c>null</c>，则使用有效的 <c>null</c> 值。</returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -288,14 +286,13 @@ namespace RenamerWpf
             {
                 var returns = (Array)parameter;
                 if(returns.Length != 3)
-                    throw new ArgumentException("必须使用长度为 3 的一维数组。", "parameter");
-                var val = (Int32)value;
+                    throw new ArgumentException("必须使用长度为 3 的一维数组。", nameof(parameter));
+                var val = (int)value;
                 if(val > 0)
                     return returns.GetValue(0);
-                else if(val == 0)
+                if(val == 0)
                     return returns.GetValue(1);
-                else
-                    return returns.GetValue(2);
+                return returns.GetValue(2);
             }
             catch(Exception ex)
             {
@@ -306,6 +303,7 @@ namespace RenamerWpf
         /// <summary>
         /// 转换值，未实现此功能。
         /// </summary>
+        /// <exception cref="NotImplementedException">未实现此功能。</exception>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
