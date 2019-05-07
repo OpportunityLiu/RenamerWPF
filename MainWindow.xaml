@@ -1215,9 +1215,11 @@
         <ColumnDefinition Width="100" />
       </Grid.ColumnDefinitions>
       <TextBox x:Name="textboxFind"
+               FontFamily="Sarasa Mono T SC, Consolas"
                Tag="{x:Static res:Resources.LableFind}"
                TextChanged="textboxTextChanged" />
       <TextBox x:Name="textboxTo"
+               FontFamily="Sarasa Mono T SC, Consolas"
                Tag="{x:Static res:Resources.LableTo}"
                TextChanged="textboxTextChanged"
                Grid.Row="2" />

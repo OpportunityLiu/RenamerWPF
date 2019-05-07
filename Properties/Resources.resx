@@ -173,10 +173,10 @@
     <value>所选项目数量</value>
   </data>
   <data name="LableFind" xml:space="preserve">
-    <value>查找...</value>
+    <value>查找…</value>
   </data>
   <data name="LableTo" xml:space="preserve">
-    <value>替换为...</value>
+    <value>替换为…</value>
   </data>
   <data name="MenuDelete" xml:space="preserve">
     <value>删除(_D)</value>
